@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 class TextFieldGroup extends Component {
   render() {
-    const {field, value, label, type, onChangeHandler, placeholder, error} = this.props
+    const {field, value, label, type, onChangeHandler, placeholder, error, onBlurHandler} = this.props
     return (
       <div className="form_group">
         <label className="form_group__label">{label}</label>
@@ -10,6 +10,7 @@ class TextFieldGroup extends Component {
           value={value}
           onChange={onChangeHandler}
           type={type}
+          onBlur={onBlurHandler}
           name={field}
           placeholder={placeholder}
           className="form_group__input"
