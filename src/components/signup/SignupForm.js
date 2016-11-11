@@ -102,7 +102,7 @@ class SignupForm extends Component {
       <div className="links">
         <Link to="/login" className="redirect">Login page</Link>
       </div>
-      
+
 
       <div className="form_group">
         <button className="form_group__button" onClick={this.onClickHandler}>Next Step</button>
@@ -112,6 +112,7 @@ class SignupForm extends Component {
 
     return (
       <form className="auth_form">
+        <h2>Sign up</h2>
         {changeForms}
       </form>
     )

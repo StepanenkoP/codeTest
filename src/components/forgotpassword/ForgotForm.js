@@ -1,20 +1,19 @@
 import React, {Component} from 'react'
 import TextFieldGroup from '../signup/TextFieldGroup'
-import validateLoginForm from '../../functions/validateLoginForm'
+import validateForgotForm from '../../functions/validateForgotForm'
 import { Link } from 'react-router'
 import update from 'react-addons-update'
 
-class LoginForm extends Component {
+class ForgotForm extends Component {
   state = {
-    login: '',
-    password: '',
+    email: '',
     errors: {}
   }
   onChangeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
-    const {errors, isValid} = validateLoginForm(this.state)
+    const {errors, isValid} = validateForgotForm(this.state)
     if (!isValid) {
       const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
       this.setState({
@@ -23,7 +22,7 @@ class LoginForm extends Component {
     }
   }
   isValid() {
-    const {errors, isValid} = validateLoginForm(this.state)
+    const {errors, isValid} = validateForgotForm(this.state)
 
     if (!isValid) {
       this.setState({
@@ -45,40 +44,30 @@ class LoginForm extends Component {
     const {errors} = this.state
     return(
       <form className="auth_form">
-        <h2>Log In</h2>
+        <h2>Forgot Password</h2>
         <TextFieldGroup
-          value={this.state.login}
-          label="Login"
-          placeholder="Login"
+          value={this.state.email}
+          label="Email"
+          placeholder="Email"
           type="email"
-          field="login"
+          field="email"
           onChangeHandler={this.onChangeHandler}
-          error={errors.login}
-          className="form_group__input"
-        />
-        <TextFieldGroup
-          value={this.state.password}
-          label="Password"
-          placeholder="******"
-          type="password"
-          field="password"
-          onChangeHandler={this.onChangeHandler}
-          error={errors.password}
+          error={errors.email}
           className="form_group__input"
         />
 
         <div className="links">
-          <Link to="/forgot" className="redirect">Forgot your password?</Link>
+          <Link to="/login" className="redirect">Login page</Link>
 
           <Link to="/signup" className="redirect">Signup page</Link>
         </div>
 
         <div className="form_group">
-          <button className="form_group__button" onClick={this.onClickHandler}>Enter</button>
+          <button className="form_group__button" onClick={this.onClickHandler}>Send</button>
         </div>
       </form>
     )
   }
 }
 
-export default LoginForm
+export default ForgotForm
