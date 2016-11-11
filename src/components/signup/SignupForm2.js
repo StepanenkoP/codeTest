@@ -94,7 +94,11 @@ class SignupForm2 extends Component {
           </select>
           {errors.business && <span className="validate_span">{errors.business}</span>}
         </div>
-        <Link to="/login" className="redirect">Login page</Link>
+
+        <div className="links">
+          <Link to="/login" className="redirect">Login page</Link>
+        </div>
+
         <div className="form_group">
           <button className="form_group__button" onClick={this.onClickHandler}>Sign Up</button>
         </div>

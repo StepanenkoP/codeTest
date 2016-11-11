@@ -99,7 +99,10 @@ class SignupForm extends Component {
         className="form_group__input"
       />
 
-      <Link to="/login" className="redirect">Login page</Link>
+      <div className="links">
+        <Link to="/login" className="redirect">Login page</Link>
+      </div>
+      
 
       <div className="form_group">
         <button className="form_group__button" onClick={this.onClickHandler}>Next Step</button>
