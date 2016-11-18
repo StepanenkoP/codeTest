@@ -42,6 +42,13 @@ body
     margin-bottom: 45px
     margin-bottom: 45px
     margin-top: 20px
+  .back
+    margin-bottom: 30px
+    cursor: pointer
+    img
+      margin-right: 7px
+      position: relative
+      top: 2px
   h2
     text-transform: uppercase
     color: #000
@@ -88,6 +95,10 @@ body
       padding: 12px 45px
       border-radius: 20px
       background-color: #0C73C0
+      transition: background-color .3s ease, color .3s ease
+      &:hover
+        background-color: #000
+        color: #fff
       &.in_btn
         display: inline-block
         text-decoration: none
@@ -104,3 +115,39 @@ body
       background-image: url(./img/signup/arrow.png)
       background-repeat: no-repeat
       background-position: 95% 50%
+
+
+.no_page
+  background-image: url(./img/404/bg.png)
+  height: 100vh
+  background-repeat: no-repeat
+  background-size: cover
+  color: #fff
+  text-align: center
+  h1
+    padding-top: 50vh
+    text-transform: uppercase
+    font-size: 37px
+    font-weight: 700
+    margin-bottom: 15px
+  p
+    font-weight: 300
+    font-size: 21px
+    margin-bottom: 20px
+  &__link
+    text-transform: uppercase
+    display: inline-block
+    color: #fff
+    cursor: pointer
+    font-weight: 500
+    margin-top: 20px
+    font-size: 15px
+    border: none
+    padding: 12px 45px
+    text-decoration: none
+    border-radius: 20px
+    background-color: #0C73C0
+    transition: background-color .3s ease, color .3s ease
+    &:hover
+      background-color: #fff
+      color: #0C73C0

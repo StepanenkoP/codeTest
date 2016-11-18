@@ -48,6 +48,13 @@ class SignupForm extends Component {
       });
     }
   }
+
+  backClick = () => {
+    this.setState({
+      show: !this.state.show
+    })
+  }
+
   render() {
     const {errors} = this.state
     const stateObj = {
@@ -55,9 +62,11 @@ class SignupForm extends Component {
       lastname: this.state.lastname,
       email: this.state.email,
       password: this.state.password,
+      show: this.state.show
     }
-    const changeForms = this.state.show ? <SignupForm2 stateObj={stateObj}/> :
+    const changeForms = this.state.show ? <SignupForm2 stateObj={stateObj} backClick={this.backClick}/> :
     <div>
+      <h2>Sign up</h2>
       <TextFieldGroup
         value={this.state.firstname}
         label="First Name"
@@ -112,7 +121,6 @@ class SignupForm extends Component {
 
     return (
       <form className="auth_form">
-        <h2>Sign up</h2>
         {changeForms}
       </form>
     )

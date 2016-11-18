@@ -3,19 +3,24 @@ import TextFieldGroup from './TextFieldGroup'
 import update from 'react-addons-update'
 import {Link} from 'react-router'
 import validateSecondForm from '../../functions/validateSecondForm'
+import back from '../../img/signup/back.png'
+import axios from 'axios'
 
 class SignupForm2 extends Component {
   state = {
-    firstname: this.props.stateObj.firstname,
-    lastname: this.props.stateObj.lastname,
+    first_name: this.props.stateObj.firstname,
+    last_name: this.props.stateObj.lastname,
     email: this.props.stateObj.email,
     password: this.props.stateObj.password,
-    contactnumber: '',
+    show: this.props.stateObj.show,
+    contact_number: '',
     address: '',
-    business: '',
+    business_type_id: '',
     errors: {}
   }
+
   onChangeHandler = (e) => {
+    console.log(this.state.errors);
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -24,6 +29,7 @@ class SignupForm2 extends Component {
       errors: newData
     })
   }
+
   isValid() {
     const {errors, isValid} = validateSecondForm(this.state)
 
@@ -40,20 +46,46 @@ class SignupForm2 extends Component {
       errors : {}
     });
     if (this.isValid()) {
-      alert("Check your email for account activation!");
+      const registerObj = {}
+      for (let key in this.state) {
+        if (key !== "errors") {
+          registerObj[''+ key] = this.state['' + key];
+        }
+      }
+      registerObj.user_type = 1;
+      console.log(registerObj);
+      axios({
+        method: "post",
+        url: "/registration",
+        data: registerObj,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      }).then((response) => {
+          console.log(response);
+          if(response.data.success && response.data.success == true) {
+            alert("Success! Visit your email to activate your account!");
+            this.context.router.push('/login');
+          }
+          if (response.data.email) {
+            alert(response.data.email[0]);
+          }
+        })
     }
   }
+
   render() {
     const {errors} = this.state
     return(
       <div>
+        <div className="back" onClick={this.props.backClick}><img src={back} alt="alt"/> Back</div>
         <TextFieldGroup
-          value={this.state.contactnumber}
+          value={this.state.contact_number}
           label="Contact Number"
           placeholder="Number"
           type="text"
-          field="contactnumber"
-          error={errors.contactnumber}
+          field="contact_number"
+          error={errors.contact_number}
           onChangeHandler={this.onChangeHandler}
           className="form_group__input"
         />
@@ -70,29 +102,29 @@ class SignupForm2 extends Component {
         <div className="form_group">
           <label className="form_group__label">Type of business</label>
           <select
-            value={this.state.business}
+            value={this.state.business_type_id}
             onChange={this.onChangeHandler}
-            name="business"
+            name="business_type_id"
             className="form_group__input"
           >
             <option value="" disabled>Choose your business</option>
-            <option value="Agriculture & Foresty/Wildlife">Agriculture & Foresty/Wildlife</option>
-            <option value="Business & Information">Business & Information</option>
-            <option value="Construction/Utilities/Contracting">Construction/Utilities/Contracting</option>
-            <option value="Education">Education</option>
-            <option value="Finance & Ensurance">Finance & Ensurance</option>
-            <option value="Food & Hospitality">Food & Hospitality</option>
-            <option value="Gaming">Gaming</option>
-            <option value="Health Services">Health Services</option>
-            <option value="Motor Vehicle">Motor Vehicle</option>
-            <option value="Natural Resources/Environmental">Natural Resources/Environmental</option>
-            <option value="Other">Other</option>
-            <option value="Personal Services">Personal Services</option>
-            <option value="Real Estate & Housing">Real Estate & Housing</option>
-            <option value="Safety/Security & Legal">Safety/Security & Legal</option>
-            <option value="Transportation">Transportation</option>
+            <option value="1">Agriculture & Foresty/Wildlife</option>
+            <option value="2">Business & Information</option>
+            <option value="3">Construction/Utilities/Contracting</option>
+            <option value="4">Education</option>
+            <option value="5">Finance & Ensurance</option>
+            <option value="6">Food & Hospitality</option>
+            <option value="7">Gaming</option>
+            <option value="8">Health Services</option>
+            <option value="9">Motor Vehicle</option>
+            <option value="10">Natural Resources/Environmental</option>
+            <option value="11">Other</option>
+            <option value="12">Personal Services</option>
+            <option value="13">Real Estate & Housing</option>
+            <option value="14">Safety/Security & Legal</option>
+            <option value="15">Transportation</option>
           </select>
-          {errors.business && <span className="validate_span">{errors.business}</span>}
+          {errors.business_type_id && <span className="validate_span">{errors.business_type_id}</span>}
         </div>
 
         <div className="links">
@@ -110,5 +142,10 @@ class SignupForm2 extends Component {
 SignupForm2.propTypes = {
   stateObj: React.PropTypes.object.isRequired
 }
+
+SignupForm2.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
 
 export default SignupForm2
