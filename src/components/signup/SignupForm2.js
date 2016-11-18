@@ -4,7 +4,6 @@ import update from 'react-addons-update'
 import {Link} from 'react-router'
 import validateSecondForm from '../../functions/validateSecondForm'
 import back from '../../img/signup/back.png'
-import axios from 'axios'
 
 class SignupForm2 extends Component {
   state = {
@@ -13,9 +12,9 @@ class SignupForm2 extends Component {
     email: this.props.stateObj.email,
     password: this.props.stateObj.password,
     show: this.props.stateObj.show,
-    contact_number: '',
-    address: '',
-    business_type_id: '',
+    contact_number: localStorage.getItem('contact_number') == null ? '' : localStorage.getItem('contact_number'),
+    address: localStorage.getItem('address') == null ? '' : localStorage.getItem('address'),
+    business_type_id: localStorage.getItem('business_type_id') == null ? '' : localStorage.getItem('business_type_id'),
     errors: {}
   }
 
@@ -40,6 +39,7 @@ class SignupForm2 extends Component {
     }
     return isValid
   }
+
   onClickHandler = (e) => {
     e.preventDefault();
     this.setState({
@@ -54,31 +54,31 @@ class SignupForm2 extends Component {
       }
       registerObj.user_type = 1;
       console.log(registerObj);
-      axios({
-        method: "post",
-        url: "/registration",
-        data: registerObj,
-        headers: {
-            'Content-Type': 'application/json'
-        }
-      }).then((response) => {
+      this.props.userSignupRequest(registerObj).then((response) => {
           console.log(response);
-          if(response.data.success && response.data.success == true) {
+          if(response.data.success && response.data.success === true) {
             alert("Success! Visit your email to activate your account!");
             this.context.router.push('/login');
           }
           if (response.data.email) {
             alert(response.data.email[0]);
           }
-        })
+        });
     }
   }
 
+
   render() {
     const {errors} = this.state
+    console.log(this.props);
+    const formData = {
+      business_type_id: this.state.business_type_id,
+      address: this.state.address,
+      contact_number: this.state.contact_number
+    }
     return(
       <div>
-        <div className="back" onClick={this.props.backClick}><img src={back} alt="alt"/> Back</div>
+        <div className="back" onClick={()=> this.props.backClick(formData)}><img src={back} alt="alt"/> Back</div>
         <TextFieldGroup
           value={this.state.contact_number}
           label="Contact Number"
@@ -140,7 +140,8 @@ class SignupForm2 extends Component {
 }
 
 SignupForm2.propTypes = {
-  stateObj: React.PropTypes.object.isRequired
+  stateObj: React.PropTypes.object.isRequired,
+  userSignupRequest: React.PropTypes.func.isRequired
 }
 
 SignupForm2.contextTypes = {

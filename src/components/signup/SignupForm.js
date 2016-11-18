@@ -4,6 +4,8 @@ import update from 'react-addons-update'
 import {Link} from 'react-router'
 import validateInput from '../../functions/validateInput'
 import SignupForm2 from './SignupForm2'
+import {connect} from 'react-redux'
+import {userSignupRequest} from '../../AC/signupActions'
 
 class SignupForm extends Component {
   state = {
@@ -18,7 +20,7 @@ class SignupForm extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-    const {errors, isValid} = validateInput(this.state)
+    const {isValid} = validateInput(this.state)
     if (!isValid) {
       const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
       this.setState({
@@ -49,10 +51,13 @@ class SignupForm extends Component {
     }
   }
 
-  backClick = () => {
+  backClick = (data) => {
     this.setState({
       show: !this.state.show
     })
+    localStorage.setItem('business_type_id', data.business_type_id)
+    localStorage.setItem('address', data.address)
+    localStorage.setItem('contact_number', data.contact_number)
   }
 
   render() {
@@ -64,7 +69,8 @@ class SignupForm extends Component {
       password: this.state.password,
       show: this.state.show
     }
-    const changeForms = this.state.show ? <SignupForm2 stateObj={stateObj} backClick={this.backClick}/> :
+    const {userSignupRequest} = this.props
+    const changeForms = this.state.show ? <SignupForm2 stateObj={stateObj} backClick={this.backClick} userSignupRequest={userSignupRequest}/> :
     <div>
       <h2>Sign up</h2>
       <TextFieldGroup
@@ -127,4 +133,8 @@ class SignupForm extends Component {
   }
 }
 
-export default SignupForm;
+SignupForm.propTypes = {
+  userSignupRequest: React.PropTypes.func.isRequired
+}
+
+export default connect(null, {userSignupRequest})(SignupForm);

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Cup from '../../img/signup/Cup.png'
 import { Link } from 'react-router'
 
 class NoPage extends Component {

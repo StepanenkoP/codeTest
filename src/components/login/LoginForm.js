@@ -3,6 +3,8 @@ import TextFieldGroup from '../signup/TextFieldGroup'
 import validateLoginForm from '../../functions/validateLoginForm'
 import { Link } from 'react-router'
 import update from 'react-addons-update'
+import {connect} from 'react-redux'
+import {userLoginRequest} from '../../AC/signupActions'
 
 class LoginForm extends Component {
   state = {
@@ -14,7 +16,7 @@ class LoginForm extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-    const {errors, isValid} = validateLoginForm(this.state)
+    const {isValid} = validateLoginForm(this.state)
     if (!isValid) {
       const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
       this.setState({
@@ -39,6 +41,25 @@ class LoginForm extends Component {
     });
     if (this.isValid()) {
       console.log(this.state);
+      const loginObj = {
+        email: this.state.login,
+        password: this.state.password,
+      }
+      this.props.userLoginRequest(loginObj).then(
+        (response) => {
+          console.log(response);
+          if (response.data.error) {
+            alert(response.data.error);
+          }
+          if (response.data.token) {
+            this.context.router.push('/')
+          }
+        }
+      ).catch((err) => {
+        if (err.response.data.error == "invalid_credentials") {
+          alert("Invalid email or password!");
+        }
+      })
     }
   }
   render() {
@@ -81,4 +102,8 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm
+LoginForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+export default connect(null, {userLoginRequest})(LoginForm)

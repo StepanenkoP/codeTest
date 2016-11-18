@@ -7,10 +7,14 @@ import SuccessPage from './components/success/SuccessPage'
 import NoPage from './components/404/NoPage'
 import App from './components/App'
 
+const resetStorage = () => {
+  localStorage.clear()
+}
+
 export default (
   <Route path='/'>
     <IndexRoute component={App} />
-    <Route path='signup' component={SignupPage}/>
+    <Route path='signup' component={SignupPage} onLeave={resetStorage}/>
     <Route path='login' component={LoginPage}/>
     <Route path='forgot' component={ForgotPage}/>
     <Route path='success' component={SuccessPage}/>

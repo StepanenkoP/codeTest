@@ -13,7 +13,7 @@ class ForgotForm extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-    const {errors, isValid} = validateForgotForm(this.state)
+    const {isValid} = validateForgotForm(this.state)
     if (!isValid) {
       const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
       this.setState({
