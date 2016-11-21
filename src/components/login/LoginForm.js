@@ -4,7 +4,7 @@ import validateLoginForm from '../../functions/validateLoginForm'
 import { Link } from 'react-router'
 import update from 'react-addons-update'
 import {connect} from 'react-redux'
-import {userLoginRequest} from '../../AC/signupActions'
+import {userLoginRequest, userActivateRequest} from '../../AC/signupActions'
 
 class LoginForm extends Component {
   state = {
@@ -50,8 +50,15 @@ class LoginForm extends Component {
           console.log(response);
           if (response.data.error) {
             alert(response.data.error);
+            this.props.userActivateRequest().then(
+              res => {
+                console.log(res)
+                this.context.router.push('/success')
+              }
+            )
           }
           if (response.data.token) {
+            localStorage.setItem('token', response.data.token)
             this.context.router.push('/')
           }
         }
@@ -106,4 +113,4 @@ LoginForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default connect(null, {userLoginRequest})(LoginForm)
+export default connect(null, {userLoginRequest, userActivateRequest})(LoginForm)

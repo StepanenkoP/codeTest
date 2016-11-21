@@ -26,12 +26,26 @@ export function userLoginRequest(userData) {
   }
 }
 
-export function userActivateRequest(userData) {
+export function userForgotPasswordRequest(email) {
+  console.log(email);
   return dispatch => {
     return axios({
-      method: "get",
+      method: "post",
+      url: "/forgotPassword",
+      data: email,
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    })
+  }
+}
+
+export function userActivateRequest() {
+  return dispatch => {
+    return axios({
+      method: "post",
       url: "/activation",
-      data: "87b0efac8f74ea0179360c7a56845573",
+      data: {activation_token: "b384f34edf7f7bfaba4b6a5f24eff6ee"},
       headers: {
           'Content-Type': 'application/json'
       }

@@ -3,6 +3,8 @@ import TextFieldGroup from '../signup/TextFieldGroup'
 import validateForgotForm from '../../functions/validateForgotForm'
 import { Link } from 'react-router'
 import update from 'react-addons-update'
+import {connect} from 'react-redux'
+import {userForgotPasswordRequest} from '../../AC/signupActions'
 
 class ForgotForm extends Component {
   state = {
@@ -37,7 +39,10 @@ class ForgotForm extends Component {
       errors : {}
     });
     if (this.isValid()) {
-      console.log(this.state);
+      console.log(this.state.email);
+      this.props.userForgotPasswordRequest({email: this.state.email}).then(
+        (r) => console.log(r)
+      )
     }
   }
   render() {
@@ -70,4 +75,4 @@ class ForgotForm extends Component {
   }
 }
 
-export default ForgotForm
+export default connect(null, {userForgotPasswordRequest})(ForgotForm)
