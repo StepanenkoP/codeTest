@@ -6,6 +6,7 @@ import validateInput from '../../functions/validateInput'
 import SignupForm2 from './SignupForm2'
 import {connect} from 'react-redux'
 import {userSignupRequest} from '../../AC/signupActions'
+import {addFlashMessage} from '../../AC/flashMessages'
 
 class SignupForm extends Component {
   state = {
@@ -69,8 +70,9 @@ class SignupForm extends Component {
       password: this.state.password,
       show: this.state.show
     }
-    const {userSignupRequest} = this.props
-    const changeForms = this.state.show ? <SignupForm2 stateObj={stateObj} backClick={this.backClick} userSignupRequest={userSignupRequest}/> :
+    const {userSignupRequest, addFlashMessage} = this.props
+    console.log(this.props);
+    const changeForms = this.state.show ? <SignupForm2 stateObj={stateObj} addFlashMessage={addFlashMessage} backClick={this.backClick} userSignupRequest={userSignupRequest}/> :
     <div>
       <h2>Sign up</h2>
       <TextFieldGroup
@@ -134,7 +136,8 @@ class SignupForm extends Component {
 }
 
 SignupForm.propTypes = {
-  userSignupRequest: React.PropTypes.func.isRequired
+  userSignupRequest: React.PropTypes.func.isRequired,
+  addFlashMessage: React.PropTypes.func.isRequired
 }
 
-export default connect(null, {userSignupRequest})(SignupForm);
+export default connect(null, {userSignupRequest, addFlashMessage})(SignupForm);

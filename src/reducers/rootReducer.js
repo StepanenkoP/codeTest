@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
-import signupFormReducer from './signup/signupFormReducer'
+import flashMessages from './flash/flashMessages'
 
 export default combineReducers({
-  signupFormReducer
+  flashMessages
 })

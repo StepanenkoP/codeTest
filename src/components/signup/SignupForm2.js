@@ -57,7 +57,10 @@ class SignupForm2 extends Component {
       this.props.userSignupRequest(registerObj).then((response) => {
           console.log(response);
           if(response.data.success && response.data.success === true) {
-            alert("Success! Visit your email to activate your account!");
+            this.props.addFlashMessage({
+              type: 'success',
+              text: 'Success! Visit your email to activate your account!'
+            })
             this.context.router.push('/login');
           }
           if (response.data.email) {
@@ -141,7 +144,8 @@ class SignupForm2 extends Component {
 
 SignupForm2.propTypes = {
   stateObj: React.PropTypes.object.isRequired,
-  userSignupRequest: React.PropTypes.func.isRequired
+  userSignupRequest: React.PropTypes.func.isRequired,
+  addFlashMessage: React.PropTypes.func.isRequired
 }
 
 SignupForm2.contextTypes = {
