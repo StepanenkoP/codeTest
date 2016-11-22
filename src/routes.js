@@ -7,21 +7,35 @@ import ForgotPage from './components/forgotpassword/ForgotPage'
 import SuccessPage from './components/success/SuccessPage'
 import NoPage from './components/404/NoPage'
 import App from './components/App'
-
-const resetStorage = () => {
-  localStorage.clear()
-}
+import {addFlashMessage} from './AC/flashMessages'
+import {store} from './index'
+import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from './types'
 
 const needLogout = () => {
+  localStorage.removeItem('address');
+  localStorage.removeItem('business_type_id');
+  localStorage.removeItem('contact_number');
   if (localStorage.token) {
-    alert("To do this you need to logout!");
+    store.dispatch({
+      type: ADD_FLASH_MESSAGE,
+      message : {
+        type: 'error',
+        text: "To do this you need to logout!"
+      }
+    })
     browserHistory.push('/');
   }
 }
 
 const needLogin = () => {
   if (!localStorage.token) {
-    alert("Please log in!");
+    store.dispatch({
+      type: ADD_FLASH_MESSAGE,
+      message : {
+        type: 'error',
+        text: "Please log in!"
+      }
+    })
     browserHistory.push('/login');
   }
 }
@@ -29,10 +43,10 @@ const needLogin = () => {
 export default (
   <Route path='/'>
     <IndexRoute component={App} onEnter={needLogin}/>
-    <Route path='signup' component={SignupPage} onLeave={resetStorage} onEnter={needLogout}/>
+    <Route path='signup' component={SignupPage} onEnter={needLogout}/>
     <Route path='login' component={LoginPage} onEnter={needLogout}/>
     <Route path='forgot' component={ForgotPage} onEnter={needLogout}/>
     <Route path='success' component={SuccessPage} onEnter={needLogout}/>
-    <Route path='*' component={NoPage} onEnter={needLogout}/>
+    <Route path='*' component={NoPage}/>
   </Route>
 )

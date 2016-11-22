@@ -64,12 +64,14 @@ class SignupForm2 extends Component {
             this.context.router.push('/login');
           }
           if (response.data.email) {
-            alert(response.data.email[0]);
+            this.props.addFlashMessage({
+              type: 'error',
+              text: 'The email has already been taken!'
+            })
           }
         });
     }
   }
-
 
   render() {
     const {errors} = this.state

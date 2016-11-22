@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 import update from 'react-addons-update'
 import {connect} from 'react-redux'
 import {userLoginRequest, userActivateRequest} from '../../AC/signupActions'
+import {addFlashMessage} from '../../AC/flashMessages'
 
 class LoginForm extends Component {
   state = {
@@ -49,22 +50,32 @@ class LoginForm extends Component {
         (response) => {
           console.log(response);
           if (response.data.error) {
-            alert(response.data.error);
-            this.props.userActivateRequest().then(
-              res => {
-                console.log(res)
-                this.context.router.push('/success')
-              }
-            )
+            this.props.addFlashMessage({
+              type: 'error',
+              text: response.data.error
+            })
+            // this.props.userActivateRequest().then(
+            //   res => {
+            //     console.log(res)
+            //     this.context.router.push('/success')
+            //   }
+            // )
           }
           if (response.data.token) {
+            this.props.addFlashMessage({
+              type: 'success',
+              text: "Success! Welcome to Micro Advertising Portal"
+            })
             localStorage.setItem('token', response.data.token)
             this.context.router.push('/')
           }
         }
       ).catch((err) => {
         if (err.response.data.error == "invalid_credentials") {
-          alert("Invalid email or password!");
+          this.props.addFlashMessage({
+            type: 'error',
+            text: "Invalid email or password!"
+          })
         }
       })
     }
@@ -113,4 +124,4 @@ LoginForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default connect(null, {userLoginRequest, userActivateRequest})(LoginForm)
+export default connect(null, {userLoginRequest, userActivateRequest, addFlashMessage})(LoginForm)

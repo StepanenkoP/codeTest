@@ -3,14 +3,16 @@ import classnames from 'classnames'
 
 class FlashMessage extends Component {
 
-  onClickHandler = () => {
-    this.props.deleteFlashMessage(this.props.message.id)
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.props.deleteFlashMessage(this.props.message.id)
+    }, 3000);
   }
 
   render() {
     const {id,type,text} = this.props.message
     return(
-      <div onClick={this.onClickHandler} className={classnames('alert', {
+      <div className={classnames('alert', {
         'alert_success': type === 'success',
         'alert_error': type === 'error'
       })}>
