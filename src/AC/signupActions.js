@@ -39,16 +39,3 @@ export function userForgotPasswordRequest(email) {
     })
   }
 }
-
-export function userActivateRequest() {
-  return dispatch => {
-    return axios({
-      method: "post",
-      url: "/api/activation",
-      data: {activation_token: "b384f34edf7f7bfaba4b6a5f24eff6ee"},
-      headers: {
-          'Content-Type': 'application/json'
-      }
-    })
-  }
-}

@@ -38,7 +38,8 @@ body
   float: right
   position: fixed
   right: 0
-  top: 50px
+  top: 80px
+  z-index: 10
   &_success
     background-color: #16A05D
     border-radius: 20px 0 0 20px
@@ -51,7 +52,7 @@ body
   margin-right: auto
   padding: 35px 40px 30px 40px
   background-color: #fff
-  width: 310px
+  width: 390px
   .img_wrapper
     text-align: center
     margin-bottom: 45px
@@ -166,3 +167,184 @@ body
     &:hover
       background-color: #fff
       color: #0C73C0
+
+///// ACCOUNT SUMMARY
+
+.main_wrapper
+  position: relative
+  .mobile_mnu
+    display: none
+    position: absolute
+    width: 100%
+    height: 100%
+    background-color: #1A1B1C
+    color: #fff
+    z-index: 2
+    .mobile_ul
+      &__link
+        display: block
+        color: #fff
+        font-size: 15px
+        text-transform: uppercase
+        padding: 12px 30px
+        text-decoration: none
+        transition: background-color .3s ease
+        &:hover
+          background-color: #4172BB
+    .mobile_head
+      border-bottom: 1px solid #535455
+    .ham
+      position: absolute
+      right: 30px
+      top: 35px
+      cursor: pointer
+    .user
+      padding: 15px
+      padding-top: 25px
+      letter-spacing: 1px
+      display: inline-block
+      position: relative
+      margin-left: 80px
+      &_img
+        position: absolute
+        left: -60px
+      &_name
+        text-transform: uppercase
+        font-size: 16px
+        margin: 0
+      &_mnu
+        margin-top: 5px
+        .logout
+          font-size: 12.5px
+          font-weight: 400
+          cursor: pointer
+          position: relative
+          top: 3px
+        .balance
+          font-size: 18px
+          float: right
+  .main_header
+    background-image: url(./img/main/headbg.png)
+    background-repeat: no-repeat
+    background-size: cover
+    position: relative
+    &__line
+      width: 1170px
+      margin: auto
+      color: #fff
+      .img_wrapper
+        padding-top: 30px
+        display: inline-block
+        padding-bottom: 90px
+      .ham
+        display: none
+        cursor: pointer
+      .user
+        float: right
+        padding-top: 25px
+        color: #fff
+        letter-spacing: 1px
+        position: relative
+        &_img
+          position: absolute
+          left: -60px
+        &_name
+          text-transform: uppercase
+          font-size: 16px
+          margin: 0
+        &_mnu
+          margin-top: 5px
+          .logout
+            font-size: 12.5px
+            font-weight: 400
+            cursor: pointer
+            position: relative
+            top: 3px
+          .balance
+            font-size: 18px
+            float: right
+      h1
+        font-size: 41px
+        text-transform: uppercase
+        font-weight: 300
+      .text
+        font-size: 20px
+        font-weight: 300
+        width: 50%
+        margin-bottom: 100px
+      .main_mnu
+        list-style-type: none
+        margin-bottom: 30px
+        li
+          display: inline-block
+          text-transform: uppercase
+          letter-spacing: 1px
+          margin-right: 35px
+          font-size: 16px
+          &:last-child
+            margin-right: 0
+        &__link
+          text-decoration: none
+          color: #fff
+  .data
+    width: 1170px
+    margin: auto
+    padding-top: 115px
+    &_ul
+      list-style-type: none
+      margin-bottom: 65px
+      li
+        width: 165px
+        height: 90px
+        display: inline-block
+        box-shadow: 0 0 10px rgba(0,0,0,.1)
+        border-radius: 6px
+        border-left: 5px solid #88D957
+        padding-left: 15px
+        padding-top: 15px
+        margin-right: 30px
+        &:last-child
+          margin-right: 0
+        p
+          font-size: 12px
+        &:nth-child(even)
+          border-color: #F3A112
+      &__number
+        font-size: 24px
+        margin-bottom: 10px
+        display: inline-block
+        font-weight: 700
+    h2
+      text-align: center
+      text-transform: uppercase
+      font-size: 20px
+      font-weight: 700
+      margin-bottom: 45px
+    .data_chart
+      height: 330px
+      margin-bottom: 80px
+      .no_data
+        text-align: center
+        line-height: 330px
+        font-size: 25px
+        color: #ACACAC
+        text-transform: uppercase
+        font-weight: 700
+
+  .main_footer
+    border-top: 1px solid #C8D3E6
+    height: 105px
+    line-height: 105px
+    &__content
+      width: 1170px
+      margin: auto
+      font-size: 15px
+      color: #000
+      font-weight: 600
+      .copy
+        letter-spacing: 2px
+      .feedback
+        float: right
+        letter-spacing: 1px
+        color: #000
+        text-decoration: none

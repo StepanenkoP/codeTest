@@ -9,6 +9,7 @@ import NoPage from './components/404/NoPage'
 import App from './components/App'
 import {addFlashMessage} from './AC/flashMessages'
 import {store} from './index'
+import axios from 'axios'
 import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from './types'
 
 const needLogout = () => {
@@ -25,6 +26,22 @@ const needLogout = () => {
     })
     browserHistory.push('/');
   }
+  if (window.location.href.indexOf("=") !== -1) {
+    let obj = window.location.href.split("=");
+    let token = obj[obj.length - 1];
+    axios({
+      method: "post",
+      url: "/api/activation",
+      data: {activation_token: token},
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then((r)=> {
+      if (r.data.success == true) {
+        browserHistory.push('/success');
+      }
+    })
+  }
 }
 
 const needLogin = () => {
@@ -39,6 +56,7 @@ const needLogin = () => {
     browserHistory.push('/login');
   }
 }
+
 
 export default (
   <Route path='/'>
