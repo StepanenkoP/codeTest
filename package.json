@@ -71,6 +71,7 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "proxy": "http://midwinter-map.com/api",
+  "homepage": "http://midwinter-map.com",
   "jest": {
     "moduleFileExtensions": [
       "jsx",
