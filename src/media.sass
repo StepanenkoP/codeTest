@@ -42,12 +42,40 @@
   .main_wrapper .mobile_mnu
     display: block
 
+  .settings_wrapper__form
+    width: 100%
+
+  .settings_wrapper
+    padding-left: 20px
+    padding-right: 20px
+
+  .settings_wrapper__form .all_blocks .form_block
+    display: block
+    width: 100%
+
+  .settings_wrapper__form .all_blocks .form_block .form_group .checkbox_label
+    display: block
+
 @media screen and (max-width: 768px)
   .alert
     width: 100%
     border-radius: 0
     top: 0
     position: fixed
+
+  .main_wrapper .main_footer__content .copy,
+  .main_wrapper .main_footer__content .feedback
+    display: block
+    text-align: center
+    padding: 20px 0
+
+  .main_wrapper .main_footer__content .feedback
+    float: none
+
+  .main_wrapper .main_footer
+    height: auto
+    line-height: 1.4
+
 
 @media screen and (max-width: 480px)
   .auth_form
@@ -63,3 +91,18 @@
   .main_wrapper .main_header__line .text
     width: 100%
     font-size: 16px
+
+  .main_wrapper .main_footer__content
+    padding-right: 20px
+    padding-left: 20px
+
+  .settings_wrapper__form .title
+    text-align: center
+    padding-left: 0
+
+  .settings_wrapper__form .delete_acc
+    text-align: center
+
+  .settings_wrapper__form .all_blocks
+    padding-left: 20px
+    padding-right: 20px

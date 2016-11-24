@@ -54,12 +54,6 @@ class LoginForm extends Component {
               type: 'error',
               text: response.data.error
             })
-            // this.props.userActivateRequest().then(
-            //   res => {
-            //     console.log(res)
-            //     this.context.router.push('/success')
-            //   }
-            // )
           }
           if (response.data.token) {
             this.props.addFlashMessage({
@@ -71,7 +65,7 @@ class LoginForm extends Component {
           }
         }
       ).catch((err) => {
-        if (err.response.data.error == "invalid_credentials") {
+        if (err.response.data.error === "invalid_credentials") {
           this.props.addFlashMessage({
             type: 'error',
             text: "Invalid email or password!"

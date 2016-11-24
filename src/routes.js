@@ -5,12 +5,12 @@ import SignupPage from './components/signup/SignupPage'
 import LoginPage from './components/login/LoginPage'
 import ForgotPage from './components/forgotpassword/ForgotPage'
 import SuccessPage from './components/success/SuccessPage'
+import SettingsPage from './components/settings/SettingsPage'
 import NoPage from './components/404/NoPage'
 import App from './components/App'
-import {addFlashMessage} from './AC/flashMessages'
 import {store} from './index'
 import axios from 'axios'
-import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from './types'
+import {ADD_FLASH_MESSAGE} from './types'
 
 const needLogout = () => {
   localStorage.removeItem('address');
@@ -37,7 +37,7 @@ const needLogout = () => {
           'Content-Type': 'application/json'
       }
     }).then((r)=> {
-      if (r.data.success == true) {
+      if (r.data.success === true) {
         browserHistory.push('/success');
       }
     })
@@ -65,6 +65,7 @@ export default (
     <Route path='login' component={LoginPage} onEnter={needLogout}/>
     <Route path='forgot' component={ForgotPage} onEnter={needLogout}/>
     <Route path='success' component={SuccessPage} onEnter={needLogout}/>
+    <Route path='/settings' component={SettingsPage} onEnter={needLogin}/>
     <Route path='*' component={NoPage}/>
   </Route>
 )
