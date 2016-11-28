@@ -29,6 +29,27 @@
   .no_page
     height: 900px
 
+  .create_block
+    width: 100%
+    padding-left: 30px
+
+  .ads_wrapper
+    width: 100%
+    padding-left: 30px
+    padding-right: 30px
+
+  .ads_wrapper__item .left
+    padding-right: 0
+    padding-top: 190px
+
+  .ads_wrapper__item .right
+    left: 50%
+    margin-left: -100px
+
+  .ads_wrapper__item .left h2
+    padding-right: 0
+
+
 
 @media screen and (max-width: 992px)
   .main_wrapper .main_header__line .main_mnu
@@ -59,6 +80,36 @@
   .settings_wrapper__form .all_blocks .form_block .form_group .checkbox_label
     display: block
 
+  .ads_wrapper__item .left .buttons
+    display: block
+    float: none
+    text-align: center
+    margin-top: 30px
+
+  .ads_wrapper__item .left .buttons div
+    float: none
+    display: inline-block
+
+  .ads_wrapper__item .left .info
+    float: none
+    text-align: center
+    margin-bottom: 20px
+
+  .ads_wrapper__item .left .info .item
+    display: inline-block
+    float: none
+    width: 50%
+    margin-right: 0
+    padding-right: 0
+    padding: 0 15px
+
+  .ads_wrapper__item .left .info .item:last-child
+    background-image: none
+
+  .ads_wrapper__item
+    padding-right: 30px
+
+
 @media screen and (max-width: 768px)
   .alert
     width: 100%
@@ -79,11 +130,35 @@
     height: auto
     line-height: 1.4
 
+  .ads_wrapper__item .left h2 span
+    display: block
+    float: none
+    margin-top: 10px
+
 
 @media screen and (max-width: 480px)
   .auth_form
     width: 90%
     box-sizing: border-box
+
+  .ads_wrapper__item
+    padding-right: 15px
+    padding-left: 15px
+
+  .ads_wrapper__item .left .info .item
+    padding: 0
+
+  .ads_wrapper__item .left h2
+    font-size: 20px
+
+  .ads_wrapper__item .left .info .item_info
+    font-size: 15px
+
+  .ads_wrapper__item .left .info .item:first-child
+    text-align: left
+
+  .ads_wrapper__item .left .info .item:last-child
+    text-align: right
 
   .main_wrapper .data_ul li
     width: 100%

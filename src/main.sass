@@ -405,3 +405,114 @@ body
             margin-left: 10px
           .checkbox_label
             margin-top: 12px
+
+//////ADVERTISE LIST
+.create_block
+  width: 1170px
+  margin: auto
+  padding: 40px 0
+  color: #2864BE
+  &__button
+    border: 1px solid #2864BE
+    text-transform: uppercase
+    padding: 12px 15px
+    border-radius: 35px
+    text-decoration: none
+    margin-right: 20px
+    cursor: pointer
+    font-weight: 600
+    transition: color .3s ease, background-color .3s ease
+    &:hover
+      background-color: #2864BE
+      color: #fff
+      text-decoration: none
+    &:last-child
+      margin-right: 0
+
+.ads_wrapper
+  width: 1170px
+  margin: auto
+  &__item
+    box-shadow: 0 0 10px rgba(0,0,0,.1)
+    padding: 30px 55px 30px 30px
+    border-radius: 10px
+    position: relative
+    margin-bottom: 30px
+    &:last-child
+      margin-bottom: 45px
+    &.not_active
+      .left
+        h2
+          color: #C0C0C0
+        .info
+          .item
+            &_info
+              color: #C0C0C0
+      .right
+        opacity: .5
+
+    .right
+      position: absolute
+      top: 30px
+      right: 55px
+    .left
+      padding-right: 260px
+      h2
+        font-size: 25px
+        text-transform: uppercase
+        font-weight: 700
+        margin-top: 0
+        margin-bottom: 20px
+        color: #4172BB
+        padding-right: 20px
+        span
+          font-size: 19px
+          float: right
+          color: #FE3000
+      .text
+        font-weight: 600
+        margin-bottom: 30px
+      .info
+        float: left
+        .item
+          float: left
+          padding-right: 38px
+          margin-right: 38px
+          background-image: url(./img/adlist/dots.png)
+          background-repeat: no-repeat
+          background-position: 100% 15%
+          p
+            margin-bottom: 0
+          &_info
+            font-size: 19px
+            font-weight: 700
+            color: #4172BB
+            text-transform: uppercase
+          &_title
+            font-size: 12.5px
+            font-weight: 400
+            color: #919191
+            text-transform: uppercase
+            letter-spacing: 1px
+      .buttons
+        float: right
+        div
+          float: left
+          width: 45px
+          height: 45px
+          background-repeat: no-repeat
+          background-position: 50%
+          margin-right: 30px
+          transition: box-shadow .3s ease
+          cursor: pointer
+          &:last-child
+            margin-right: 0
+          &:hover
+            border-radius: 4px
+            box-shadow: 0 0 10px rgba(0,0,0,.2)
+        &_settings
+          background-image: url(./img/adlist/gear.png)
+        &_delete
+          background-image: url(./img/adlist/trash.png)
+        &_stats
+          background-image: url(./img/adlist/stats.png)

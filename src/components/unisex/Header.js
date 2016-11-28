@@ -22,7 +22,7 @@ class Header extends Component {
           <p className="text">{this.props.text}</p>
           <ul className="main_mnu">
             <li><Link className="main_mnu__link" to="/">Account summary</Link></li>
-            <li><Link className="main_mnu__link" to="/advers_list">List of Advers</Link></li>
+            <li><Link className="main_mnu__link" to="/advers_list">List of Adverts</Link></li>
             <li><Link className="main_mnu__link" to="/compaign_list">List of Compaign</Link></li>
             <li><Link className="main_mnu__link" to="/messages">Messages</Link></li>
             <li><Link className="main_mnu__link" to="/payments">Payments</Link></li>

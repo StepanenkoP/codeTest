@@ -4,6 +4,8 @@ import {Link} from 'react-router'
 import Footer from '../unisex/Footer'
 import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
+import CreateBlock from '../unisex/CreateBlock'
+import AdList from './AdList'
 
 
 class AdversPage extends Component {
@@ -39,11 +41,13 @@ class AdversPage extends Component {
         {mobileMenu}
         <FlashList />
         <Header
-          title="Settings"
+          title="List of adverts"
           text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
           openMenu={this.openMenu}
           logOut={this.logOut}
         />
+        <CreateBlock />
+        <AdList />
         <Footer />
       </div>
     );
