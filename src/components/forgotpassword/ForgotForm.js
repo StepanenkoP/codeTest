@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 import update from 'react-addons-update'
 import {connect} from 'react-redux'
 import {userForgotPasswordRequest} from '../../AC/signupActions'
+import {addFlashMessage} from '../../AC/flashMessages'
 
 class ForgotForm extends Component {
   state = {
@@ -41,7 +42,22 @@ class ForgotForm extends Component {
     if (this.isValid()) {
       console.log(this.state.email);
       this.props.userForgotPasswordRequest({email: this.state.email}).then(
-        (r) => console.log(r)
+        (r) => {
+          console.log(r);
+          if (r.data.success == true) {
+            this.props.addFlashMessage({
+              type: 'success',
+              text: 'Success! Visit your email!'
+            })
+            this.context.router.push('/login')
+          }
+          if (r.data.error) {
+            this.props.addFlashMessage({
+              type: 'error',
+              text: 'This email does not exist'
+            })
+          }
+        }
       )
     }
   }
@@ -75,4 +91,13 @@ class ForgotForm extends Component {
   }
 }
 
-export default connect(null, {userForgotPasswordRequest})(ForgotForm)
+ForgotForm.propTypes = {
+  userForgotPasswordRequest: React.PropTypes.func.isRequired,
+  addFlashMessage: React.PropTypes.func.isRequired,
+}
+
+ForgotForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+export default connect(null, {userForgotPasswordRequest, addFlashMessage})(ForgotForm)

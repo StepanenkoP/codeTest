@@ -4,6 +4,9 @@ import LoginForm from './LoginForm'
 import FlashList from '../flash/FlashList'
 
 class LoginPage extends Component {
+  componentDidMount= () => {
+    document.title = "Login - Micro Advertising Portal";
+  }
   render() {
     return (
       <div className="auth_wrapper">

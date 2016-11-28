@@ -18,6 +18,7 @@ class SignupForm extends Component {
     show: false
   }
   onChangeHandler = (e) => {
+    console.log(e);
     this.setState({
       [e.target.name]: e.target.value
     })
@@ -41,6 +42,7 @@ class SignupForm extends Component {
   }
 
   onClickHandler = (e) => {
+    console.log(this.state);
     e.preventDefault();
     this.setState({
       errors : {}

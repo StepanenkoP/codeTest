@@ -3,6 +3,9 @@ import logo from '../../img/signup/logo.png'
 import SuccessForm from './SuccessForm'
 
 class SuccessPage extends Component {
+  componentDidMount= () => {
+    document.title = "Success - Micro Advertising Portal";
+  }
   render() {
     return (
       <div className="auth_wrapper">

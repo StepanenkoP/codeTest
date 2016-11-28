@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import { Link } from 'react-router'
 
 class NoPage extends Component {
+  componentDidMount= () => {
+    document.title = "404 - Micro Advertising Portal";
+  }
   render() {
     return(
       <div className="no_page">

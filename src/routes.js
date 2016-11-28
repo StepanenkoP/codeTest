@@ -6,6 +6,7 @@ import LoginPage from './components/login/LoginPage'
 import ForgotPage from './components/forgotpassword/ForgotPage'
 import SuccessPage from './components/success/SuccessPage'
 import SettingsPage from './components/settings/SettingsPage'
+import AdversPage from './components/advers/AdversPage'
 import NoPage from './components/404/NoPage'
 import App from './components/App'
 import {store} from './index'
@@ -46,13 +47,6 @@ const needLogout = () => {
 
 const needLogin = () => {
   if (!localStorage.token) {
-    store.dispatch({
-      type: ADD_FLASH_MESSAGE,
-      message : {
-        type: 'error',
-        text: "Please log in!"
-      }
-    })
     browserHistory.push('/login');
   }
 }
@@ -65,7 +59,8 @@ export default (
     <Route path='login' component={LoginPage} onEnter={needLogout}/>
     <Route path='forgot' component={ForgotPage} onEnter={needLogout}/>
     <Route path='success' component={SuccessPage} onEnter={needLogout}/>
-    <Route path='/settings' component={SettingsPage} onEnter={needLogin}/>
+    <Route path='settings' component={SettingsPage} onEnter={needLogin}/>
+    <Route path='advers_list' component={AdversPage} onEnter={needLogin}/>
     <Route path='*' component={NoPage}/>
   </Route>
 )

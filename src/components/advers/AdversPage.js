@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react'
 import FlashList from '../flash/FlashList'
-import SettingsForm from './SettingsForm'
 import {Link} from 'react-router'
 import Footer from '../unisex/Footer'
 import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
 
 
-class SettingsPage extends Component {
+class AdversPage extends Component {
   state = {
     isOpen: false
   }
 
   componentDidMount= () => {
-    document.title = "Settings - Micro Advertising Portal";
+    document.title = "List of Advers - Micro Advertising Portal";
   }
 
   openMenu = () => {
@@ -45,15 +44,10 @@ class SettingsPage extends Component {
           openMenu={this.openMenu}
           logOut={this.logOut}
         />
-        <SettingsForm />
         <Footer />
       </div>
     );
   }
 }
 
-SettingsPage.contextTypes = {
-  router: React.PropTypes.object.isRequired
-}
-
-export default SettingsPage;
+export default AdversPage
