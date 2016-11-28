@@ -54,4 +54,8 @@ class AdversPage extends Component {
   }
 }
 
+AdversPage.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
 export default AdversPage
