@@ -7,6 +7,7 @@ import ForgotPage from './components/forgotpassword/ForgotPage'
 import SuccessPage from './components/success/SuccessPage'
 import SettingsPage from './components/settings/SettingsPage'
 import AdversPage from './components/advers/AdversPage'
+import CreateAd from './components/advers/CreateAd'
 import NoPage from './components/404/NoPage'
 import App from './components/App'
 import {store} from './index'
@@ -61,6 +62,7 @@ export default (
     <Route path='success' component={SuccessPage} onEnter={needLogout}/>
     <Route path='settings' component={SettingsPage} onEnter={needLogin}/>
     <Route path='advers_list' component={AdversPage} onEnter={needLogin}/>
+    <Route path='create_ad' component={CreateAd} onEnter={needLogin}/>
     <Route path='*' component={NoPage}/>
   </Route>
 )

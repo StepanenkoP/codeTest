@@ -33,7 +33,8 @@
     width: 100%
     padding-left: 30px
 
-  .ads_wrapper
+  .ads_wrapper,
+  .ad_constructor
     width: 100%
     padding-left: 30px
     padding-right: 30px
@@ -49,6 +50,13 @@
   .ads_wrapper__item .left h2
     padding-right: 0
 
+  .ad_constructor__form .right
+    width: 400px
+    padding-right: 0
+
+  .ad_constructor__form .left
+    width: 400px
+    padding-left: 0
 
 
 @media screen and (max-width: 992px)
@@ -108,6 +116,24 @@
 
   .ads_wrapper__item
     padding-right: 30px
+
+  .ad_constructor__form .left,
+  .ad_constructor__form .right
+    float: none
+    width: 100%
+
+  .ad_constructor__form .left
+    margin-bottom: 70px
+
+  .ad_constructor__form .right
+    padding-top: 70px
+    padding-right: 0
+    border-top: 2px solid #E6E6E6
+
+  .ad_constructor__form .create_ad
+    text-align: center
+    padding-left: 0
+    margin-top: 75px
 
 
 @media screen and (max-width: 768px)
@@ -184,3 +210,8 @@
   .settings_wrapper__form .all_blocks
     padding-left: 20px
     padding-right: 20px
+
+  .ad_constructor__form h2
+    font-size: 20px
+    padding-left: 30px
+    background-position-x: 0
