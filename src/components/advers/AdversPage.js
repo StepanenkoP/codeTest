@@ -14,7 +14,7 @@ class AdversPage extends Component {
   }
 
   componentDidMount= () => {
-    document.title = "List of Advers - Micro Advertising Portal";
+    document.title = "List of Adverts - Micro Advertising Portal";
   }
 
   openMenu = () => {
