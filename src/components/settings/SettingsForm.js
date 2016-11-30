@@ -3,19 +3,29 @@ import mech from '../../img/settings/mech.png'
 import trash from '../../img/settings/trash.png'
 import TextFieldGroup from '../signup/TextFieldGroup'
 import Checkbox from 'rc-checkbox'
+import update from 'react-addons-update'
 import 'rc-checkbox/assets/index.css';
+import validateChangepass from '../../functions/validateChangepass'
+import {connect} from 'react-redux'
+import {addFlashMessage} from '../../AC/flashMessages'
+import {userChangePassword} from '../../AC/changePassword'
 
 class SettingsForm extends Component {
   state = {
     current_password: '',
     new_password: '',
     confirm_password: '',
-    disabled: false
+    disabled: false,
+    errors: {}
   }
 
   onChangeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+    const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
+    this.setState({
+      errors: newData
     })
   }
 
@@ -25,7 +35,68 @@ class SettingsForm extends Component {
     })
   }
 
+  isValid() {
+    const {errors, isValid} = validateChangepass(this.state)
+
+    if (!isValid) {
+      this.setState({
+        errors
+      })
+    }
+    return isValid
+  }
+
+  clickHandler = () => {
+    this.setState({
+      errors : {}
+    });
+    if (this.isValid()) {
+      if (this.state.new_password !== this.state.confirm_password) {
+        this.props.addFlashMessage({
+          type: 'error',
+          text: '"New password" and "Confirm password" fields must match'
+        })
+      }
+      else if (this.state.current_password == this.state.new_password) {
+        this.props.addFlashMessage({
+          type: 'error',
+          text: "New password can't be the same as current one"
+        })
+      }
+      else {
+        const changeObj = {
+          old_password: this.state.current_password,
+          new_password: this.state.new_password
+        }
+        console.log(changeObj);
+        this.props.userChangePassword(changeObj).then(
+          (r) => {
+            console.log(r);
+            if (r.data.error) {
+              this.props.addFlashMessage({
+                type: 'error',
+                text: "Current password is incorrect"
+              })
+            }
+            if (r.data.success) {
+              this.props.addFlashMessage({
+                type: 'success',
+                text: "Success! You have changed your password"
+              })
+              this.setState({
+                current_password: '',
+                new_password: '',
+                confirm_password: ''
+              })
+            }
+          }
+        )
+      }
+    }
+  }
+
   render() {
+    const {errors} = this.state
     return (
       <div className="settings_wrapper">
         <div className="settings_wrapper__form">
@@ -43,6 +114,7 @@ class SettingsForm extends Component {
                 field="current_password"
                 onChangeHandler={this.onChangeHandler}
                 className="form_group__input"
+                error={errors.current_password}
               />
             </div>
             <div className="form_block">
@@ -54,6 +126,7 @@ class SettingsForm extends Component {
                 field="new_password"
                 onChangeHandler={this.onChangeHandler}
                 className="form_group__input"
+                error={errors.new_password}
               />
             </div>
             <div className="form_block">
@@ -65,6 +138,7 @@ class SettingsForm extends Component {
                 field="confirm_password"
                 onChangeHandler={this.onChangeHandler}
                 className="form_group__input"
+                error={errors.confirm_password}
               />
             </div>
             <div className="form_block">
@@ -84,7 +158,7 @@ class SettingsForm extends Component {
             </div>
           </div>
           <div className="form_group">
-            <button className="form_group__button">Save</button>
+            <button className="form_group__button" onClick={this.clickHandler}>Save</button>
           </div>
           <div className="delete_acc">
             <div className="img_wrapper"><img src={trash} alt="alt"/></div>
@@ -96,4 +170,4 @@ class SettingsForm extends Component {
   }
 }
 
-export default SettingsForm;
+export default connect(null, {userChangePassword, addFlashMessage})(SettingsForm);
