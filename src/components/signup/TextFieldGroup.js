@@ -3,11 +3,11 @@ import React, {Component} from 'react'
 class TextFieldGroup extends Component {
   render() {
     const {field, value, label, type, onChangeHandler, placeholder, error, onBlurHandler, className} = this.props
+    const limits = this.props.limits ? <span className="no_limits">0 - no limits</span> : null
     return (
       <div className="form_group">
         <label className="form_group__label">{label}</label>
         <input
-          ref='input'
           value={value}
           onChange={onChangeHandler}
           type={type}
@@ -17,6 +17,7 @@ class TextFieldGroup extends Component {
           className={className}
         />
         {error && <span className="validate_span">{error}</span>}
+        {limits}
       </div>
     )
   }
@@ -30,7 +31,8 @@ TextFieldGroup.propTypes = {
   onChangeHandler: React.PropTypes.func.isRequired,
   placeholder: React.PropTypes.string.isRequired,
   className: React.PropTypes.string.isRequired,
-  error: React.PropTypes.string
+  error: React.PropTypes.string,
+  limits: React.PropTypes.string
 }
 
 export default TextFieldGroup

@@ -20,7 +20,7 @@ class MobileMenu extends Component {
         <ul className="mobile_ul">
           <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/">Account summary</Link></li>
           <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/advers_list">List of Adverts</Link></li>
-          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/compaign_list">List of Compaign</Link></li>
+          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/campaign_list">List of Compaign</Link></li>
           <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/messages">Messages</Link></li>
           <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/payments">Payments</Link></li>
           <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/settings">Settings</Link></li>

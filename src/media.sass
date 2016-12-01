@@ -58,6 +58,22 @@
     width: 400px
     padding-left: 0
 
+  .cam_wrapper__item .left
+    padding-top: 0
+
+  .cam_wrapper__item .left .info
+    float: none
+    text-align: center
+    margin-bottom: 20px
+
+  .cam_wrapper__item .left .info .item
+    display: inline-block
+    float: none
+    width: 50%
+    margin-right: 0
+    padding-right: 0
+    padding: 0 15px
+
 
 @media screen and (max-width: 992px)
   .main_wrapper .main_header__line .main_mnu
@@ -135,6 +151,15 @@
     padding-left: 0
     margin-top: 75px
 
+  .ad_constructor.campaign_constructor .input_fields
+    padding-right: 45px
+
+  .ad_constructor.campaign_constructor .input_fields .block .form_group:last-child
+    float: right
+
+  .ad_constructor.campaign_constructor .input_fields .block .form_group
+    width: 285px
+
 
 @media screen and (max-width: 768px)
   .alert
@@ -142,6 +167,16 @@
     border-radius: 0
     top: 0
     position: fixed
+
+  .ad_constructor.campaign_constructor .input_fields .block .form_group
+    width: 100%
+    margin-right: 0
+
+  .ad_constructor.campaign_constructor .input_fields .block .form_group.date .data_field
+    width: 45%
+
+  .cam_wrapper__item .left .info .item .item_info
+    font-size: 14px
 
   .main_wrapper .main_footer__content .copy,
   .main_wrapper .main_footer__content .feedback
@@ -161,11 +196,21 @@
     float: none
     margin-top: 10px
 
+  .create_block
+    text-align: center
+    padding-left: 0
+
+  .ad_constructor.campaign_constructor .input_fields
+    margin-bottom: 150px
+
 
 @media screen and (max-width: 480px)
   .auth_form
     width: 90%
     box-sizing: border-box
+
+  .create_block
+    font-size: 12px
 
   .ads_wrapper__item
     padding-right: 15px
@@ -215,3 +260,27 @@
     font-size: 20px
     padding-left: 30px
     background-position-x: 0
+
+  .cam_wrapper__item .left .info .item .item_info
+    font-size: 12px
+
+  .ads_wrapper__item .left .info .item_title
+    font-size: 11px
+
+  .ads_wrapper__item .left .info .item:last-child
+    padding-left: 10px
+
+  .ads_wrapper__item .left .info .item:first-child
+    padding-right: 10px
+
+  .cam_wrapper__item .left .info .item.no_m
+    text-align: center
+    padding-left: 0
+    padding-right: 0
+
+  .ad_constructor.campaign_constructor .input_fields
+    padding-right: 20px
+    padding-left: 20px
+
+  .ad_constructor.campaign_constructor .checkbox_section .wrapper
+    padding-left: 20px

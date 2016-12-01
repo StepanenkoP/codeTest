@@ -64,7 +64,7 @@ body
     img
       margin-right: 7px
       position: relative
-      top: 2px
+      top: 0px
   h2
     text-transform: uppercase
     color: #000
@@ -558,10 +558,66 @@ body
   width: 1170px
   margin: auto
   padding: 85px 0
+  &.campaign_constructor
+    h2
+      background-image: url(./img/adlist/portfolio.png)
+    .create_ad
+      padding-left: 0
+      text-align: center
+      margin-top: 40px
+    .checkbox_section
+      color: #000
+      .title
+        text-transform: uppercase
+        font-weight: 700
+        font-size: 14px
+        padding-left: 45px
+        padding-bottom: 5px
+        border-bottom: 2px solid #E8E8E8
+        margin-top: 55px
+        margin-bottom: 15px
+      .wrapper
+        padding-left: 45px
+        .checkbox_label
+          display: inline-block
+          width: 115px
+          margin-bottom: 15px
+          .label_text
+            margin-left: 10px
+
+
+    .input_fields
+      padding-left: 45px
+      &.limits
+        margin-top: 45px
+      .block
+        .no_limits
+          display: block
+          text-align: left
+          margin-top: 10px
+        .form_group
+          display: inline-block
+          vertical-align: top
+          width: 310px
+          margin-right: 35px
+          &:last-child
+            margin-right: 0
+          &.date
+            .data_field
+              float: left
+              width: 135px
+              &:last-child
+                float: right
   &__form
     box-shadow: 0 0 10px rgba(0,0,0,.1)
     border-radius: 10px
     padding: 40px 20px
+    &.no_p
+      padding-left: 0
+      padding-right: 0
+      h2
+        margin-left: 20px
+        margin-right: 20px
     h2
       margin: 0
       background-image: url(./img/adlist/ribbon.png)
@@ -612,3 +668,17 @@ body
     .create_ad
       text-align: left
       padding-left: 65px
+
+
+/// CAMPAIGN LIST
+
+.cam_wrapper
+  &__item
+    padding: 45px 30px
+    .left
+      padding-right: 0
+      .info
+        .item
+          &.no_m
+            margin-right: 0
+            background-image: none
