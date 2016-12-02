@@ -43,6 +43,7 @@
     "promise": "7.1.1",
     "rc-checkbox": "^1.4.3",
     "react-addons-update": "^15.3.2",
+    "react-checkbox-group": "^3.0.1",
     "react-dev-utils": "^0.3.0",
     "react-redux": "^4.4.6",
     "react-validation": "^2.10.9",

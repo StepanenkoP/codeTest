@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import img from '../../img/adlist/img.png'
 
 class CampaignList extends Component {
   render() {

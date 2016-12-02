@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import FlashList from './flash/FlashList'
-import {Link} from 'react-router'
 import Footer from './unisex/Footer'
 import Header from './unisex/Header'
 import MobileMenu from './unisex/MobileMenu'
-import ham from '../img/main/ham.png'
-import image from '../img/main/image.png'
 
 
 class App extends Component {

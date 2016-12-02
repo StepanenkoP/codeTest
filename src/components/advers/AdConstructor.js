@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
 import TextFieldGroup from '../signup/TextFieldGroup'
 import TextareaField from '../unisex/TextareaField'
 import InputFileGroup from '../unisex/InputFileGroup'
-import globus from '../../img/adlist/globus.png'
-import addimg from '../../img/adlist/addimg.png'
 import img from '../../img/adlist/img.png'
 
 class AdConstructor extends Component {

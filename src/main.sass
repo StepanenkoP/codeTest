@@ -582,9 +582,25 @@ body
           display: inline-block
           width: 115px
           margin-bottom: 15px
+          padding-left: 25px
+          position: relative
           .label_text
             margin-left: 10px
-
+          input
+            display: none
+          span
+            &.passive
+              width: 15px
+              height: 15px
+              position: absolute
+              background-color: #fff
+              border: 1px solid #D9D9D9
+              border-radius: 4px
+              left: 0
+              top: 1px
+              &.active
+                background-image: url(./img/settings/on.png)
+                border: none
 
     .input_fields
       padding-left: 45px

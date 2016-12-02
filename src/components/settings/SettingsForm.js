@@ -57,7 +57,7 @@ class SettingsForm extends Component {
           text: '"New password" and "Confirm password" fields must match'
         })
       }
-      else if (this.state.current_password == this.state.new_password) {
+      else if (this.state.current_password === this.state.new_password) {
         this.props.addFlashMessage({
           type: 'error',
           text: "New password can't be the same as current one"

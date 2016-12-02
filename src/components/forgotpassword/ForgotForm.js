@@ -44,7 +44,7 @@ class ForgotForm extends Component {
       this.props.userForgotPasswordRequest({email: this.state.email}).then(
         (r) => {
           console.log(r);
-          if (r.data.success == true) {
+          if (r.data.success === true) {
             this.props.addFlashMessage({
               type: 'success',
               text: 'Success! Visit your email!'

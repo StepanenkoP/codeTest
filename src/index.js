@@ -6,7 +6,6 @@ import './media.sass';
 import routes from './routes'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
-import logger from 'redux-logger'
 import {createStore, applyMiddleware, compose} from 'redux'
 import rootReducer from './reducers/rootReducer'
 

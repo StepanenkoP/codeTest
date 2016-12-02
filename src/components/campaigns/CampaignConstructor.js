@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
 import TextFieldGroup from '../signup/TextFieldGroup'
-import TextareaField from '../unisex/TextareaField'
-import InputFileGroup from '../unisex/InputFileGroup'
-import globus from '../../img/adlist/globus.png'
-import addimg from '../../img/adlist/addimg.png'
-import img from '../../img/adlist/img.png'
-import CheckboxSection from './CheckboxSection'
+import DaysCheck from './DaysCheck'
+import TimeCheck from './TimeCheck'
+import AgeCheck from './AgeCheck'
+import WebsitesCheck from './WebsitesCheck'
 
 class CampaignConstructor extends Component {
   state = {
@@ -17,6 +14,10 @@ class CampaignConstructor extends Component {
     gender: '',
     page_limit: '',
     views_limit: '',
+    days: [],
+    time: [],
+    age: [],
+    websites: [],
     errors: {}
   }
 
@@ -24,6 +25,115 @@ class CampaignConstructor extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  onChange = (e) => {
+    if (this.state.days.indexOf(e.target.name) > -1) {
+      console.log(e.target.name);
+      const filteredArr = this.state.days.filter(item => {
+        return item !== e.target.name
+      })
+      console.log(filteredArr);
+      this.setState({
+        days: filteredArr
+      })
+    } else {
+      console.log(e);
+      const newDaysArr = this.state.days
+      newDaysArr.push(e.target.name)
+      console.log(newDaysArr);
+      this.setState({
+        days: newDaysArr,
+        daysAll: false
+      })
+      if (e.target.name === "All") {
+        const allDaysArr = ["All"]
+        this.setState({
+          days: allDaysArr,
+          daysAll: true
+        })
+      }
+    }
+  }
+
+  daysChanged= (days) => {
+    if (days.indexOf("All") !== -1) {
+      this.setState({
+        days: ['All']
+      });
+    }
+    if (this.state.days.indexOf("All") !== -1 && this.state.days.length === 1) {
+      const allIndex = days.indexOf("All");
+      const newArr = days.splice(allIndex, 1)
+      this.setState({
+        days: days
+      });
+    }
+    if (days.indexOf("All") === -1) {
+      this.setState({
+        days: days
+      });
+    }
+  }
+
+  timeChanged= (time) => {
+    if (time.indexOf("All") !== -1) {
+      this.setState({
+        time: ['All']
+      });
+    }
+    if (this.state.time.indexOf("All") !== -1 && this.state.time.length === 1) {
+      const allIndex = time.indexOf("All");
+      const newArr = time.splice(allIndex, 1)
+      this.setState({
+        time: time
+      });
+    }
+    if (time.indexOf("All") === -1) {
+      this.setState({
+        time: time
+      });
+    }
+  }
+
+  ageChanged= (age) => {
+    if (age.indexOf("All") !== -1) {
+      this.setState({
+        age: ['All']
+      });
+    }
+    if (this.state.age.indexOf("All") !== -1 && this.state.age.length === 1) {
+      const allIndex = age.indexOf("All");
+      const newArr = age.splice(allIndex, 1)
+      this.setState({
+        age: age
+      });
+    }
+    if (age.indexOf("All") === -1) {
+      this.setState({
+        age: age
+      });
+    }
+  }
+
+  websitesChanged= (websites) => {
+    if (websites.indexOf("All") !== -1) {
+      this.setState({
+        websites: ['All']
+      });
+    }
+    if (this.state.websites.indexOf("All") !== -1 && this.state.websites.length === 1) {
+      const allIndex = websites.indexOf("All");
+      const newArr = websites.splice(allIndex, 1)
+      this.setState({
+        websites: websites
+      });
+    }
+    if (websites.indexOf("All") === -1) {
+      this.setState({
+        websites: websites
+      });
+    }
   }
 
   render() {
@@ -101,18 +211,24 @@ class CampaignConstructor extends Component {
               </div>
             </div>
           </div>
-          <CheckboxSection
+          <DaysCheck
             title="Days of the week"
             items={["All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
+            checkTitle={this.state.days}
+            daysChanged={this.daysChanged}
           />
-          <CheckboxSection
+          <TimeCheck
             title="Time"
             items={["All", "0-1 am", "1-2 am", "2-3 am", "3-4 am", "4-5 am", "5-6 am", "6-7 am", "7-8 am", "8-9 am", "9-10 am", "10-11 am",
             "11-12 am", "0-1 pm", "1-2 pm", "2-3 pm", "3-4 pm", "4-5 pm", "5-6 pm", "6-7 pm", "7-8 pm", "8-9 pm", "9-10 pm", "10-11 pm", "11-12 pm"]}
+            checkTitle={this.state.time}
+            timeChanged={this.timeChanged}
           />
-          <CheckboxSection
+          <AgeCheck
             title="Age"
             items={["All", "to 18", "19-25", "26-35", "36-50", "51-60", "more 61"]}
+            checkTitle={this.state.age}
+            ageChanged={this.ageChanged}
           />
           <div className="input_fields limits">
             <div className="block">
@@ -138,10 +254,12 @@ class CampaignConstructor extends Component {
               />
             </div>
           </div>
-          <CheckboxSection
+          <WebsitesCheck
             title="Websites"
             items={["All", "project1.com", "project2.com", "project3.com", "project4.com", "project5.com", "project6.com"]}
-            width= {{width: 150}}
+            width={{width:150}}
+            checkTitle={this.state.websites}
+            websitesChanged={this.websitesChanged}
           />
           <div className="form_group create_ad">
             <button className="form_group__button">Create</button>

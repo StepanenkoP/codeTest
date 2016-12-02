@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FlashList from '../flash/FlashList'
 import SettingsForm from './SettingsForm'
-import {Link} from 'react-router'
 import Footer from '../unisex/Footer'
 import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
