@@ -4,139 +4,276 @@ import DaysCheck from './DaysCheck'
 import TimeCheck from './TimeCheck'
 import AgeCheck from './AgeCheck'
 import WebsitesCheck from './WebsitesCheck'
+import DayInputEnd from '../unisex/DayInputEnd'
+import {connect} from 'react-redux'
+import {getCountries,getDays,getTimes,getAges,getWebsites,createCampaign} from '../../AC/campaignConstructor'
+import validateCampaignForm from '../../functions/validateCampaignForm'
+import update from 'react-addons-update'
 
 class CampaignConstructor extends Component {
   state = {
-    name: '',
+    title: '',
     start_date: '',
     end_date: '',
-    country: '',
-    gender: '',
-    page_limit: '',
-    views_limit: '',
+    country_id: '',
+    gender_id: '',
+    limit_per_day: '0',
+    limit_per_user: '0',
     days: [],
-    time: [],
-    age: [],
+    times: [],
+    ages: [],
     websites: [],
+    serverDays: [],
+    serverTimes: [],
+    serverAges: [],
+    serverWebsites: [],
     errors: {}
+  }
+
+  componentDidMount() {
+    this.props.getCountries();
+    this.props.getDays();
+    this.props.getTimes();
+    this.props.getAges();
+    this.props.getWebsites();
   }
 
   onChangeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
-  }
-
-  onChange = (e) => {
-    if (this.state.days.indexOf(e.target.name) > -1) {
-      console.log(e.target.name);
-      const filteredArr = this.state.days.filter(item => {
-        return item !== e.target.name
-      })
-      console.log(filteredArr);
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
       this.setState({
-        days: filteredArr
+        errors: newData
       })
-    } else {
-      console.log(e);
-      const newDaysArr = this.state.days
-      newDaysArr.push(e.target.name)
-      console.log(newDaysArr);
-      this.setState({
-        days: newDaysArr,
-        daysAll: false
-      })
-      if (e.target.name === "All") {
-        const allDaysArr = ["All"]
-        this.setState({
-          days: allDaysArr,
-          daysAll: true
-        })
-      }
     }
   }
 
+  isValid() {
+    const {errors, isValid} = validateCampaignForm(this.state)
+
+    if (!isValid) {
+      this.setState({
+        errors
+      })
+    }
+    return isValid
+  }
+
+  getDateData = (data) => {
+    console.log(data);
+    if (data.startError === '') {
+      let newData = update(this.state.errors, { start_date: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+    if (data.endError) {
+      let newData = update(this.state.errors, { end_date: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+    let newData = update(this.state.errors, { end_date: {$set: ''}, start_date: {$set: ''}});
+    this.setState({
+      start_date: data.from,
+      end_date: data.to,
+      errors: newData
+    })
+  }
+
+  // onChange = (e) => {
+  //   if (this.state.days.indexOf(e.target.name) > -1) {
+  //     console.log(e.target.name);
+  //     const filteredArr = this.state.days.filter(item => {
+  //       return item !== e.target.name
+  //     })
+  //     console.log(filteredArr);
+  //     this.setState({
+  //       days: filteredArr
+  //     })
+  //   } else {
+  //     console.log(e);
+  //     const newDaysArr = this.state.days
+  //     newDaysArr.push(e.target.name)
+  //     console.log(newDaysArr);
+  //     this.setState({
+  //       days: newDaysArr,
+  //       daysAll: false
+  //     })
+  //     if (e.target.name === "All") {
+  //       const allDaysArr = ["All"]
+  //       this.setState({
+  //         days: allDaysArr,
+  //         daysAll: true
+  //       })
+  //     }
+  //   }
+  // }
+
+  onClickHandler = () => {
+    this.setState({
+      errors : {}
+    });
+    if (this.isValid()) {
+      const data = {
+        title: this.state.title,
+        start_date: this.state.start_date,
+        end_date: this.state.end_date,
+        country_id: this.state.country_id,
+        gender_id: this.state.gender_id,
+        limit_per_day: this.state.limit_per_day,
+        limit_per_user: this.state.limit_per_user,
+        days: this.state.serverDays,
+        times: this.state.serverTimes,
+        ages: this.state.serverAges,
+        websites: this.state.serverWebsites,
+      }
+      this.props.createCampaign(data).then(
+        r => {
+          console.log(r);
+        }
+      )
+    }
+  }
+
+  //// other methods
+
   daysChanged= (days) => {
     if (days.indexOf("All") !== -1) {
+      const toServer = this.props.days.map(item => item.title)
       this.setState({
-        days: ['All']
+        days: ['All'],
+        serverDays: toServer
       });
     }
     if (this.state.days.indexOf("All") !== -1 && this.state.days.length === 1) {
       const allIndex = days.indexOf("All");
       const newArr = days.splice(allIndex, 1)
       this.setState({
-        days: days
+        days: days,
+        serverDays: days
       });
     }
     if (days.indexOf("All") === -1) {
       this.setState({
-        days: days
+        days: days,
+        serverDays: days
       });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {days: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
     }
   }
 
   timeChanged= (time) => {
     if (time.indexOf("All") !== -1) {
+      const toServer = this.props.times.map(item => item.title)
       this.setState({
-        time: ['All']
+        times: ['All'],
+        serverTimes: toServer
       });
     }
-    if (this.state.time.indexOf("All") !== -1 && this.state.time.length === 1) {
+    if (this.state.times.indexOf("All") !== -1 && this.state.times.length === 1) {
       const allIndex = time.indexOf("All");
       const newArr = time.splice(allIndex, 1)
       this.setState({
-        time: time
+        times: time,
+        serverTimes: time
       });
     }
     if (time.indexOf("All") === -1) {
       this.setState({
-        time: time
+        times: time,
+        serverTimes: time
       });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {times: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
     }
   }
 
   ageChanged= (age) => {
+    console.log(age);
     if (age.indexOf("All") !== -1) {
+      const toServer = this.props.ages.map(item => item.title)
       this.setState({
-        age: ['All']
+        ages: ['All'],
+        serverAges: toServer
       });
     }
-    if (this.state.age.indexOf("All") !== -1 && this.state.age.length === 1) {
+    if (this.state.ages.indexOf("All") !== -1 && this.state.ages.length === 1) {
       const allIndex = age.indexOf("All");
       const newArr = age.splice(allIndex, 1)
       this.setState({
-        age: age
+        ages: age,
+        serverAges: age
       });
     }
     if (age.indexOf("All") === -1) {
       this.setState({
-        age: age
+        ages: age,
+        serverAges: age
       });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {ages: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
     }
   }
 
   websitesChanged= (websites) => {
     if (websites.indexOf("All") !== -1) {
+      const toServer = this.props.websites.map(item => item.title)
       this.setState({
-        websites: ['All']
+        websites: ['All'],
+        serverWebsites: toServer
       });
     }
     if (this.state.websites.indexOf("All") !== -1 && this.state.websites.length === 1) {
       const allIndex = websites.indexOf("All");
       const newArr = websites.splice(allIndex, 1)
       this.setState({
-        websites: websites
+        websites: websites,
+        serverWebsites: websites
       });
     }
     if (websites.indexOf("All") === -1) {
       this.setState({
-        websites: websites
+        websites: websites,
+        serverWebsites: websites
       });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {websites: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
     }
   }
 
   render() {
+    const {errors} = this.state
+    const countries = this.props.countries ? this.props.countries.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null
+    const allInArr = [{id:0, title: "All"}]
+    const days = this.props.days ? allInArr.concat(this.props.days) : []
+    const times = this.props.times ? allInArr.concat(this.props.times) : []
+    const ages = this.props.ages ? allInArr.concat(this.props.ages) : []
+    const websites = this.props.websites ? allInArr.concat(this.props.websites) : []
     return (
       <div className="ad_constructor campaign_constructor">
         <div className="ad_constructor__form no_p clearfix">
@@ -144,125 +281,106 @@ class CampaignConstructor extends Component {
           <div className="input_fields">
             <div className="block">
               <TextFieldGroup
-                value={this.state.name}
+                value={this.state.title}
                 label="Name of the compaign"
                 placeholder=""
                 type="text"
-                field={this.state.name}
+                field="title"
                 onChangeHandler={this.onChangeHandler}
                 className="form_group__input"
+                error={this.state.errors.title}
               />
               <div className="form_group date">
-                <div className="data_field">
-                  <label className="form_group__label">Start Date</label>
-                  <input
-                    value={this.state.start_date}
-                    onChange={this.onChangeHandler}
-                    type="text"
-                    name={this.state.start_date}
-                    placeholder=""
-                    className="form_group__input"
-                  />
-                  {this.state.errors.start_date && <span className="validate_span">{this.state.errors.start_date}</span>}
-                </div>
-                <div className="data_field">
-                  <label className="form_group__label">End Date</label>
-                  <input
-                    value={this.state.end_date}
-                    onChange={this.onChangeHandler}
-                    type="text"
-                    name={this.state.end_date}
-                    placeholder=""
-                    className="form_group__input"
-                  />
-                  {this.state.errors.end_date && <span className="validate_span">{this.state.errors.end_date}</span>}
-                </div>
+                <DayInputEnd errors={this.state.errors} getDateData={this.getDateData} />
               </div>
             </div>
             <div className="block">
               <div className="form_group">
                 <label className="form_group__label">Country</label>
                 <select
-                  value={this.state.country}
+                  value={this.state.country_id}
                   onChange={this.onChangeHandler}
-                  name="country"
+                  name="country_id"
                   className="form_group__input"
                 >
                   <option value="" disabled>Country</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                  {countries}
                 </select>
-                {/* {errors.select_compaign && <span className="validate_span">{errors.select_compaign}</span>} */}
+                {errors.country_id && <span className="validate_span">{errors.country_id}</span>}
               </div>
               <div className="form_group">
                 <label className="form_group__label">Gender</label>
                 <select
-                  value={this.state.gender}
+                  value={this.state.gender_id}
                   onChange={this.onChangeHandler}
-                  name="gender"
+                  name="gender_id"
                   className="form_group__input"
                 >
                   <option value="" disabled>Gender</option>
                   <option value="1">Male</option>
                   <option value="2">Female</option>
                 </select>
-                {/* {errors.select_compaign && <span className="validate_span">{errors.select_compaign}</span>} */}
+                {errors.gender_id && <span className="validate_span">{errors.gender_id}</span>}
               </div>
             </div>
           </div>
           <DaysCheck
             title="Days of the week"
-            items={["All", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
+            items={days}
             checkTitle={this.state.days}
             daysChanged={this.daysChanged}
+            error={this.state.errors.days}
           />
           <TimeCheck
             title="Time"
-            items={["All", "0-1 am", "1-2 am", "2-3 am", "3-4 am", "4-5 am", "5-6 am", "6-7 am", "7-8 am", "8-9 am", "9-10 am", "10-11 am",
-            "11-12 am", "0-1 pm", "1-2 pm", "2-3 pm", "3-4 pm", "4-5 pm", "5-6 pm", "6-7 pm", "7-8 pm", "8-9 pm", "9-10 pm", "10-11 pm", "11-12 pm"]}
-            checkTitle={this.state.time}
+            items={times}
+            checkTitle={this.state.times}
             timeChanged={this.timeChanged}
+            error={this.state.errors.times}
           />
           <AgeCheck
             title="Age"
-            items={["All", "to 18", "19-25", "26-35", "36-50", "51-60", "more 61"]}
-            checkTitle={this.state.age}
+            items={ages}
+            checkTitle={this.state.ages}
             ageChanged={this.ageChanged}
+            error={this.state.errors.ages}
           />
           <div className="input_fields limits">
             <div className="block">
               <TextFieldGroup
-                value={this.state.page_limit}
+                value={this.state.limit_per_day}
                 label="The limit of page views per day"
                 placeholder=""
                 type="text"
-                field={this.state.page_limit}
+                field="limit_per_day"
                 limits="true"
                 onChangeHandler={this.onChangeHandler}
                 className="form_group__input"
+                error={this.state.errors.limit_per_day}
               />
               <TextFieldGroup
-                value={this.state.views_limit}
+                value={this.state.limit_per_user}
                 label="Limit of views for each user"
                 placeholder=""
                 type="text"
                 limits="true"
-                field={this.state.views_limit}
+                field="limit_per_user"
                 onChangeHandler={this.onChangeHandler}
                 className="form_group__input"
+                error={this.state.errors.limit_per_user}
               />
             </div>
           </div>
           <WebsitesCheck
             title="Websites"
-            items={["All", "project1.com", "project2.com", "project3.com", "project4.com", "project5.com", "project6.com"]}
+            items={websites}
             width={{width:150}}
             checkTitle={this.state.websites}
             websitesChanged={this.websitesChanged}
+            error={this.state.errors.websites}
           />
           <div className="form_group create_ad">
-            <button className="form_group__button">Create</button>
+            <button className="form_group__button" onClick={this.onClickHandler}>Create</button>
           </div>
         </div>
       </div>
@@ -270,4 +388,14 @@ class CampaignConstructor extends Component {
   }
 }
 
-export default CampaignConstructor;
+function mapStateToProps({campaignGetData}) {
+  return {
+    countries: campaignGetData.countriesList,
+    days: campaignGetData.daysList,
+    times: campaignGetData.timesList,
+    ages: campaignGetData.agesList,
+    websites: campaignGetData.websitesList,
+  }
+}
+
+export default connect(mapStateToProps, {getCountries,getDays,getTimes,getAges,getWebsites,validateCampaignForm, createCampaign})(CampaignConstructor);

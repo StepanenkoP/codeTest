@@ -1,2 +1,7 @@
 export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE'
 export const DELETE_FLASH_MESSAGE = 'DELETE_FLASH_MESSAGE'
+export const LOAD_COUNTRIES = 'LOAD_COUNTRIES'
+export const LOAD_DAYS = 'LOAD_DAYS'
+export const LOAD_TIMES = 'LOAD_TIMES'
+export const LOAD_AGES = 'LOAD_AGES'
+export const LOAD_WEBSITES = 'LOAD_WEBSITES'
