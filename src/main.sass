@@ -540,6 +540,10 @@ body
           margin-right: 30px
           transition: box-shadow .3s ease
           cursor: pointer
+          .cam_link
+            display: block
+            height: 100%
+            width: 100%
           &:last-child
             margin-right: 0
           &:hover
@@ -624,6 +628,18 @@ body
               width: 135px
               &:last-child
                 float: right
+            .reset
+              position: absolute
+              right: -75px
+              cursor: pointer
+              text-transform: uppercase
+              font-weight: 700
+              color: #000
+              padding-left: 20px
+              top: 52%
+              background-image: url(./img/signup/back.png)
+              background-repeat: no-repeat
+              background-position: 0 50%
   &__form
     box-shadow: 0 0 10px rgba(0,0,0,.1)
     border-radius: 10px

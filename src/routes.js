@@ -10,6 +10,7 @@ import AdversPage from './components/advers/AdversPage'
 import CampaignsPage from './components/campaigns/CampaignsPage'
 import CreateAd from './components/advers/CreateAd'
 import CreateCampaign from './components/campaigns/CreateCampaign'
+import EditCampaign from './components/campaigns/EditCampaign'
 import NoPage from './components/404/NoPage'
 import App from './components/App'
 import {store} from './index'
@@ -55,6 +56,9 @@ const needLogin = () => {
 }
 
 
+
+
+
 export default (
   <Route path='/'>
     <IndexRoute component={App} onEnter={needLogin}/>
@@ -64,7 +68,9 @@ export default (
     <Route path='success' component={SuccessPage} onEnter={needLogout}/>
     <Route path='settings' component={SettingsPage} onEnter={needLogin}/>
     <Route path='advers_list' component={AdversPage} onEnter={needLogin}/>
-    <Route path='campaign_list' component={CampaignsPage} onEnter={needLogin}/>
+    <Route path='campaign_list' component={CampaignsPage} onEnter={needLogin}>
+      <Route path=':id' component={EditCampaign} />
+    </Route>
     <Route path='create_ad' component={CreateAd} onEnter={needLogin}/>
     <Route path='create_campaign' component={CreateCampaign} onEnter={needLogin}/>
     <Route path='*' component={NoPage}/>

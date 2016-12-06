@@ -74,6 +74,19 @@
     padding-right: 0
     padding: 0 15px
 
+  .ads_wrapper__item .left .buttons
+    display: block
+    float: none
+    text-align: center
+    margin-top: 30px
+
+  .ads_wrapper__item .left .buttons div
+    float: none
+    display: inline-block
+
+  .ads_wrapper__item .left .info .item:last-child
+    background-image: none
+
 
 @media screen and (max-width: 992px)
   .main_wrapper .main_header__line .main_mnu
@@ -104,11 +117,7 @@
   .settings_wrapper__form .all_blocks .form_block .form_group .checkbox_label
     display: block
 
-  .ads_wrapper__item .left .buttons
-    display: block
-    float: none
-    text-align: center
-    margin-top: 30px
+
 
   .DayPicker
     width: 100% !important
@@ -117,11 +126,8 @@
     margin-bottom: 20px !important
 
   .close_picker
-    right: 13px  
+    right: 13px
 
-  .ads_wrapper__item .left .buttons div
-    float: none
-    display: inline-block
 
   .ads_wrapper__item .left .info
     float: none
@@ -135,9 +141,8 @@
     margin-right: 0
     padding-right: 0
     padding: 0 15px
+    vertical-align: top
 
-  .ads_wrapper__item .left .info .item:last-child
-    background-image: none
 
   .ads_wrapper__item
     padding-right: 30px
@@ -293,3 +298,19 @@
 
   .ad_constructor.campaign_constructor .checkbox_section .wrapper
     padding-left: 20px
+
+
+@media screen and (min-width: 1200px)
+
+  .cam_wrapper__item .left .info .item
+    word-break: break-word
+    padding-right: 20px
+    &.name
+      width: 140px
+    &.country
+      width: 177px
+    &.start,
+    &.end
+      width: 122px
+    &_no_m
+      width: 163px

@@ -5,6 +5,8 @@ import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
 import CreateBlock from '../unisex/CreateBlock'
 import CampaignList from './CampaignList'
+import {getCampaignList} from '../../AC/campaignGet'
+import {connect} from 'react-redux'
 
 
 class CampaignsPage extends Component {
@@ -12,8 +14,13 @@ class CampaignsPage extends Component {
     isOpen: false
   }
 
-  componentDidMount= () => {
+
+  componentWillMount= () => {
     document.title = "List of Campaigns - Micro Advertising Portal";
+  }
+
+  componentDidMount() {
+    this.props.getCampaignList()
   }
 
   openMenu = () => {
@@ -35,19 +42,23 @@ class CampaignsPage extends Component {
 
   render() {
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
+    const content = this.props.params.id == undefined ?
+    <div className="main_wrapper">
+      {mobileMenu}
+      <FlashList />
+      <Header
+        title="List of campaigns"
+        text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
+        openMenu={this.openMenu}
+        logOut={this.logOut}
+      />
+      <CreateBlock />
+      <CampaignList />
+      <Footer />
+    </div> : <div>{this.props.children}</div>
     return (
-      <div className="main_wrapper">
-        {mobileMenu}
-        <FlashList />
-        <Header
-          title="List of campaigns"
-          text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
-          openMenu={this.openMenu}
-          logOut={this.logOut}
-        />
-        <CreateBlock />
-        <CampaignList />
-        <Footer />
+      <div>
+        {content}
       </div>
     );
   }
@@ -57,4 +68,10 @@ CampaignsPage.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default CampaignsPage
+function mapStateToProps({campaignGetData}) {
+  return {
+    campaignList: campaignGetData.campaignList
+  }
+}
+
+export default connect(mapStateToProps, {getCampaignList})(CampaignsPage)

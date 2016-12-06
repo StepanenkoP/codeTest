@@ -16,27 +16,41 @@ export default class Range extends React.Component {
     from: null,
     to: null,
   };
+  componentWillReceiveProps() {
+    const data = new Date(this.props.startState)
+    const newDate = moment(data).format("YYYY-MM-DD")
+    // console.log(this.props.startState);
+    // console.log(newDate);
+    // console.log(newDate == this.props.startState);
+    if (newDate == this.props.startState) {
+      // this.setState({
+      //   from: newDate
+      // })
+    }
+  }
   handleDayClick(e, day) {
+    console.log(day);
     const range = DateUtils.addDayToRange(day, this.state);
+    console.log(range.from);
     this.setState(range);
     if (range.from && range.to) {
       this.props.getDateData({
-        from: moment(range.from).format('L'),
-        to: moment(range.to).format('L'),
+        from: moment(range.from).format("YYYY-MM-DD"),
+        to: moment(range.to).format("YYYY-MM-DD"),
       })
     }
     if (range.from) {
       this.props.getDateData({
         startError: '',
-        from: moment(range.from).format('L'),
-        to: moment(range.to).format('L'),
+        from: moment(range.from).format("YYYY-MM-DD"),
+        to: moment(range.to).format("YYYY-MM-DD"),
       })
     }
     if (range.to) {
       this.props.getDateData({
         endError: '',
-        from: moment(range.from).format('L'),
-        to: moment(range.to).format('L'),
+        from: moment(range.from).format("YYYY-MM-DD"),
+        to: moment(range.to).format("YYYY-MM-DD"),
       })
     }
   }
@@ -66,7 +80,7 @@ export default class Range extends React.Component {
             <label className="form_group__label">Start Date</label>
             <input
               type="text"
-              value={this.state.from !== null ? moment(from).format('L') : '' }
+              value={this.state.from !== null ? moment(from).format("YYYY-MM-DD") : '' }
               placeholder="MM-DD-YYYY"
               onFocus={ this.openDaypicker }
               className="form_group__input"
@@ -77,7 +91,7 @@ export default class Range extends React.Component {
             <label className="form_group__label">End Date</label>
             <input
               type="text"
-              value={this.state.to !== null ? moment(to).format('L') : '' }
+              value={this.state.to !== null ? moment(to).format("YYYY-MM-DD") : '' }
               placeholder="MM-DD-YYYY"
               onChange={ this.handleInputChange }
               onFocus={ this.openDaypicker }

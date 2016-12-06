@@ -1,46 +1,42 @@
 import React, { Component } from 'react';
+import CampaignListItem from './CampaignListItem'
+import {connect} from 'react-redux'
+import {getCampaignList} from '../../AC/campaignGet'
+import ring from '../../img/main/ring.svg'
+import EditCampaign from './EditCampaign'
 
 class CampaignList extends Component {
+  componentWillMount() {
+    this.props.getCampaignList()
+  }
+
   render() {
+    console.log(this.props);
+    const List =  this.props.campaignList.length ? this.props.campaignList.map(item=>
+      <div key={item.id}>
+        <CampaignListItem
+          title={item.title}
+          country={item.country}
+          start={item.start_date}
+          end={item.end_date}
+          id={item.id}
+          advertisementsCount={item.advertisementsCount}
+        />
+      </div>
+  ) : <img src={ring} alt="alt"/>
     return (
       <div className="ads_wrapper cam_wrapper">
-        <div className="ads_wrapper__item cam_wrapper__item clearfix">
-          <div className="left clearfix">
-            <div className="info clearfix">
-              <div className="item">
-                <p className="item_info">Lego Kids</p>
-                <p className="item_title">Name</p>
-              </div>
-              <div className="item">
-                <p className="item_info">United Kingdom</p>
-                <p className="item_title">Country</p>
-              </div>
-            </div>
-            <div className="info clearfix">
-              <div className="item">
-                <p className="item_info">11/01/2016</p>
-                <p className="item_title">Start</p>
-              </div>
-              <div className="item">
-                <p className="item_info">12/31/2016</p>
-                <p className="item_title">End</p>
-              </div>
-            </div>
-            <div className="info clearfix">
-              <div className="item no_m">
-                <p className="item_info">3</p>
-                <p className="item_title">Number of adverts</p>
-              </div>
-            </div>
-            <div className="buttons clearfix">
-              <div className="buttons_settings"></div>
-              <div className="buttons_delete"></div>
-            </div>
-          </div>
-        </div>
+        {List}
       </div>
     )
   }
 }
 
-export default CampaignList;
+
+function mapStateToProps({campaignGetData}) {
+  return {
+    campaignList: campaignGetData.campaignList
+  }
+}
+
+export default connect(mapStateToProps, {getCampaignList})(CampaignList);
