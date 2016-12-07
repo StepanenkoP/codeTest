@@ -2,26 +2,54 @@ import React, { Component } from 'react';
 import TextFieldGroup from '../signup/TextFieldGroup'
 import TextareaField from '../unisex/TextareaField'
 import InputFileGroup from '../unisex/InputFileGroup'
+import update from 'react-addons-update'
 import img from '../../img/adlist/img.png'
+import validateCreateAd from '../../functions/validateCreateAd'
+
 
 class AdConstructor extends Component {
   state = {
     title: '',
     short_description: '',
     description: '',
-    link: '',
-    select_compaign: '',
-    image: '',
+    url_link: '',
+    campaign_id: '',
+    image_base64: '',
     errors: {}
   }
 
+  isValid() {
+    const {errors, isValid} = validateCreateAd(this.state)
+
+    if (!isValid) {
+      this.setState({
+        errors
+      })
+    }
+    return isValid
+  }
+
+
   onChangeHandler = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    if (e.target.name !== 'image_base64') {
+      this.setState({
+        [e.target.name]: e.target.value
+      })
+      const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+  }
+
+  onClickHandler = () => {
+    if (this.isValid()) {
+
+    }
   }
 
   render() {
+    const {errors} = this.state
     return (
       <div className="ad_constructor">
         <div className="ad_constructor__form clearfix">
@@ -32,6 +60,7 @@ class AdConstructor extends Component {
               label="Title"
               placeholder=""
               type="text"
+              error={this.state.errors.title}
               field="title"
               onChangeHandler={this.onChangeHandler}
               className="form_group__input"
@@ -40,6 +69,7 @@ class AdConstructor extends Component {
               value={this.state.short_description}
               label="Short description"
               placeholder=""
+              error={this.state.errors.short_description}
               type="text"
               field="short_description"
               onChangeHandler={this.onChangeHandler}
@@ -48,40 +78,42 @@ class AdConstructor extends Component {
             <TextareaField
               value={this.state.description}
               label="Description"
+              error={this.state.errors.description}
               placeholder=""
               field="description"
               onChangeHandler={this.onChangeHandler}
             />
             <TextFieldGroup
-              value={this.state.link}
+              value={this.state.url_link}
               label="Link to Url"
               placeholder=""
               type="text"
-              field="link"
+              error={this.state.errors.url_link}
+              field="url_link"
               onChangeHandler={this.onChangeHandler}
               className="form_group__input withbg"
             />
             <div className="form_group">
               <label className="form_group__label">Select a campaign</label>
               <select
-                value={this.state.select_compaign}
+                value={this.state.campaign_id}
                 onChange={this.onChangeHandler}
-                name="select_compaign"
+                name="campaign_id"
                 className="form_group__input"
               >
                 <option value="" disabled>Company name</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                {this.props.campaignList}
               </select>
-              {/* {errors.select_compaign && <span className="validate_span">{errors.select_compaign}</span>} */}
+              {errors.campaign_id && <span className="validate_span">{errors.campaign_id}</span>}
             </div>
             <InputFileGroup
-              value={this.state.image}
+              value={this.state.image_base64}
               label="Add Image"
               placeholder=""
               type="text"
-              field="image"
+              readOnly={true}
+              error={this.state.errors.image_base64}
+              field="image_base64"
               onChangeHandler={this.onChangeHandler}
               className="form_group__input withbg fileinput"
               id="addimg"
@@ -89,18 +121,22 @@ class AdConstructor extends Component {
           </div>
           <div className="right">
             <div className="img_wrapper"><img src={img} alt="alt"/></div>
-            <h3>Lorem ipsum dolor sit amet, ea sit</h3>
-            <p className="short">Est eu pertinaciaen delacrue instructiol vel eu</p>
-            <p className="long">Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per. Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per.</p>
-            <a href="/">www.loremipsum.com</a>
+            <h3>{this.state.title}</h3>
+            <p className="short">{this.state.short_description}</p>
+            <p className="long">{this.state.description}</p>
+            <a href={this.state.url_link}>{this.state.url_link}</a>
           </div>
           <div className="form_group create_ad">
-            <button className="form_group__button">Create</button>
+            <button className="form_group__button" onClick={this.onClickHandler}>Create</button>
           </div>
         </div>
       </div>
     )
   }
+}
+
+AdConstructor.propTypes = {
+  campaignList: React.PropTypes.array
 }
 
 export default AdConstructor;

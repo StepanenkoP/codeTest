@@ -45,6 +45,7 @@
     "react-addons-update": "^15.3.2",
     "react-checkbox-group": "^3.0.1",
     "react-dev-utils": "^0.3.0",
+    "react-file-base64": "^1.0.0",
     "react-redux": "^4.4.6",
     "react-validation": "^2.10.9",
     "recursive-readdir": "2.1.0",
@@ -63,6 +64,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "base64-loader": "^1.0.0",
     "moment": "^2.17.1",
     "react": "^15.3.2",
     "react-day-picker": "^3.1.1",

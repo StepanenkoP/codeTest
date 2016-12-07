@@ -4,11 +4,17 @@ import Footer from '../unisex/Footer'
 import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
 import AdConstructor from './AdConstructor'
+import {connect} from 'react-redux'
+import {getCampaignList} from '../../AC/campaignGet'
 
 
 class CreateAd extends Component {
   state = {
     isOpen: false
+  }
+
+  componentWillMount() {
+    this.props.getCampaignList()
   }
 
   componentDidMount= () => {
@@ -33,6 +39,8 @@ class CreateAd extends Component {
   }
 
   render() {
+    console.log(this.props);
+    const campaignList = this.props.campaignList.campaign_array.map(item => <option key={item.id} value={item.id}>{item.title}</option>)
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
     return (
       <div className="main_wrapper">
@@ -44,7 +52,9 @@ class CreateAd extends Component {
           openMenu={this.openMenu}
           logOut={this.logOut}
         />
-        <AdConstructor />
+        <AdConstructor
+          campaignList={campaignList}
+        />
         <Footer />
       </div>
     );
@@ -55,4 +65,10 @@ CreateAd.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default CreateAd
+function mapStateToProps({campaignGetData}) {
+  return {
+    campaignList: campaignGetData.campaignList
+  }
+}
+
+export default connect(mapStateToProps, {getCampaignList})(CreateAd)

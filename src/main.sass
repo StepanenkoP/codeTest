@@ -207,6 +207,15 @@ body
 
 ///// ACCOUNT SUMMARY
 
+.no_data
+  text-align: center
+  line-height: 330px
+  font-size: 25px
+  color: #ACACAC
+  text-transform: uppercase
+  font-weight: 700
+
+  
 .main_wrapper
   position: relative
   .mobile_mnu
@@ -360,13 +369,6 @@ body
     .data_chart
       height: 330px
       margin-bottom: 80px
-      .no_data
-        text-align: center
-        line-height: 330px
-        font-size: 25px
-        color: #ACACAC
-        text-transform: uppercase
-        font-weight: 700
 
   .main_footer
     border-top: 1px solid #C8D3E6
@@ -467,6 +469,12 @@ body
 .ads_wrapper
   width: 1170px
   margin: auto
+  .no_data
+    font-weight: 700
+    text-transform: uppercase
+    font-size: 20px
+    margin-bottom: 100px
+    margin-top: 50px
   &__item
     box-shadow: 0 0 10px rgba(0,0,0,.1)
     padding: 30px 55px 30px 30px
@@ -531,7 +539,41 @@ body
             letter-spacing: 1px
       .buttons
         float: right
-        div
+        &.delete_campaign
+          position: absolute
+          height: 100%
+          top: 0
+          right: 0
+          width: 230px
+          text-align: center
+          padding-top: 40px
+          font-weight: 700
+          color: #fff
+          text-transform: uppercase
+          background-color: transparentize(#4172BB, .1)
+          border-radius: 0 10px 10px 0
+          .block_btn
+            float: none
+            width: 100%
+            display: block
+            text-align: center
+            margin-top: 30px
+            cursor: default
+            button
+              width: 45px
+              height: 30px
+              background-color: #000
+              border: none
+              transition: background-color .3s ease
+              &:hover
+                background-color: #fff
+                color: #000
+              &.yes
+                margin-right: 20px
+            &:hover
+              box-shadow: none
+
+        .btn_basic
           float: left
           width: 45px
           height: 45px
@@ -549,12 +591,12 @@ body
           &:hover
             border-radius: 4px
             box-shadow: 0 0 10px rgba(0,0,0,.2)
-        &_settings
-          background-image: url(./img/adlist/gear.png)
-        &_delete
-          background-image: url(./img/adlist/trash.png)
-        &_stats
-          background-image: url(./img/adlist/stats.png)
+          &.settings
+            background-image: url(./img/adlist/gear.png)
+          &.delete
+            background-image: url(./img/adlist/trash.png)
+          &.stats
+            background-image: url(./img/adlist/stats.png)
 
 /// CREATE AD
 

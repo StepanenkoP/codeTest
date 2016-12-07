@@ -6,12 +6,17 @@ import Header from '../unisex/Header'
 import CampaignConstructor from './CampaignConstructor'
 import {connect} from 'react-redux'
 import {getCampaign, editCampaign} from '../../AC/campaignGet'
+import validateCampaignForm from '../../functions/validateCampaignForm'
+import {addFlashMessage} from '../../AC/flashMessages'
+import ring from '../../img/main/ring.svg'
+import isEmpty from 'lodash/isEmpty'
 
 
 
 class EditCampaign extends Component {
   state = {
-    isOpen: false
+    isOpen: false,
+    formData: {}
   }
 
   componentWillMount= () => {
@@ -39,17 +44,65 @@ class EditCampaign extends Component {
     this.context.router.push('/login');
   }
 
-  onClickEdit = (id, data) => {
-    console.log(id);
-    console.log(data);
-    this.props.editCampaign(id, data)
+  componentDidUpdate() {
+    if (this.state.formData.title) {
+      console.log(this.state.formData);
+      const obj = {
+        formData: this.state.formData,
+        id: this.state.id
+      }
+      this.props.editCampaign(obj).then(
+        r => {
+          if (r.payload.success) {
+            this.props.addFlashMessage({
+              type: 'success',
+              text: 'Campaign has been edited successfully!'
+            })
+            this.context.router.push('/campaign_list')
+          }
+        }
+      )
+    }
   }
 
+
+  onClickEdit = (data) => {
+    console.log(data);
+    const {formData} = data
+    const {id} = data
+    this.setState({
+      formData,
+      id
+    })
+  }
+
+
+
   render() {
-    console.log(this.props);
     const {campaign} = this.props
-    console.log(campaign.days);
+    console.log(campaign);
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
+    const loader =
+    !campaign.error && !isEmpty(campaign) && campaign.days.length && campaign.times.length && campaign.ages.length && campaign.websites.length ?
+    <CampaignConstructor
+      id={+this.props.params.id}
+      title="Edit Campaign"
+      name={campaign.title !== undefined ? campaign.title : ''}
+      start_date={campaign.start_date !== undefined ? campaign.start_date : ''}
+      end_date={campaign.end_date !== undefined ? campaign.end_date : ''}
+      gender_id={campaign.gender_id !== undefined ? campaign.gender_id : ''}
+      daysEdit={campaign.days !== undefined ? campaign.days : ''}
+      agesEdit={campaign.ages !== undefined ? campaign.ages : ''}
+      timesEdit={campaign.times !== undefined ? campaign.times : ''}
+      websitesEdit={campaign.websites !== undefined ? campaign.websites : ''}
+      limit_per_day={campaign.limit_per_day !== undefined ? campaign.limit_per_day : ''}
+      limit_per_user={campaign.limit_per_user !== undefined ? campaign.limit_per_user : ''}
+      country_id={campaign.country_id !== undefined ? campaign.country_id : ''}
+      editbtn={true}
+      showDatePicker='datepicker'
+      onClickEdit={this.onClickEdit}
+    /> : <div style={{textAlign: 'center', marginTop: '50px'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
+  const noData = campaign.error ? <div className="no_data" style={{textAlign: 'center'}}>No data</div> : loader
     return (
       <div className="main_wrapper">
         {mobileMenu}
@@ -60,22 +113,7 @@ class EditCampaign extends Component {
           openMenu={this.openMenu}
           logOut={this.logOut}
         />
-        <CampaignConstructor
-          id={+this.props.params.id}
-          title="Edit Campaign"
-          name={campaign.title !== undefined ? campaign.title : ''}
-          start_date={campaign.start_date !== undefined ? campaign.start_date : ''}
-          end_date={campaign.end_date !== undefined ? campaign.end_date : ''}
-          gender_id={campaign.gender_id !== undefined ? campaign.gender_id : ''}
-          daysEdit={campaign.days !== undefined ? campaign.days : ''}
-          agesEdit={campaign.ages !== undefined ? campaign.ages : ''}
-          timesEdit={campaign.times !== undefined ? campaign.times : ''}
-          websitesEdit={campaign.websites !== undefined ? campaign.websites : ''}
-          limit_per_day={campaign.limit_per_day !== undefined ? campaign.limit_per_day : ''}
-          limit_per_user={campaign.limit_per_user !== undefined ? campaign.limit_per_user : ''}
-          editbtn={true}
-          onClickEdit={this.onClickEdit}
-        />
+        {noData}
         <Footer />
       </div>
     );
@@ -92,4 +130,4 @@ function mapStateToProps({campaignGetData}) {
   }
 }
 
-export default connect(mapStateToProps, {getCampaign, editCampaign})(EditCampaign)
+export default connect(mapStateToProps, {getCampaign, editCampaign, addFlashMessage})(EditCampaign)

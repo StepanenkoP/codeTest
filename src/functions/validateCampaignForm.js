@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty'
 
 export default function validateCampaignForm(data) {
   let errors = {}
+  console.log(data);
 
   if (Validator.isEmpty(data.title)) {
     errors.title = "This field is required";

@@ -43,19 +43,29 @@ class CampaignConstructor extends Component {
   componentWillReceiveProps() {
     if (this.props.name) {
       const daysArr = this.props.daysEdit.map(item=> item.title);
+      const daysArrServer = this.props.daysEdit.map(item=> item.id);
       const agesArr = this.props.agesEdit.map(item=> item.title);
+      const agesArrServer = this.props.agesEdit.map(item=> item.id);
       const timesArr = this.props.timesEdit.map(item=> item.title);
+      const timesArrServer = this.props.timesEdit.map(item=> item.id);
       const websitesArr = this.props.websitesEdit.map(item=> item.title);
-      console.log(daysArr);
+      const websitesArrServer = this.props.websitesEdit.map(item=> item.id);
       this.setState({
         title: this.props.name,
-        gender_id: this.props.gender_id,
+        gender_id: `${this.props.gender_id}`,
         days: daysArr,
+        serverDays: daysArrServer,
+        serverAges: agesArrServer,
+        serverTimes: timesArrServer,
+        serverWebsites: websitesArrServer,
+        start_date: this.props.start_date,
+        end_date: this.props.end_date,
         ages: agesArr,
         times: timesArr,
         websites: websitesArr,
         limit_per_day: `${this.props.limit_per_day}`,
-        limit_per_user: `${this.props.limit_per_user}`
+        limit_per_user: `${this.props.limit_per_user}`,
+        country_id: `${this.props.country_id}`
       })
     }
   }
@@ -85,7 +95,6 @@ class CampaignConstructor extends Component {
   }
 
   getDateData = (data) => {
-    console.log(data);
     if (data.startError === '') {
       let newData = update(this.state.errors, { start_date: {$set: ''}});
       this.setState({
@@ -114,8 +123,8 @@ class CampaignConstructor extends Component {
     if (this.isValid()) {
       const data = {
         title: this.state.title,
-        start_date: this.state.start_date,
-        end_date: this.state.end_date,
+        start_date: !this.props.start_date ? this.state.start_date : this.props.start_date,
+        end_date: !this.props.end_date ? this.state.end_date : this.props.end_date,
         country_id: this.state.country_id,
         gender_id: this.state.gender_id,
         limit_per_day: this.state.limit_per_day,
@@ -125,18 +134,26 @@ class CampaignConstructor extends Component {
         ages: this.state.serverAges,
         websites: this.state.serverWebsites,
       }
-      this.props.createCampaign(data).then(
-        r => {
-          console.log(r);
-          if (r.data.success) {
-            this.props.addFlashMessage({
-              type: 'success',
-              text: "Campaign has been created successfully!"
-            })
-            this.context.router.push('/campaign_list');
+      if (!this.props.start_date) {
+        this.props.createCampaign(data).then(
+          r => {
+            console.log(r);
+            if (r.data.success) {
+              this.props.addFlashMessage({
+                type: 'success',
+                text: "Campaign has been created successfully!"
+              })
+              this.context.router.push('/campaign_list');
+            }
           }
+        )
+      } else {
+        const obj = {
+          formData: data,
+          id: this.props.id
         }
-      )
+        this.props.onClickEdit(obj)
+      }
     }
   }
 
@@ -277,15 +294,17 @@ class CampaignConstructor extends Component {
 
   showDatePicker = () => {
     this.setState({
-      showDatePicker: true
+      showDatePicker: true,
+      start_date: '',
+      end_date: ''
     })
   }
 
 
   render() {
+    console.log(this.props.showDatePicker);
     const {errors} = this.state
-    console.log(this.props);
-    const dayInputs = !this.state.showDatePicker ?
+    const dayInputs = this.props.showDatePicker ?
     <div>
       <div className="data_field">
         <label className="form_group__label">Start Date</label>
@@ -316,19 +335,22 @@ class CampaignConstructor extends Component {
     const ages = this.props.ages ? allInArr.concat(this.props.ages) : []
     const websites = this.props.websites ? allInArr.concat(this.props.websites) : []
     const dataOnEdit = {
-      title: this.state.title,
-      start_date: this.state.start_date,
-      end_date: this.state.end_date,
-      country_id: this.state.country_id,
-      gender_id: this.state.gender_id,
-      limit_per_day: this.state.limit_per_day,
-      limit_per_user: this.state.limit_per_user,
-      days: this.state.serverDays,
-      times: this.state.serverTimes,
-      ages: this.state.serverAges,
-      websites: this.state.serverWebsites,
+      id: this.props.id,
+      formData: {
+        title: this.state.title,
+        start_date: this.props.start_date,
+        end_date: this.props.end_date,
+        country_id: this.state.country_id,
+        gender_id: this.state.gender_id,
+        limit_per_day: this.state.limit_per_day,
+        limit_per_user: this.state.limit_per_user,
+        days: this.state.serverDays,
+        times: this.state.serverTimes,
+        ages: this.state.serverAges,
+        websites: this.state.serverWebsites,
+      }
     }
-    const buttonSwitch = !this.props.editbtn ? <button className="form_group__button" onClick={this.onClickHandler}>Create</button> : <button className="form_group__button" onClick={this.props.onClickEdit(this.props.id, dataOnEdit)}>Save</button>
+    const buttonSwitch = !this.props.editbtn ? <button className="form_group__button" onClick={this.onClickHandler}>Create</button> : <button className="form_group__button" onClick={this.onClickHandler}>Save</button>
     return (
       <div className="ad_constructor campaign_constructor">
         <div className="ad_constructor__form no_p clearfix">

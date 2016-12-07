@@ -30,9 +30,9 @@ class NotActive extends Component {
             </div>
           </div>
           <div className="buttons clearfix">
-            <div className="buttons_settings"></div>
-            <div className="buttons_delete"></div>
-            <div className="buttons_stats"></div>
+            <div className="btn_basic settings"></div>
+            <div className="btn_basic delete"></div>
+            <div className="btn_basic stats"></div>
           </div>
         </div>
         <div className="right">

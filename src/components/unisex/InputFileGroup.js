@@ -1,6 +1,14 @@
 import React, {Component} from 'react'
 
+
 class InputFileGroup extends Component {
+  state = {
+    files: []
+  }
+  getFiles(files){
+    this.setState({ files: files })
+  }
+
   render() {
     console.log(this.props);
     const {field, value, label, type, onChangeHandler, placeholder, error, onBlurHandler, className, id} = this.props
@@ -14,6 +22,7 @@ class InputFileGroup extends Component {
           type={type}
           onBlur={onBlurHandler}
           name={field}
+          readOnly={this.props.readOnly}
           placeholder={placeholder}
           className={className}
         />

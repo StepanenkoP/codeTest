@@ -1,4 +1,4 @@
-import {LOAD_COUNTRIES, LOAD_DAYS, LOAD_TIMES, LOAD_AGES, LOAD_WEBSITES, LOAD_CAMPAIGNS, LOAD_CAMPAIGN} from '../../types'
+import {LOAD_COUNTRIES, LOAD_DAYS, LOAD_TIMES, LOAD_AGES, LOAD_WEBSITES, LOAD_CAMPAIGNS, LOAD_CAMPAIGN, DELETE_CAMPAIGN} from '../../types'
 
 const initialState = {
   countriesList: [],
@@ -6,7 +6,10 @@ const initialState = {
   timesList: [],
   agesList: [],
   websitesList: [],
-  campaignList: [],
+  campaignList: {
+    campaign_array: [],
+    campaign_count: null
+  },
   campaign: {}
 }
 
@@ -46,6 +49,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         campaign: action.payload
+      }
+    case DELETE_CAMPAIGN:
+      return {
+        ...state,
+        campaignList: action.payload
       }
     default:
     return state
