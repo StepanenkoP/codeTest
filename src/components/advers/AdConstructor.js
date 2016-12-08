@@ -3,8 +3,11 @@ import TextFieldGroup from '../signup/TextFieldGroup'
 import TextareaField from '../unisex/TextareaField'
 import InputFileGroup from '../unisex/InputFileGroup'
 import update from 'react-addons-update'
-import img from '../../img/adlist/img.png'
 import validateCreateAd from '../../functions/validateCreateAd'
+import {createAD, editAd} from '../../AC/adsAC'
+import {addFlashMessage} from '../../AC/flashMessages'
+import {connect} from 'react-redux'
+import ring from '../../img/main/ring.svg'
 
 
 class AdConstructor extends Component {
@@ -14,8 +17,25 @@ class AdConstructor extends Component {
     description: '',
     url_link: '',
     campaign_id: '',
+    files: [],
     image_base64: '',
-    errors: {}
+    errors: {},
+    image: '',
+    loader: false
+  }
+
+  componentWillReceiveProps() {
+    if (this.props.short_description) {
+      const {adTitle, short_description, description, image, campaign_id, url_link} = this.props
+      this.setState({
+        title: adTitle,
+        short_description,
+        description,
+        image,
+        campaign_id: `${campaign_id}`,
+        url_link
+      })
+    }
   }
 
   isValid() {
@@ -31,29 +51,81 @@ class AdConstructor extends Component {
 
 
   onChangeHandler = (e) => {
-    if (e.target.name !== 'image_base64') {
-      this.setState({
-        [e.target.name]: e.target.value
-      })
-      const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+    const newData = update(this.state.errors, {[e.target.name]: {$set: ''}});
+    this.setState({
+      errors: newData
+    })
+  }
+
+  getFiles = (files) => {
+    this.setState({
+      files: files,
+    })
+    this.setState({
+      image_base64: this.state.files[0] ? this.state.files[0].base64 : '',
+      image:this.state.files[0] ? this.state.files[0].name : ''
+    })
+    if (this.state.image_base64) {
+      const newData = update(this.state.errors, {image_base64: {$set: ''}});
       this.setState({
         errors: newData
       })
     }
   }
 
+
   onClickHandler = () => {
     if (this.isValid()) {
-
+      this.setState({
+        loader: true
+      })
+      const data = {}
+      for (let key in this.state) {
+        if (key !== 'files' && key !== 'errors' && key !== 'loader' && key !== 'image') {
+          data[key] = this.state[key]
+        }
+      }
+      data.campaign_id = +data.campaign_id
+      if (!this.props.adTitle) {
+        this.props.createAD(data).then(
+          r => {
+            console.log(r);
+            if (r.data.success) {
+              this.setState({
+                loader: false
+              })
+              this.props.addFlashMessage({
+                type: 'success',
+                text: 'Advertise has been created successfully!'
+              })
+              this.context.router.push('/advers_list')
+            }
+          }
+        )
+      } else {
+        this.props.editAd(this.props.id)
+      }
     }
   }
 
   render() {
+    console.log(this.state);
+    const image = this.state.image_base64.length || this.state.image ? <img src={this.state.image ? `/api/public/upload/images/${this.state.image}` : this.state.image_base64} alt="alt"/> : null
+    const pending = !this.state.loader
+    ?
+    <button className="form_group__button" onClick={this.onClickHandler}>{this.props.id ? <span>Edit</span> : <span>Create</span>}</button>
+    :
+    <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px', paddingTop: '50px'}}/></div>
+    console.log(this.state);
     const {errors} = this.state
+    const title = this.props.title ? <h2>Edit Adverts</h2> : <h2>Create Adverts</h2>
     return (
       <div className="ad_constructor">
         <div className="ad_constructor__form clearfix">
-          <h2>Create Adverts</h2>
+          {title}
           <div className="left">
             <TextFieldGroup
               value={this.state.title}
@@ -107,27 +179,27 @@ class AdConstructor extends Component {
               {errors.campaign_id && <span className="validate_span">{errors.campaign_id}</span>}
             </div>
             <InputFileGroup
-              value={this.state.image_base64}
+              value={this.state.files[0] || this.state.image ? this.state.image : ''}
               label="Add Image"
               placeholder=""
               type="text"
+              getFiles={this.getFiles}
               readOnly={true}
               error={this.state.errors.image_base64}
               field="image_base64"
-              onChangeHandler={this.onChangeHandler}
               className="form_group__input withbg fileinput"
               id="addimg"
             />
           </div>
           <div className="right">
-            <div className="img_wrapper"><img src={img} alt="alt"/></div>
+            <div className="img_wrapper">{image}</div>
             <h3>{this.state.title}</h3>
             <p className="short">{this.state.short_description}</p>
             <p className="long">{this.state.description}</p>
             <a href={this.state.url_link}>{this.state.url_link}</a>
           </div>
           <div className="form_group create_ad">
-            <button className="form_group__button" onClick={this.onClickHandler}>Create</button>
+            {pending}
           </div>
         </div>
       </div>
@@ -135,8 +207,12 @@ class AdConstructor extends Component {
   }
 }
 
+AdConstructor.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
 AdConstructor.propTypes = {
   campaignList: React.PropTypes.array
 }
 
-export default AdConstructor;
+export default connect(null, {createAD, addFlashMessage, editAd})(AdConstructor);

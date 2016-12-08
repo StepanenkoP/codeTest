@@ -35,19 +35,22 @@ class AdversPage extends Component {
 
   render() {
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
+    const content = this.props.params.id == undefined ? <div className="main_wrapper">
+      {mobileMenu}
+      <FlashList />
+      <Header
+        title="List of adverts"
+        text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
+        openMenu={this.openMenu}
+        logOut={this.logOut}
+      />
+      <CreateBlock />
+      <AdList />
+      <Footer />
+    </div> : <div>{this.props.children}</div>
     return (
-      <div className="main_wrapper">
-        {mobileMenu}
-        <FlashList />
-        <Header
-          title="List of adverts"
-          text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
-          openMenu={this.openMenu}
-          logOut={this.logOut}
-        />
-        <CreateBlock />
-        <AdList />
-        <Footer />
+      <div>
+        {content}
       </div>
     );
   }

@@ -12,7 +12,7 @@ class CampaignList extends Component {
 
   render() {
     console.log(this.props);
-    const List =  this.props.campaignList.campaign_count ? this.props.campaignList.campaign_array.map(item=>
+    const List = this.props.campaignList.success || this.props.campaignList.campaign_count !== null ? this.props.campaignList.campaign_array.map(item=>
       <div key={item.id}>
         <CampaignListItem
           title={item.title}

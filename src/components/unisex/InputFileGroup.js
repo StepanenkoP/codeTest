@@ -1,16 +1,10 @@
 import React, {Component} from 'react'
-
+import FileBase64 from '../unisex/FileBase64';
 
 class InputFileGroup extends Component {
-  state = {
-    files: []
-  }
-  getFiles(files){
-    this.setState({ files: files })
-  }
+
 
   render() {
-    console.log(this.props);
     const {field, value, label, type, onChangeHandler, placeholder, error, onBlurHandler, className, id} = this.props
     // const image = bgimg ? <img src={bgimg} alt="alt" className="bgimg"/> : null
     return (
@@ -18,7 +12,6 @@ class InputFileGroup extends Component {
         <label className="form_group__label">{label}</label>
         <input
           value={value}
-          onChange={onChangeHandler}
           type={type}
           onBlur={onBlurHandler}
           name={field}
@@ -28,7 +21,10 @@ class InputFileGroup extends Component {
         />
         <label htmlFor={id} className="labelFile">
           Upload photo
-          <input type="file" id={id}/>
+          <FileBase64
+            id={id}
+            multiple={ true }
+            onDone={this.props.getFiles} />
         </label>
         {error && <span className="validate_span">{error}</span>}
       </div>
@@ -41,7 +37,6 @@ InputFileGroup.propTypes = {
   value: React.PropTypes.string.isRequired,
   label: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  onChangeHandler: React.PropTypes.func.isRequired,
   placeholder: React.PropTypes.string.isRequired,
   className: React.PropTypes.string.isRequired,
   error: React.PropTypes.string

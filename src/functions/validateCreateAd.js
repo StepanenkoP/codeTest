@@ -20,7 +20,7 @@ export default function validateCreateAd(data) {
   if (Validator.isEmpty(data.campaign_id.trim())) {
     errors.campaign_id = "Select campaign";
   }
-  if (Validator.isEmpty(data.image_base64.trim())) {
+  if (Validator.isEmpty(data.image.trim())) {
     errors.image_base64 = "Choose image";
   }
 
