@@ -522,6 +522,7 @@ body
         margin-bottom: 30px
       .info
         float: left
+        height: 51px
         .item
           float: left
           padding-right: 38px
@@ -544,6 +545,38 @@ body
             letter-spacing: 1px
       .buttons
         float: right
+        &.delete_ad
+          float: none
+          position: absolute
+          right: 320px
+          border-radius: 20px 20px 0 0
+          bottom: 0
+          background-color: transparentize(#4172BB, .1)
+          color: #fff
+          font-weight: 700
+          text-transform: uppercase
+          text-align: center
+          padding: 20px
+          .block_btn
+            float: none
+            width: 100%
+            display: block
+            text-align: center
+            cursor: default
+            margin-top: 10px
+            button
+              width: 45px
+              height: 30px
+              background-color: #000
+              border: none
+              transition: background-color .3s ease
+              &:hover
+                background-color: #fff
+                color: #000
+              &.yes
+                margin-right: 20px
+            &:hover
+              box-shadow: none
         &.delete_campaign
           position: absolute
           height: 100%

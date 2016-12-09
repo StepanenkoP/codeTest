@@ -4,6 +4,7 @@ import NotActive from './NotActive'
 import Active from './Active'
 import {loadAds} from '../../AC/adsAC'
 import {connect} from 'react-redux'
+import ring from '../../img/main/ring.svg'
 
 class AdList extends Component {
 
@@ -13,7 +14,7 @@ class AdList extends Component {
 
   render() {
     console.log(this.props);
-    const list = this.props.adsList.map(item =>
+    const list = this.props.adsList.advertisement_count !== null ? this.props.adsList.advertisement_array.map(item =>
       <div key={item.id}>
         <Awaiting
           title={item.title}
@@ -22,10 +23,11 @@ class AdList extends Component {
           image={item.image}
           id={item.id}
         />
-      </div>)
+      </div>) : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
     return (
       <div className="ads_wrapper">
         {list}
+        {!this.props.adsList.advertisement_count && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
       </div>
     )
   }

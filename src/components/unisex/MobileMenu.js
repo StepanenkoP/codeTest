@@ -4,6 +4,12 @@ import hamclose from '../../img/main/hamclose.png'
 import image from '../../img/main/image.png'
 
 class MobileMenu extends Component {
+
+  logOut = () => {
+    localStorage.removeItem('token');
+    this.context.router.push('/login');
+  }
+
   render() {
     return (
       <div className="mobile_mnu">
@@ -28,6 +34,10 @@ class MobileMenu extends Component {
       </div>
     )
   }
+}
+
+MobileMenu.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }
 
 export default MobileMenu;

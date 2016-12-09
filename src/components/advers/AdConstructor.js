@@ -92,7 +92,6 @@ class AdConstructor extends Component {
       if (!this.props.adTitle) {
         this.props.createAD(data).then(
           r => {
-            console.log(r);
             if (r.data.success) {
               this.setState({
                 loader: false
@@ -106,14 +105,36 @@ class AdConstructor extends Component {
           }
         )
       } else {
-        this.props.editAd(this.props.id)
+        const editData = {
+          id: +this.props.id,
+          dataForm: data
+        }
+        this.props.editAd(editData).then(
+          r => {
+            console.log(r);
+            if (r.data.success) {
+              this.setState({
+                loader: false
+              })
+            }
+            this.props.addFlashMessage({
+              type: 'success',
+              text: 'Advertise has been edited successfully!'
+            })
+            this.context.router.push('/advers_list')
+          }
+        )
       }
     }
   }
 
   render() {
     console.log(this.state);
-    const image = this.state.image_base64.length || this.state.image ? <img src={this.state.image ? `/api/public/upload/images/${this.state.image}` : this.state.image_base64} alt="alt"/> : null
+    const image = this.state.image_base64.length
+    ?
+    <img src={this.state.image_base64} alt="alt"/>
+    :
+     this.state.image ? <img src={`/api/public/upload/images/${this.state.image}`} alt="alt"/> : this.props.id ? <img src={ring} alt="alt"/> : null
     const pending = !this.state.loader
     ?
     <button className="form_group__button" onClick={this.onClickHandler}>{this.props.id ? <span>Edit</span> : <span>Create</span>}</button>

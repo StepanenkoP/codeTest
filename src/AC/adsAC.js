@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {CREATE_AD, LOAD_ADS, LOAD_AD} from '../types'
+import {CREATE_AD, LOAD_ADS, LOAD_AD, DELETE_AD} from '../types'
 
 export function createAD(data) {
   return dispatch => {
@@ -52,15 +52,34 @@ export function loadAd(id) {
   }
 }
 
-export function editAd(id) {
+export function editAd(data) {
   return dispatch => {
     return axios({
       method: "put",
-      url: `/api/advertisement/${id}`,
+      url: `/api/advertisement/${data.id}`,
+      data: data.dataForm,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
       }
     })
+  }
+}
+
+export function deleteAd(id) {
+  return dispatch => {
+    return axios({
+      method: "delete",
+      url: `/api/advertisement/${id}`,
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.token
+      }
+    }).then(
+      r => dispatch({
+        type: DELETE_AD,
+        payload: r.data
+      })
+    )
   }
 }

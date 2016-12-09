@@ -1,7 +1,10 @@
-import {LOAD_ADS, LOAD_AD} from '../../types'
+import {LOAD_ADS, LOAD_AD, DELETE_AD} from '../../types'
 
 const initialState = {
-  adsList: [],
+  adsList: {
+    advertisement_array: [],
+    advertisement_count: null
+  },
   ad: {}
 }
 
@@ -16,6 +19,11 @@ export default (state = initialState, action) => {
         return {
           ...state,
           ad: action.payload
+        }
+      case DELETE_AD:
+        return {
+          ...state,
+          adsList: action.payload
         }
       default:
       return state
