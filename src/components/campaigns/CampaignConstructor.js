@@ -28,7 +28,7 @@ class CampaignConstructor extends Component {
     serverTimes: [],
     serverAges: [],
     serverWebsites: [],
-    showDatePicker: false,
+    showDatePicker: true,
     errors: {}
   }
 
@@ -65,7 +65,8 @@ class CampaignConstructor extends Component {
         websites: websitesArr.length == 5 ? ['All'] : websitesArr,
         limit_per_day: `${this.props.limit_per_day}`,
         limit_per_user: `${this.props.limit_per_user}`,
-        country_id: `${this.props.country_id}`
+        country_id: `${this.props.country_id}`,
+        showDatePicker: this.props.showDatePicker ? false : true
       })
     }
   }
@@ -302,6 +303,7 @@ class CampaignConstructor extends Component {
 
 
   render() {
+    console.log(this.props);
     console.log(this.state.showDatePicker);
     const {errors} = this.state
     const dayInputs = !this.state.showDatePicker ?

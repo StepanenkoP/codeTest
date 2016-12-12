@@ -100,7 +100,7 @@ class EditCampaign extends Component {
       limit_per_user={campaign.limit_per_user !== undefined ? campaign.limit_per_user : ''}
       country_id={campaign.country_id !== undefined ? campaign.country_id : ''}
       editbtn={true}
-      showDatePicker={false}
+      showDatePicker='datepicker'
       onClickEdit={this.onClickEdit}
     /> : <div style={{textAlign: 'center', marginTop: '50px'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
   const noData = campaign.error ? <div className="no_data" style={{textAlign: 'center'}}>No data</div> : loader

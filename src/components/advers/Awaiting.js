@@ -53,11 +53,11 @@ class Awaiting extends Component {
           </div>
           <div className="info clearfix">
             <div className="item">
-              <p className="item_info">87</p>
+              <p className="item_info">0</p>
               <p className="item_title">CTR (%)</p>
             </div>
             <div className="item">
-              <p className="item_info">315</p>
+              <p className="item_info">0</p>
               <p className="item_title">VIEWS</p>
             </div>
           </div>

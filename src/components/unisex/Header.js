@@ -16,7 +16,7 @@ class Header extends Component {
               <img src={image} alt="alt"/>
             </div>
             <h3 className="user_name">Chris jones</h3>
-            <div className="user_mnu"><span className="logout" onClick={this.props.logOut}>Logout</span><span className="balance">$0.00</span></div>
+            <div className="user_mnu"><span className="logout" onClick={this.props.logOut}>Logout</span><span className="balance">&#163;0.00</span></div>
           </div>
           <h1>{this.props.title}</h1>
           <p className="text">{this.props.text}</p>
