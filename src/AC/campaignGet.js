@@ -48,12 +48,7 @@ export function editCampaign(data) {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
       }
-    }).then(
-      r => dispatch({
-        type: EDIT_CAMPAIGN,
-        payload: r.data
-      })
-    )
+    })
   }
 }
 

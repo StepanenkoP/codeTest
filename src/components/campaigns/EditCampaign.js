@@ -53,7 +53,8 @@ class EditCampaign extends Component {
       }
       this.props.editCampaign(obj).then(
         r => {
-          if (r.payload.success) {
+          console.log(r);
+          if (r.data.success) {
             this.props.addFlashMessage({
               type: 'success',
               text: 'Campaign has been edited successfully!'
@@ -99,7 +100,7 @@ class EditCampaign extends Component {
       limit_per_user={campaign.limit_per_user !== undefined ? campaign.limit_per_user : ''}
       country_id={campaign.country_id !== undefined ? campaign.country_id : ''}
       editbtn={true}
-      showDatePicker='datepicker'
+      showDatePicker={false}
       onClickEdit={this.onClickEdit}
     /> : <div style={{textAlign: 'center', marginTop: '50px'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
   const noData = campaign.error ? <div className="no_data" style={{textAlign: 'center'}}>No data</div> : loader

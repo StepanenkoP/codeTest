@@ -38,6 +38,7 @@ export default class Range extends React.Component {
         from: moment(range.from).format("YYYY-MM-DD"),
         to: moment(range.to).format("YYYY-MM-DD"),
       })
+      this.closeDaypicker()
     }
     if (range.from) {
       this.props.getDateData({

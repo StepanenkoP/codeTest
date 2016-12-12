@@ -123,8 +123,8 @@ class CampaignConstructor extends Component {
     if (this.isValid()) {
       const data = {
         title: this.state.title,
-        start_date: !this.props.start_date ? this.state.start_date : this.props.start_date,
-        end_date: !this.props.end_date ? this.state.end_date : this.props.end_date,
+        start_date: this.state.start_date,
+        end_date: this.state.end_date,
         country_id: this.state.country_id,
         gender_id: this.state.gender_id,
         limit_per_day: this.state.limit_per_day,
@@ -302,9 +302,9 @@ class CampaignConstructor extends Component {
 
 
   render() {
-    console.log(this.props.showDatePicker);
+    console.log(this.state.showDatePicker);
     const {errors} = this.state
-    const dayInputs = this.props.showDatePicker ?
+    const dayInputs = !this.state.showDatePicker ?
     <div>
       <div className="data_field">
         <label className="form_group__label">Start Date</label>
@@ -314,6 +314,7 @@ class CampaignConstructor extends Component {
           placeholder="MM-DD-YYYY"
           onFocus={ this.openDaypicker }
           className="form_group__input"
+          onChange={() => {}}
         />
       </div>
       <div className="data_field" style={{float: 'right'}}>
@@ -322,6 +323,7 @@ class CampaignConstructor extends Component {
           type="text"
           value={this.props.end_date}
           placeholder="MM-DD-YYYY"
+          onChange={() => {}}
           className="form_group__input"
         />
       </div>
