@@ -8,6 +8,7 @@ import {createAD, editAd} from '../../AC/adsAC'
 import {addFlashMessage} from '../../AC/flashMessages'
 import {connect} from 'react-redux'
 import ring from '../../img/main/ring.svg'
+import AvatarCropper from 'react-avatar-cropper'
 
 
 class AdConstructor extends Component {
@@ -21,7 +22,33 @@ class AdConstructor extends Component {
     image_base64: '',
     errors: {},
     image: '',
-    loader: false
+    loader: false,
+    cropperOpen: false,
+  }
+
+  handleRequestHide = () => {
+    this.setState({
+      cropperOpen: false,
+      image: this.state.image && this.state.image_base64 ? this.state.image_base64 : this.props.image
+    });
+  }
+
+  handleCrop = (dataURI) => {
+    const newData = update(this.state.errors, {image_base64: {$set: ''}});
+    this.setState({
+      cropperOpen: false,
+      image_base64: dataURI,
+      image: dataURI,
+      errors: newData
+    });
+  }
+
+
+  handleFileChange = (dataURI) => {
+    this.setState({
+      image: dataURI,
+      cropperOpen: true
+    });
   }
 
   componentWillReceiveProps() {
@@ -61,12 +88,14 @@ class AdConstructor extends Component {
   }
 
   getFiles = (files) => {
+    console.log(files);
     this.setState({
       files: files,
     })
     this.setState({
       image_base64: this.state.files[0] ? this.state.files[0].base64 : '',
-      image:this.state.files[0] ? this.state.files[0].name : ''
+      image:this.state.files[0] ? this.state.files[0].name : '',
+      cropperOpen: true
     })
     if (this.state.image_base64) {
       const newData = update(this.state.errors, {image_base64: {$set: ''}});
@@ -128,19 +157,25 @@ class AdConstructor extends Component {
     }
   }
 
+
   render() {
-    console.log(this.state);
     const image = this.state.image_base64.length
     ?
     <img src={this.state.image_base64} alt="alt"/>
     :
-     this.state.image ? <img src={`/api/public/upload/images/${this.state.image}`} alt="alt"/> : this.props.id ? <img src={ring} alt="alt"/> : null
+    null
+
+    const imageEdit = this.state.image && !this.state.image_base64
+    ?
+    this.state.image.indexOf(";") == -1 ? <img src={`/api/public/upload/images/${this.state.image}`} alt="alt"/> : null
+    :
+    this.props.id ? this.state.image.indexOf(";") == -1 ? <img src={ring} alt="alt"/> : null : null
+
     const pending = !this.state.loader
     ?
     <button className="form_group__button" onClick={this.onClickHandler}>{this.props.id ? <span>Edit</span> : <span>Create</span>}</button>
     :
     <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px', paddingTop: '50px'}}/></div>
-    console.log(this.state);
     const {errors} = this.state
     const title = this.props.title ? <h2>Edit Adverts</h2> : <h2>Create Adverts</h2>
     return (
@@ -204,7 +239,7 @@ class AdConstructor extends Component {
               label="Add Image"
               placeholder=""
               type="text"
-              getFiles={this.getFiles}
+              handleFileChange={this.handleFileChange}
               readOnly={true}
               error={this.state.errors.image_base64}
               field="image_base64"
@@ -213,7 +248,17 @@ class AdConstructor extends Component {
             />
           </div>
           <div className="right">
-            <div className="img_wrapper">{image}</div>
+            {this.state.cropperOpen &&
+              <AvatarCropper
+                onRequestHide={this.handleRequestHide}
+                cropperOpen={this.state.cropperOpen}
+                onCrop={this.handleCrop}
+                image={this.state.image}
+                width={window.innerWidth > 480 ? 400 : 298}
+                height={320}
+              />
+            }
+            <div className="img_wrapper">{image}{imageEdit}</div>
             <h3>{this.state.title}</h3>
             <p className="short">{this.state.short_description}</p>
             <p className="long">{this.state.description}</p>

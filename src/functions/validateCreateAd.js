@@ -12,7 +12,7 @@ export default function validateCreateAd(data) {
     errors.short_description = "This field is required";
   }
   if (Validator.isEmpty(data.description.trim())) {
-    errors.description = "Email is invalid";
+    errors.description = "This field is required";
   }
   if (Validator.isEmpty(data.url_link.trim())) {
     errors.url_link = "This field is required";

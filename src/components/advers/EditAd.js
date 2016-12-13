@@ -7,6 +7,7 @@ import AdConstructor from './AdConstructor'
 import {connect} from 'react-redux'
 import {getCampaignList} from '../../AC/campaignGet'
 import {loadAd} from '../../AC/adsAC'
+import ring from '../../img/main/ring.svg'
 
 
 class EditAd extends Component {
@@ -46,6 +47,20 @@ class EditAd extends Component {
     const {title, short_description, description, image, campaign_id, url_link} = this.props.ad
     const campaignList = this.props.campaignList.campaign_array.map(item => <option key={item.id} value={item.id}>{item.title}</option>)
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
+    const loader =
+    !this.props.ad.error && title ?
+    <AdConstructor
+      id={this.props.params.id}
+      campaignList={campaignList}
+      title='Edit adverts'
+      adTitle={title}
+      short_description={short_description}
+      description={description}
+      image={image}
+      campaign_id={campaign_id}
+      url_link={url_link}
+    /> : <div style={{textAlign: 'center', marginTop: '150px'}}><img src={ring} alt="alt" style={{paddingBottom: '150px'}}/></div>
+    const noData = this.props.ad.error ? <div className="no_data" style={{textAlign: 'center'}}>No data</div> : loader
     return (
       <div className="main_wrapper">
         {mobileMenu}
@@ -56,17 +71,7 @@ class EditAd extends Component {
           openMenu={this.openMenu}
           logOut={this.logOut}
         />
-        <AdConstructor
-          id={this.props.params.id}
-          campaignList={campaignList}
-          title='Edit adverts'
-          adTitle={title}
-          short_description={short_description}
-          description={description}
-          image={image}
-          campaign_id={campaign_id}
-          url_link={url_link}
-        />
+        {noData}
         <Footer />
       </div>
     );

@@ -82,7 +82,7 @@ export default class Range extends React.Component {
             <input
               type="text"
               value={this.state.from !== null ? moment(from).format("YYYY-MM-DD") : '' }
-              placeholder="MM-DD-YYYY"
+              placeholder="YYYY-MM-DD"
               onFocus={ this.openDaypicker }
               className="form_group__input"
             />
@@ -93,7 +93,7 @@ export default class Range extends React.Component {
             <input
               type="text"
               value={this.state.to !== null ? moment(to).format("YYYY-MM-DD") : '' }
-              placeholder="MM-DD-YYYY"
+              placeholder="YYYY-MM-DD"
               onChange={ this.handleInputChange }
               onFocus={ this.openDaypicker }
               className="form_group__input"

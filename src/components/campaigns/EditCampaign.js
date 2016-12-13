@@ -102,7 +102,7 @@ class EditCampaign extends Component {
       editbtn={true}
       showDatePicker='datepicker'
       onClickEdit={this.onClickEdit}
-    /> : <div style={{textAlign: 'center', marginTop: '50px'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
+    /> : <div style={{textAlign: 'center', marginTop: '150px'}}><img src={ring} alt="alt" style={{paddingBottom: '150px'}}/></div>
   const noData = campaign.error ? <div className="no_data" style={{textAlign: 'center'}}>No data</div> : loader
     return (
       <div className="main_wrapper">

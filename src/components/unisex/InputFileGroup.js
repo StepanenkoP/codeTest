@@ -23,8 +23,7 @@ class InputFileGroup extends Component {
           Upload photo
           <FileBase64
             id={id}
-            multiple={ true }
-            onDone={this.props.getFiles} />
+            handleFileChange={this.props.handleFileChange} />
         </label>
         {error && <span className="validate_span">{error}</span>}
       </div>

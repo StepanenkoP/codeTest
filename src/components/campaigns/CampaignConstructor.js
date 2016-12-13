@@ -313,7 +313,7 @@ class CampaignConstructor extends Component {
         <input
           type="text"
           value={this.props.start_date}
-          placeholder="MM-DD-YYYY"
+          placeholder="YYYY-MM-DD"
           onFocus={ this.openDaypicker }
           className="form_group__input"
           onChange={() => {}}
@@ -324,7 +324,7 @@ class CampaignConstructor extends Component {
         <input
           type="text"
           value={this.props.end_date}
-          placeholder="MM-DD-YYYY"
+          placeholder="YYYY-MM-DD"
           onChange={() => {}}
           className="form_group__input"
         />
