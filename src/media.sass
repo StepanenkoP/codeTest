@@ -102,9 +102,37 @@
   .ads_wrapper__item .left .buttons.delete_ad
     right: 100px
 
+
+  .stats_container
+    width: 100%
+    padding-right: 30px
+    padding-left: 30px
+    padding-top: 70px
+
+  .stats_container__date
+    top: 160px
+    right: 50%
+    margin-right: -180px
+
+  .stats_container__date .DayPicker
+    right: -85px
+
+  .stats_container__date .close_picker
+    right: -71px
+
+  .stats_container__table h2
+    text-align: left
+    padding-left: 35px
+
 @media screen and (max-width: 992px)
   .main_wrapper .main_header__line .main_mnu
     display: none
+
+  .stats_container__date .DayPicker
+    right: 0
+
+  .stats_container__date .close_picker
+    right: 15px
 
   .ads_wrapper__item .left .info .item:last-child
     background-image: none
@@ -206,6 +234,13 @@
     border-radius: 0
     top: 0
     position: fixed
+
+  .stats_container__table h2
+    padding-left: 0
+
+  .stats_container__table .table_row
+    padding-left: 0
+    padding-right: 0
 
   .ad_constructor.campaign_constructor .input_fields .block .form_group
     width: 100%
@@ -324,6 +359,15 @@
   .ad_constructor.campaign_constructor .checkbox_section .wrapper
     padding-left: 20px
 
+  .stats_container__date
+    width: 100%
+    right: 0
+    padding-right: 10px
+    padding-left: 10px
+    margin-right: 0
+
+  .stats_container__date .data_field
+    width: 140px
 
 @media screen and (min-width: 1200px)
 

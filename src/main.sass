@@ -806,3 +806,72 @@ body
   top: 87px
   z-index: 2
   cursor: pointer
+
+///Ad stats
+
+.stats_container
+  width: 1170px
+  margin: auto
+  padding-top: 105px
+  padding-bottom: 110px
+  position: relative
+  &__header
+    text-align: center
+    font-weight: 700
+    text-transform: uppercase
+    font-size: 21px
+    margin-bottom: 60px
+  &__date
+    position: absolute
+    top: 125px
+    right: 0
+    width: 360px
+    .data_field
+      float: left
+    .DayPicker
+      left: auto
+      right: 0
+    .close_picker
+      right: 15px
+  &__table
+    border: 1px solid #D7E0F1
+    padding: 35px 20px
+    width: 100%
+    overflow-x: auto
+    margin-top: 70px
+    .wrapper
+      width: 1128px
+    h2
+      padding-bottom: 35px
+      background-image: url(./img/adlist/dots2.png)
+      background-repeat: repeat-x
+      background-position: 0 100%
+      margin-top: 0
+      margin-bottom: 0
+    .table_data
+      .table_row
+        margin-bottom: 25px
+        &:last-child
+          margin-bottom: 0
+    .table_row
+      padding: 0 35px
+      font-size: 13px
+      &.title
+        padding-top: 35px
+        padding-bottom: 35px
+        font-size: 16px
+        font-weight: 700
+      div
+        display: inline-block
+        vertical-align: top
+        padding-right: 20px
+        word-wrap: break-word
+      .name,
+      .id
+        width: 225px
+      .date
+        width: 185px
+      .views
+        width: 170px
+      .clicks
+        width: 145px

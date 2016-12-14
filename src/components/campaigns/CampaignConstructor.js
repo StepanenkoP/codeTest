@@ -398,6 +398,7 @@ class CampaignConstructor extends Component {
                   className="form_group__input"
                 >
                   <option value="" disabled>Gender</option>
+                  <option value="0">Both</option>
                   <option value="1">Male</option>
                   <option value="2">Female</option>
                 </select>

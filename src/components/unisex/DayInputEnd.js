@@ -75,10 +75,12 @@ export default class Range extends React.Component {
   }
   render() {
     const { from, to } = this.state;
-    return (
+    const startTitle = this.props.startTitle ? <label className="form_group__label">{this.props.startTitle}</label> : <label className="form_group__label">Start Date</label>
+  const endTitle = this.props.endTitle ? <label className="form_group__label">{this.props.endTitle}</label> : <label className="form_group__label">End Date</label>
+  return (
         <div>
           <div className="data_field">
-            <label className="form_group__label">Start Date</label>
+            {startTitle}
             <input
               type="text"
               value={this.state.from !== null ? moment(from).format("YYYY-MM-DD") : '' }
@@ -89,7 +91,7 @@ export default class Range extends React.Component {
             {this.props.errors.start_date && <span className="validate_span">{this.props.errors.start_date}</span>}
           </div>
           <div className="data_field" style={{float: 'right'}}>
-            <label className="form_group__label">End Date</label>
+            {endTitle}
             <input
               type="text"
               value={this.state.to !== null ? moment(to).format("YYYY-MM-DD") : '' }

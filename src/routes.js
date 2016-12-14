@@ -10,6 +10,7 @@ import AdversPage from './components/advers/AdversPage'
 import CampaignsPage from './components/campaigns/CampaignsPage'
 import CreateAd from './components/advers/CreateAd'
 import EditAd from './components/advers/EditAd'
+import AdStats from './components/advers/AdStats'
 import CreateCampaign from './components/campaigns/CreateCampaign'
 import EditCampaign from './components/campaigns/EditCampaign'
 import NoPage from './components/404/NoPage'
@@ -70,6 +71,7 @@ export default (
     <Route path='settings' component={SettingsPage} onEnter={needLogin}/>
     <Route path='advers_list' component={AdversPage} onEnter={needLogin}>
       <Route path=':id' component={EditAd} />
+      <Route path='stats/:id' component={AdStats} />
     </Route>
     <Route path='campaign_list' component={CampaignsPage} onEnter={needLogin}>
       <Route path=':id' component={EditCampaign} />

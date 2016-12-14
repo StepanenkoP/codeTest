@@ -32,9 +32,9 @@ class Awaiting extends Component {
     <div className="buttons clearfix delete_ad">Delete this advertisement?<div className="block_btn"><button className="yes" onClick={() => this.deleteById(id)}>Yes</button><button className="no" onClick={this.closeDeleteBlock}>No</button></div></div>
       :
     <div className="buttons clearfix">
-      <div className="btn_basic settings"><Link to={`/advers_list/${id}`} className="cam_link" onClick={this.idToStorage}></Link></div>
+      <div className="btn_basic settings"><Link to={`/advers_list/${id}`} className="cam_link"></Link></div>
       <div className="btn_basic delete" onClick={this.openDeleteBlock}></div>
-      <div className="btn_basic stats"></div>
+      <div className="btn_basic stats"><Link to={`/advers_list/stats/${id}`} className="cam_link"></Link></div>
     </div>
     return (
       <div className="ads_wrapper__item clearfix" style={this.state.deleteIsOpen && window.innerWidth < 992 ? {paddingBottom: '100px'} : null}>
