@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {CREATE_AD, LOAD_ADS, LOAD_AD, DELETE_AD} from '../types'
+import {CREATE_AD, LOAD_ADS, LOAD_AD, DELETE_AD, GET_AD_STATS} from '../types'
 
 export function createAD(data) {
   return dispatch => {
@@ -46,6 +46,24 @@ export function loadAd(id) {
     }).then(
       r => dispatch({
         type: LOAD_AD,
+        payload: r.data
+      })
+    )
+  }
+}
+
+export function getAdStats(id) {
+  return dispatch => {
+    return axios({
+      method: "get",
+      url: `/api/advertisement/${id}/stats`,
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.token
+      }
+    }).then(
+      r => dispatch({
+        type: GET_AD_STATS,
         payload: r.data
       })
     )

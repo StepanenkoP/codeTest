@@ -28,10 +28,11 @@ export default class Range extends React.Component {
       // })
     }
   }
-  handleDayClick(e, day) {
-    console.log(day);
+  handleDayClick(e, day, { disabled}) {
+    if (disabled) {
+      return;
+    }
     const range = DateUtils.addDayToRange(day, this.state);
-    console.log(range.from);
     this.setState(range);
     if (range.from && range.to) {
       this.props.getDateData({
@@ -106,6 +107,7 @@ export default class Range extends React.Component {
             <div className="close_picker" onClick={this.closeDaypicker}><img src={close} alt="alt"/></div>
             <DayPicker
               numberOfMonths={ 2 }
+              disabledDays={ this.props.disableDays ? DateUtils.isFutureDay : null }
               selectedDays={ day => DateUtils.isDayInRange(day, { from, to }) }
               onDayClick={ this.handleDayClick }
             />

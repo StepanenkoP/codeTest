@@ -43,11 +43,13 @@ class CreateAd extends Component {
         <FlashList />
         <Header
           title="Statistics"
-          text='"Lego City" SC302948736'
+          text={`"Lego City" ${this.props.params.id}`}
           openMenu={this.openMenu}
           logOut={this.logOut}
         />
-        <AdStatsContainer />
+        <AdStatsContainer
+          id={this.props.params.id}
+        />
         <Footer />
       </div>
     );

@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import DayInputEnd from '../unisex/DayInputEnd'
 var LineChart = require("react-chartjs").Line
+import {connect} from 'react-redux'
+import {getAdStats} from '../../AC/adsAC'
 
 class AdStatsContainer extends Component {
   state = {
     start_date: '',
     end_date: '',
     errors: {}
+  }
+
+  componentDidMount() {
+    this.props.getAdStats(this.props.id)
   }
 
   getDateData = (data) => {
@@ -17,6 +23,7 @@ class AdStatsContainer extends Component {
   }
 
   render () {
+    console.log(this.props);
     const data = {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
@@ -40,6 +47,7 @@ class AdStatsContainer extends Component {
             startState={this.state.start_date}
             startTitle='From'
             endTitle='To'
+            disableDays={true}
           />
         </div>
         <LineChart data={data} width="1170" height="310"/>
@@ -79,4 +87,10 @@ class AdStatsContainer extends Component {
   }
 }
 
-export default AdStatsContainer;
+function mapStateToProps({adsData}) {
+  return {
+    adStats: adsData.adStats
+  }
+}
+
+export default connect(mapStateToProps, {getAdStats})(AdStatsContainer);
