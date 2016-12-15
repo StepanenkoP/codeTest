@@ -28,7 +28,7 @@ class CampaignList extends Component {
   return (
       <div className="ads_wrapper cam_wrapper">
         {List}
-        {!this.props.campaignList.campaign_count && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
+        {!this.props.campaignList.campaign_count && this.props.campaignList.campaign_count !== null && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
       </div>
     )
   }

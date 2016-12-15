@@ -27,7 +27,7 @@ class AdList extends Component {
     return (
       <div className="ads_wrapper">
         {list}
-        {!this.props.adsList.advertisement_count && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
+        {!this.props.adsList.advertisement_count && this.props.adsList.advertisement_count !== null && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
       </div>
     )
   }
