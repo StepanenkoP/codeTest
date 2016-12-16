@@ -40,12 +40,14 @@ class App extends Component {
 
   render() {
     console.log(this.props);
-    const {adv_completed, adv_launched, balance, total_spend, total_views, unread_message} = this.props.accountStats
+    const {adv_completed, adv_launched, balance, total_spend, total_views, unread_message, stats} = this.props.accountStats
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu} /> : null
+    const dates = stats ? stats.map(item => item.date) : []
+    const views = stats ? stats.map(item => item.views) : null
     const data = {
-        labels: [0,1],
+        labels: dates,
         datasets: [{
-            data: [0,1],
+            data: views,
             fillColor: "rgba(151,187,205,0.2)",
             pointColor: "rgba(151,187,205,1)",
             strokeColor: "rgba(151,187,205,1)",
@@ -83,7 +85,7 @@ class App extends Component {
           <p>You balance</p>
         </li>
       </ul>
-      <h2>Views last month</h2>
+      <h2>Total views</h2>
       <div className="data_chart">
         <LineChart data={data} width="1170" height="310"/>
       </div>
