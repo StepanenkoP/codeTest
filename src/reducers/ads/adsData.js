@@ -5,7 +5,7 @@ const initialState = {
     advertisement_array: [],
     advertisement_count: null
   },
-  adStats: [],
+  adStats: {},
   ad: {}
 }
 

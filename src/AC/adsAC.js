@@ -52,11 +52,11 @@ export function loadAd(id) {
   }
 }
 
-export function getAdStats(id) {
+export function getAdStats(id, start_date, end_date) {
   return dispatch => {
     return axios({
       method: "get",
-      url: `/api/advertisement/${id}/stats`,
+      url: `/api/advertisement/${id}/stats${start_date !== undefined ? `/${start_date}/${end_date}` : ''}`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
