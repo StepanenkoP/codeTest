@@ -124,6 +124,17 @@
     text-align: left
     padding-left: 35px
 
+  .ads_wrapper__item .left .info .item.name,
+  .ads_wrapper__item .left .info .item.end
+    background-image: none
+
+  .settings_wrapper__form.mess
+    width: 100%
+
+  .settings_wrapper
+    padding-left: 30px
+    padding-right: 30px
+
 @media screen and (max-width: 992px)
   .main_wrapper .main_header__line .main_mnu
     display: none
@@ -283,8 +294,16 @@
     width: 90%
     box-sizing: border-box
 
+  .settings_wrapper__form.mess .title
+    margin: 0
+    font-size: 20px
+    
   .create_block
     font-size: 12px
+
+  .settings_wrapper__form .feedback
+    padding-left: 30px
+    padding-right: 30px
 
   .ads_wrapper__item
     padding-right: 15px
@@ -304,6 +323,9 @@
 
   .ads_wrapper__item .left .info .item:last-child
     text-align: right
+
+  .ads_wrapper__item .left .info .item.name
+    text-align: center
 
   .main_wrapper .data_ul li
     width: 100%
@@ -376,7 +398,7 @@
     word-break: break-word
     padding-right: 20px
     &.name
-      width: 140px
+      width: 220px
     &.country
       width: 177px
     &.start,

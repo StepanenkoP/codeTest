@@ -4,12 +4,18 @@ import DaysCheck from './DaysCheck'
 import TimeCheck from './TimeCheck'
 import AgeCheck from './AgeCheck'
 import WebsitesCheck from './WebsitesCheck'
+import AfricaCheck from './AfricaCheck'
+import AmericaCheck from './AmericaCheck'
+import AsiaCheck from './AsiaCheck'
+import EuropeCheck from './EuropeCheck'
+import OceaniaCheck from './OceaniaCheck'
 import DayInputEnd from '../unisex/DayInputEnd'
 import {connect} from 'react-redux'
 import {getCountries,getDays,getTimes,getAges,getWebsites,createCampaign} from '../../AC/campaignConstructor'
 import validateCampaignForm from '../../functions/validateCampaignForm'
 import update from 'react-addons-update'
 import {addFlashMessage} from '../../AC/flashMessages'
+import back from '../../img/signup/back.png'
 
 class CampaignConstructor extends Component {
   state = {
@@ -28,7 +34,18 @@ class CampaignConstructor extends Component {
     serverTimes: [],
     serverAges: [],
     serverWebsites: [],
+    serverAfrica: [],
+    serverAmerica: [],
+    serverAsia: [],
+    serverEurope: [],
+    serverOceania: [],
     showDatePicker: true,
+    showModal: false,
+    africa: [],
+    america: [],
+    asia: [],
+    europe: [],
+    oceania: [],
     errors: {}
   }
 
@@ -82,6 +99,18 @@ class CampaignConstructor extends Component {
         errors: newData
       })
     }
+  }
+
+  clickModal = () => {
+    this.setState({
+      showModal: true
+    })
+  }
+
+  closeModal = () => {
+    this.setState({
+      showModal: false
+    })
   }
 
   isValid() {
@@ -260,6 +289,7 @@ class CampaignConstructor extends Component {
     }
   }
 
+
   websitesChanged= (websites) => {
     if (websites.indexOf("All") !== -1) {
       const toServer = this.props.websites.map(item => item.id)
@@ -293,6 +323,176 @@ class CampaignConstructor extends Component {
     }
   }
 
+  africaChanged= (africa) => {
+    console.log(africa);
+    if (africa.indexOf("All") !== -1) {
+      const toServer = this.props.countries.Africa.map(item => item.id)
+      this.setState({
+        africa: ['All'],
+        serverAfrica: toServer
+      });
+    }
+    if (this.state.africa.indexOf("All") !== -1 && this.state.africa.length === 1) {
+      const allIndex = africa.indexOf("All");
+      const newArr = africa.splice(allIndex, 1)
+      const toServer = this.props.countries.Africa.filter(item => africa.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        africa: africa,
+        serverAfrica: toServer
+      });
+    }
+    if (africa.indexOf("All") === -1) {
+      const toServer = this.props.countries.Africa.filter(item => africa.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        africa: africa,
+        serverAfrica: toServer
+      });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {country_id: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+  }
+
+  americaChanged= (america) => {
+    console.log(america);
+    if (america.indexOf("All") !== -1) {
+      const toServer = this.props.countries.Americas.map(item => item.id)
+      this.setState({
+        america: ['All'],
+        serverAmerica: toServer
+      });
+    }
+    if (this.state.america.indexOf("All") !== -1 && this.state.america.length === 1) {
+      const allIndex = america.indexOf("All");
+      const newArr = america.splice(allIndex, 1)
+      const toServer = this.props.countries.Americas.filter(item => america.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        america: america,
+        serverAmerica: toServer
+      });
+    }
+    if (america.indexOf("All") === -1) {
+      const toServer = this.props.countries.Americas.filter(item => america.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        america: america,
+        serverAmerica: toServer
+      });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {country_id: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+  }
+
+  asiaChanged= (asia) => {
+    console.log(asia);
+    if (asia.indexOf("All") !== -1) {
+      const toServer = this.props.countries.Asia.map(item => item.id)
+      this.setState({
+        asia: ['All'],
+        serverAsia: toServer
+      });
+    }
+    if (this.state.asia.indexOf("All") !== -1 && this.state.asia.length === 1) {
+      const allIndex = asia.indexOf("All");
+      const newArr = asia.splice(allIndex, 1)
+      const toServer = this.props.countries.Asia.filter(item => asia.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        asia: asia,
+        serverAmerica: toServer
+      });
+    }
+    if (asia.indexOf("All") === -1) {
+      const toServer = this.props.countries.Asia.filter(item => asia.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        asia: asia,
+        serverAmerica: toServer
+      });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {country_id: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+  }
+
+  europeChanged= (europe) => {
+    console.log(europe);
+    if (europe.indexOf("All") !== -1) {
+      const toServer = this.props.countries.Europe.map(item => item.id)
+      this.setState({
+        europe: ['All'],
+        serverEurope: toServer
+      });
+    }
+    if (this.state.europe.indexOf("All") !== -1 && this.state.europe.length === 1) {
+      const allIndex = europe.indexOf("All");
+      const newArr = europe.splice(allIndex, 1)
+      const toServer = this.props.countries.Europe.filter(item => europe.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        europe: europe,
+        serverEurope: toServer
+      });
+    }
+    if (europe.indexOf("All") === -1) {
+      const toServer = this.props.countries.Europe.filter(item => europe.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        europe: europe,
+        serverEurope: toServer
+      });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {country_id: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+  }
+
+  oceaniaChanged= (oceania) => {
+    console.log(oceania);
+    if (oceania.indexOf("All") !== -1) {
+      const toServer = this.props.countries.Oceania.map(item => item.id)
+      this.setState({
+        oceania: ['All'],
+        serverOceania: toServer
+      });
+    }
+    if (this.state.oceania.indexOf("All") !== -1 && this.state.oceania.length === 1) {
+      const allIndex = oceania.indexOf("All");
+      const newArr = oceania.splice(allIndex, 1)
+      const toServer = this.props.countries.Oceania.filter(item => oceania.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        oceania: oceania,
+        serverOceania: toServer
+      });
+    }
+    if (oceania.indexOf("All") === -1) {
+      const toServer = this.props.countries.Oceania.filter(item => oceania.indexOf(item.title) !== -1).map(item=> item.id)
+      this.setState({
+        oceania: oceania,
+        serverOceania: toServer
+      });
+    }
+    const {isValid} = validateCampaignForm(this.state)
+    if (!isValid) {
+      const newData = update(this.state.errors, {country_id: {$set: ''}});
+      this.setState({
+        errors: newData
+      })
+    }
+  }
+
   showDatePicker = () => {
     this.setState({
       showDatePicker: true,
@@ -304,7 +504,6 @@ class CampaignConstructor extends Component {
 
   render() {
     console.log(this.props);
-    console.log(this.state.showDatePicker);
     const {errors} = this.state
     const dayInputs = !this.state.showDatePicker ?
     <div>
@@ -332,9 +531,13 @@ class CampaignConstructor extends Component {
       <div className="reset" onClick={this.showDatePicker}>Reset</div>
     </div> : <DayInputEnd errors={this.state.errors} getDateData={this.getDateData} startState={this.state.start_date}/>
     const title = this.props.title ? <h2>Edit Campaign</h2> : <h2>Create Campaign</h2>
-    const countries = this.props.countries ? this.props.countries.map(item => <option key={item.id} value={item.id}>{item.name}</option>) : null
     const allInArr = [{id:0, title: "All"}]
     const days = this.props.days ? allInArr.concat(this.props.days) : []
+    const countriesAfrica = this.props.countries.Africa ? allInArr.concat(this.props.countries.Africa) : []
+    const countriesAmerica = this.props.countries.Americas ? allInArr.concat(this.props.countries.Americas) : []
+    const countriesAsia = this.props.countries.Asia ? allInArr.concat(this.props.countries.Asia) : []
+    const countriesEurope = this.props.countries.Europe ? allInArr.concat(this.props.countries.Europe) : []
+    const countriesOceania = this.props.countries.Oceania ? allInArr.concat(this.props.countries.Oceania) : []
     const times = this.props.times ? allInArr.concat(this.props.times) : []
     const ages = this.props.ages ? allInArr.concat(this.props.ages) : []
     const websites = this.props.websites ? allInArr.concat(this.props.websites) : []
@@ -355,116 +558,153 @@ class CampaignConstructor extends Component {
       }
     }
     const buttonSwitch = !this.props.editbtn ? <button className="form_group__button" onClick={this.onClickHandler}>Create</button> : <button className="form_group__button" onClick={this.onClickHandler}>Save</button>
+  const countryModal = !this.state.showModal ? <div className="ad_constructor__form no_p clearfix">
+    {title}
+    <div className="input_fields">
+      <div className="block">
+        <TextFieldGroup
+          value={this.state.title}
+          label="Name of the compaign"
+          placeholder=""
+          type="text"
+          field="title"
+          onChangeHandler={this.onChangeHandler}
+          className="form_group__input"
+          error={this.state.errors.title}
+        />
+        <div className="form_group date">
+          {dayInputs}
+        </div>
+      </div>
+      <div className="block">
+        <div className="form_group">
+          <label className="form_group__label">Country</label>
+          <button className="country" onClick={this.clickModal}>click to choose</button>
+          {errors.country_id && <span className="validate_span">{errors.country_id}</span>}
+        </div>
+        <div className="form_group">
+          <label className="form_group__label">Gender</label>
+          <select
+            value={this.state.gender_id}
+            onChange={this.onChangeHandler}
+            name="gender_id"
+            className="form_group__input"
+          >
+            <option value="" disabled>Gender</option>
+            <option value="0">Both</option>
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+          </select>
+          {errors.gender_id && <span className="validate_span">{errors.gender_id}</span>}
+        </div>
+      </div>
+    </div>
+    <DaysCheck
+      title="Days of the week"
+      items={days}
+      checkTitle={this.state.days}
+      daysChanged={this.daysChanged}
+      error={this.state.errors.days}
+    />
+    <TimeCheck
+      title="Time"
+      items={times}
+      checkTitle={this.state.times}
+      timeChanged={this.timeChanged}
+      error={this.state.errors.times}
+    />
+    <AgeCheck
+      title="Age"
+      items={ages}
+      checkTitle={this.state.ages}
+      ageChanged={this.ageChanged}
+      error={this.state.errors.ages}
+    />
+    <div className="input_fields limits">
+      <div className="block">
+        <TextFieldGroup
+          value={this.state.limit_per_day}
+          label="The limit of page views per day"
+          placeholder=""
+          type="text"
+          field="limit_per_day"
+          limits="true"
+          onChangeHandler={this.onChangeHandler}
+          className="form_group__input"
+          error={this.state.errors.limit_per_day}
+        />
+        <TextFieldGroup
+          value={this.state.limit_per_user}
+          label="Limit of views for each user"
+          placeholder=""
+          type="text"
+          limits="true"
+          field="limit_per_user"
+          onChangeHandler={this.onChangeHandler}
+          className="form_group__input"
+          error={this.state.errors.limit_per_user}
+        />
+      </div>
+    </div>
+    <WebsitesCheck
+      title="Websites"
+      items={websites}
+      width={{width:150}}
+      checkTitle={this.state.websites}
+      websitesChanged={this.websitesChanged}
+      error={this.state.errors.websites}
+    />
+    <div className="form_group create_ad">
+      {buttonSwitch}
+    </div>
+  </div>
+  :
+  <div className="ad_constructor__form no_p clearfix">
+    <div className="back" onClick={this.closeModal}><img src={back} alt="alt"/> Back</div>
+    <h2>Choose your Countries</h2>
+    <AfricaCheck
+      title="Africa"
+      items={countriesAfrica}
+      width={{width:150}}
+      checkTitle={this.state.africa}
+      africaChanged={this.africaChanged}
+    />
+    <AmericaCheck
+      title="America"
+      items={countriesAmerica}
+      width={{width:150}}
+      checkTitle={this.state.america}
+      americaChanged={this.americaChanged}
+    />
+    <AsiaCheck
+      title="Asia"
+      items={countriesAsia}
+      width={{width:150}}
+      checkTitle={this.state.asia}
+      asiaChanged={this.asiaChanged}
+    />
+    <EuropeCheck
+      title="Europe"
+      items={countriesEurope}
+      width={{width:150}}
+      checkTitle={this.state.europe}
+      europeChanged={this.europeChanged}
+    />
+    <OceaniaCheck
+      title="Oceania"
+      items={countriesOceania}
+      width={{width:150}}
+      checkTitle={this.state.oceania}
+      oceaniaChanged={this.oceaniaChanged}
+    />
+    <div className="form_group create_ad">
+      <button className="form_group__button" onClick={this.closeModal}>Back</button>
+    </div>
+  </div>
+
     return (
       <div className="ad_constructor campaign_constructor">
-        <div className="ad_constructor__form no_p clearfix">
-          {title}
-          <div className="input_fields">
-            <div className="block">
-              <TextFieldGroup
-                value={this.state.title}
-                label="Name of the compaign"
-                placeholder=""
-                type="text"
-                field="title"
-                onChangeHandler={this.onChangeHandler}
-                className="form_group__input"
-                error={this.state.errors.title}
-              />
-              <div className="form_group date">
-                {dayInputs}
-              </div>
-            </div>
-            <div className="block">
-              <div className="form_group">
-                <label className="form_group__label">Country</label>
-                <select
-                  value={this.state.country_id}
-                  onChange={this.onChangeHandler}
-                  name="country_id"
-                  className="form_group__input"
-                >
-                  <option value="" disabled>Country</option>
-                  {countries}
-                </select>
-                {errors.country_id && <span className="validate_span">{errors.country_id}</span>}
-              </div>
-              <div className="form_group">
-                <label className="form_group__label">Gender</label>
-                <select
-                  value={this.state.gender_id}
-                  onChange={this.onChangeHandler}
-                  name="gender_id"
-                  className="form_group__input"
-                >
-                  <option value="" disabled>Gender</option>
-                  <option value="0">Both</option>
-                  <option value="1">Male</option>
-                  <option value="2">Female</option>
-                </select>
-                {errors.gender_id && <span className="validate_span">{errors.gender_id}</span>}
-              </div>
-            </div>
-          </div>
-          <DaysCheck
-            title="Days of the week"
-            items={days}
-            checkTitle={this.state.days}
-            daysChanged={this.daysChanged}
-            error={this.state.errors.days}
-          />
-          <TimeCheck
-            title="Time"
-            items={times}
-            checkTitle={this.state.times}
-            timeChanged={this.timeChanged}
-            error={this.state.errors.times}
-          />
-          <AgeCheck
-            title="Age"
-            items={ages}
-            checkTitle={this.state.ages}
-            ageChanged={this.ageChanged}
-            error={this.state.errors.ages}
-          />
-          <div className="input_fields limits">
-            <div className="block">
-              <TextFieldGroup
-                value={this.state.limit_per_day}
-                label="The limit of page views per day"
-                placeholder=""
-                type="text"
-                field="limit_per_day"
-                limits="true"
-                onChangeHandler={this.onChangeHandler}
-                className="form_group__input"
-                error={this.state.errors.limit_per_day}
-              />
-              <TextFieldGroup
-                value={this.state.limit_per_user}
-                label="Limit of views for each user"
-                placeholder=""
-                type="text"
-                limits="true"
-                field="limit_per_user"
-                onChangeHandler={this.onChangeHandler}
-                className="form_group__input"
-                error={this.state.errors.limit_per_user}
-              />
-            </div>
-          </div>
-          <WebsitesCheck
-            title="Websites"
-            items={websites}
-            width={{width:150}}
-            checkTitle={this.state.websites}
-            websitesChanged={this.websitesChanged}
-            error={this.state.errors.websites}
-          />
-          <div className="form_group create_ad">
-            {buttonSwitch}
-          </div>
-        </div>
+        {countryModal}
       </div>
     )
   }
@@ -481,7 +721,7 @@ function mapStateToProps({campaignGetData}) {
     days: campaignGetData.daysList,
     times: campaignGetData.timesList,
     ages: campaignGetData.agesList,
-    websites: campaignGetData.websitesList,
+    websites: campaignGetData.websitesList
   }
 }
 

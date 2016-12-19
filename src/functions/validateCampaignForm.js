@@ -17,7 +17,7 @@ export default function validateCampaignForm(data) {
     errors.end_date = "Enter end date";
   }
   if (Validator.isEmpty(data.country_id.trim())) {
-    errors.country_id = "Select your country";
+    errors.country_id = "Select your countries";
   }
   if (Validator.isEmpty(data.gender_id.trim())) {
     errors.gender_id = "Select your gender";

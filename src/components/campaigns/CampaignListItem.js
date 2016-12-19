@@ -30,7 +30,7 @@ class CampaignListItem extends Component {
   }
 
   render() {
-    const {title,country,start,end, id, advertisements_count} = this.props
+    const {title,start,end, id, advertisements_count} = this.props
     const morePadding = this.state.deleteIsOpen && window.innerWidth < 1200 ? {paddingBottom: '150px'} : {}
     const buttons = this.state.deleteIsOpen ?
     <div className="buttons clearfix delete_campaign">Delete this campaign?<div className="block_btn"><button className="yes" onClick={() => this.deleteById(id)}>Yes</button><button className="no" onClick={this.closeDeleteBlock}>No</button></div></div>
@@ -46,10 +46,6 @@ class CampaignListItem extends Component {
             <div className="item name">
               <p className="item_info">{title}</p>
               <p className="item_title">Name</p>
-            </div>
-            <div className="item country">
-              <p className="item_info">{country}</p>
-              <p className="item_title">Country</p>
             </div>
           </div>
           <div className="info clearfix">
@@ -78,7 +74,6 @@ class CampaignListItem extends Component {
 
 CampaignListItem.propTypes = {
   title: React.PropTypes.string.isRequired,
-  country: React.PropTypes.string.isRequired,
   start: React.PropTypes.string.isRequired,
   end: React.PropTypes.string.isRequired,
   id: React.PropTypes.number.isRequired,

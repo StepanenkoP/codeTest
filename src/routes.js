@@ -14,6 +14,9 @@ import AdStats from './components/advers/AdStats'
 import CreateCampaign from './components/campaigns/CreateCampaign'
 import EditCampaign from './components/campaigns/EditCampaign'
 import NoPage from './components/404/NoPage'
+import FeedbackPage from './components/feedback/FeedbackPage'
+import MessagesPage from './components/messages/MessagesPage'
+import Message from './components/messages/Message'
 import App from './components/App'
 import {store} from './index'
 import axios from 'axios'
@@ -77,6 +80,10 @@ export default (
       <Route path=':id' component={EditCampaign} />
     </Route>
     <Route path='create_ad' component={CreateAd} onEnter={needLogin}/>
+    <Route path='feedback' component={FeedbackPage} onEnter={needLogin}/>
+    <Route path='messages' component={MessagesPage} onEnter={needLogin}>
+      <Route path=':id' component={Message} />
+    </Route>
     <Route path='create_campaign' component={CreateCampaign} onEnter={needLogin}/>
     <Route path='*' component={NoPage}/>
   </Route>

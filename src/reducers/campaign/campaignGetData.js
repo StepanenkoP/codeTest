@@ -1,7 +1,7 @@
 import {LOAD_COUNTRIES, LOAD_DAYS, LOAD_TIMES, LOAD_AGES, LOAD_WEBSITES, LOAD_CAMPAIGNS, LOAD_CAMPAIGN, DELETE_CAMPAIGN} from '../../types'
 
 const initialState = {
-  countriesList: [],
+  countriesList: {},
   daysList: [],
   timesList: [],
   agesList: [],

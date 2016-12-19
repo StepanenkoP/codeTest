@@ -97,6 +97,16 @@ body
     color: #000
     font-weight: 700
     margin-bottom: 5px
+  .country
+    background-color: #4272BC
+    color: #fff
+    border: none
+    display: block
+    height: 40px
+    text-transform: uppercase
+    padding: 0 20px
+    border-radius: 2px
+    font-weight: 700
   .labelFile
     position: absolute
     right: 3px
@@ -401,6 +411,52 @@ body
     padding: 35px 0px 0 0px
     box-shadow: 0 0 10px rgba(0,0,0,.1)
     color: #000
+    &.mess
+      width: 1170px
+      box-shadow: none
+      border-radius: 0
+      border: 1px solid #D7E0F1
+    .feedback
+      padding: 30px 70px
+    .messages_wrapper
+      overflow-x: auto
+    .messages
+      padding-top: 30px
+      width: 1168px
+      &_row
+        padding-left: 65px
+        font-weight: 700
+        font-size: 16px
+        margin-bottom: 25px
+        cursor: pointer
+        &.passive
+          background-color: #F6F4F6
+          padding-top: 15px
+          padding-bottom: 15px
+          margin-bottom: 0
+          font-size: 13px
+          background-image: url(./img/messages/passive.png)
+          background-repeat: no-repeat
+          background-position: 25px 50%
+        &.active
+          font-size: 13px
+          background-image: url(./img/messages/active.png)
+          background-repeat: no-repeat
+          background-position: 25px 50%
+          padding-top: 15px
+          padding-bottom: 15px
+          margin-bottom: 0
+          font-weight: 400
+        div
+          float: left
+          &.from
+            width: 190px
+          &.subject
+            width: 345px
+          &.id
+            width: 250px
+          &.date
+            width: 200px
     .title
       padding-left: 15px
       text-transform: uppercase
@@ -524,7 +580,6 @@ body
         margin-bottom: 30px
       .info
         float: left
-        height: 51px
         .item
           float: left
           padding-right: 38px
@@ -667,6 +722,7 @@ body
         .checkbox_label
           display: inline-block
           width: 115px
+          vertical-align: top
           margin-bottom: 15px
           padding-left: 25px
           position: relative
@@ -729,6 +785,17 @@ body
     &.no_p
       padding-left: 0
       padding-right: 0
+      .back
+        display: inline-block
+        cursor: pointer
+        padding-left: 30px
+        margin-bottom: 30px
+        text-transform: uppercase
+        font-weight: 700
+        img
+          margin-right: 5px
+          position: relative
+          top: -1px
       h2
         margin-left: 20px
         margin-right: 20px
