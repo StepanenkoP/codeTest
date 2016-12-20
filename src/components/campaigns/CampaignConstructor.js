@@ -39,6 +39,7 @@ class CampaignConstructor extends Component {
     serverAsia: [],
     serverEurope: [],
     serverOceania: [],
+    serverCountries: [],
     showDatePicker: true,
     showModal: false,
     africa: [],
@@ -192,14 +193,15 @@ class CampaignConstructor extends Component {
   daysChanged= (days) => {
     if (days.indexOf("All") !== -1) {
       const toServer = this.props.days.map(item => item.id)
+      const toClient = this.props.days.map(item => item.title)
       this.setState({
-        days: ['All'],
+        days: ['All'].concat(toClient),
         serverDays: toServer
       });
     }
-    if (this.state.days.indexOf("All") !== -1 && this.state.days.length === 1) {
+    if (this.state.days.indexOf("All") !== -1 && this.state.serverDays.length === this.props.days.length) {
       const allIndex = days.indexOf("All");
-      const newArr = days.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? days = [] : days.splice(allIndex, 1)
       const toServer = this.props.days.filter(item => days.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         days: days,
@@ -225,14 +227,15 @@ class CampaignConstructor extends Component {
   timeChanged= (time) => {
     if (time.indexOf("All") !== -1) {
       const toServer = this.props.times.map(item => item.id)
+      const toClient = this.props.times.map(item => item.title)
       this.setState({
-        times: ['All'],
+        times: ['All'].concat(toClient),
         serverTimes: toServer
       });
     }
-    if (this.state.times.indexOf("All") !== -1 && this.state.times.length === 1) {
+    if (this.state.times.indexOf("All") !== -1 && this.state.serverTimes.length === this.props.times.length) {
       const allIndex = time.indexOf("All");
-      const newArr = time.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? time = [] : time.splice(allIndex, 1)
       const toServer = this.props.times.filter(item => time.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         times: time,
@@ -256,17 +259,17 @@ class CampaignConstructor extends Component {
   }
 
   ageChanged= (age) => {
-    console.log(age);
     if (age.indexOf("All") !== -1) {
       const toServer = this.props.ages.map(item => item.id)
+      const toClient = this.props.ages.map(item => item.title)
       this.setState({
-        ages: ['All'],
+        ages: ['All'].concat(toClient),
         serverAges: toServer
       });
     }
-    if (this.state.ages.indexOf("All") !== -1 && this.state.ages.length === 1) {
+    if (this.state.ages.indexOf("All") !== -1 && this.state.serverAges.length === this.props.ages.length) {
       const allIndex = age.indexOf("All");
-      const newArr = age.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? age = [] : age.splice(allIndex, 1)
       const toServer = this.props.ages.filter(item => age.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         ages: age,
@@ -293,14 +296,15 @@ class CampaignConstructor extends Component {
   websitesChanged= (websites) => {
     if (websites.indexOf("All") !== -1) {
       const toServer = this.props.websites.map(item => item.id)
+      const toClient = this.props.websites.map(item => item.title)
       this.setState({
-        websites: ['All'],
+        websites: ['All'].concat(toClient),
         serverWebsites: toServer
       });
     }
-    if (this.state.websites.indexOf("All") !== -1 && this.state.websites.length === 1) {
+    if (this.state.websites.indexOf("All") !== -1 && this.state.serverWebsites.length === this.props.websites.length) {
       const allIndex = websites.indexOf("All");
-      const newArr = websites.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? websites = [] : websites.splice(allIndex, 1)
       const toServer = this.props.websites.filter(item => websites.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         websites: websites,
@@ -323,18 +327,71 @@ class CampaignConstructor extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.serverAfrica !== this.state.serverAfrica) {
+      this.setState({
+        country_id: 'checked'
+      })
+    }
+    if (prevState.serverAmerica !== this.state.serverAmerica) {
+      this.setState({
+        country_id: 'checked'
+      })
+    }
+    if (prevState.serverAsia !== this.state.serverAsia) {
+      this.setState({
+        country_id: 'checked'
+      })
+    }
+    if (prevState.serverEurope !== this.state.serverEurope) {
+      this.setState({
+        country_id: 'checked'
+      })
+    }
+    if (prevState.serverOceania !== this.state.serverOceania) {
+      this.setState({
+        country_id: 'checked'
+      })
+    }
+    if (prevState.serverAfrica.length > this.state.serverAfrica) {
+      this.setState({
+        country_id: ''
+      })
+    }
+    if (prevState.serverAmerica.length > this.state.serverAmerica) {
+      this.setState({
+        country_id: ''
+      })
+    }
+    if (prevState.serverAsia.length > this.state.serverAsia) {
+      this.setState({
+        country_id: ''
+      })
+    }
+    if (prevState.serverEurope.length > this.state.serverEurope) {
+      this.setState({
+        country_id: ''
+      })
+    }
+    if (prevState.serverOceania.length > this.state.serverOceania) {
+      this.setState({
+        country_id: ''
+      })
+    }
+  }
+
   africaChanged= (africa) => {
-    console.log(africa);
     if (africa.indexOf("All") !== -1) {
       const toServer = this.props.countries.Africa.map(item => item.id)
+      const toClient = this.props.countries.Africa.map(item => item.title)
       this.setState({
-        africa: ['All'],
+        africa: ['All'].concat(toClient),
         serverAfrica: toServer
       });
     }
-    if (this.state.africa.indexOf("All") !== -1 && this.state.africa.length === 1) {
+    if (this.state.africa.indexOf("All") !== -1 && this.state.serverAfrica.length === this.props.countries.Africa.length) {
       const allIndex = africa.indexOf("All");
-      const newArr = africa.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? africa = [] : africa.splice(allIndex, 1)
       const toServer = this.props.countries.Africa.filter(item => africa.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         africa: africa,
@@ -358,17 +415,17 @@ class CampaignConstructor extends Component {
   }
 
   americaChanged= (america) => {
-    console.log(america);
     if (america.indexOf("All") !== -1) {
       const toServer = this.props.countries.Americas.map(item => item.id)
+      const toClient = this.props.countries.Americas.map(item => item.title)
       this.setState({
-        america: ['All'],
+        america: ['All'].concat(toClient),
         serverAmerica: toServer
       });
     }
-    if (this.state.america.indexOf("All") !== -1 && this.state.america.length === 1) {
+    if (this.state.america.indexOf("All") !== -1 && this.state.serverAmerica.length === this.props.countries.Americas.length) {
       const allIndex = america.indexOf("All");
-      const newArr = america.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? america = [] : america.splice(allIndex, 1)
       const toServer = this.props.countries.Americas.filter(item => america.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         america: america,
@@ -392,28 +449,28 @@ class CampaignConstructor extends Component {
   }
 
   asiaChanged= (asia) => {
-    console.log(asia);
     if (asia.indexOf("All") !== -1) {
       const toServer = this.props.countries.Asia.map(item => item.id)
+      const toClient = this.props.countries.Asia.map(item => item.title)
       this.setState({
-        asia: ['All'],
+        asia: ['All'].concat(toClient),
         serverAsia: toServer
       });
     }
-    if (this.state.asia.indexOf("All") !== -1 && this.state.asia.length === 1) {
+    if (this.state.asia.indexOf("All") !== -1 && this.state.serverAsia.length === this.props.countries.Asia.length) {
       const allIndex = asia.indexOf("All");
-      const newArr = asia.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? asia = [] : asia.splice(allIndex, 1)
       const toServer = this.props.countries.Asia.filter(item => asia.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         asia: asia,
-        serverAmerica: toServer
+        serverAsia: toServer
       });
     }
     if (asia.indexOf("All") === -1) {
       const toServer = this.props.countries.Asia.filter(item => asia.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         asia: asia,
-        serverAmerica: toServer
+        serverAsia: toServer
       });
     }
     const {isValid} = validateCampaignForm(this.state)
@@ -426,17 +483,17 @@ class CampaignConstructor extends Component {
   }
 
   europeChanged= (europe) => {
-    console.log(europe);
     if (europe.indexOf("All") !== -1) {
       const toServer = this.props.countries.Europe.map(item => item.id)
+      const toClient = this.props.countries.Europe.map(item => item.title)
       this.setState({
-        europe: ['All'],
+        europe: ['All'].concat(toClient),
         serverEurope: toServer
       });
     }
-    if (this.state.europe.indexOf("All") !== -1 && this.state.europe.length === 1) {
+    if (this.state.europe.indexOf("All") !== -1 && this.state.serverEurope.length === this.props.countries.Europe.length) {
       const allIndex = europe.indexOf("All");
-      const newArr = europe.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? europe = [] : europe.splice(allIndex, 1)
       const toServer = this.props.countries.Europe.filter(item => europe.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         europe: europe,
@@ -460,17 +517,17 @@ class CampaignConstructor extends Component {
   }
 
   oceaniaChanged= (oceania) => {
-    console.log(oceania);
     if (oceania.indexOf("All") !== -1) {
       const toServer = this.props.countries.Oceania.map(item => item.id)
+      const toClient = this.props.countries.Oceania.map(item => item.title)
       this.setState({
-        oceania: ['All'],
+        oceania: ['All'].concat(toClient),
         serverOceania: toServer
       });
     }
-    if (this.state.oceania.indexOf("All") !== -1 && this.state.oceania.length === 1) {
+    if (this.state.oceania.indexOf("All") !== -1 && this.state.serverOceania.length === this.props.countries.Oceania.length) {
       const allIndex = oceania.indexOf("All");
-      const newArr = oceania.splice(allIndex, 1)
+      const newArr = allIndex === -1 ? oceania = [] : oceania.splice(allIndex, 1)
       const toServer = this.props.countries.Oceania.filter(item => oceania.indexOf(item.title) !== -1).map(item=> item.id)
       this.setState({
         oceania: oceania,
@@ -557,6 +614,7 @@ class CampaignConstructor extends Component {
         websites: this.state.serverWebsites,
       }
     }
+    const countriesChosen = this.state.serverAfrica.length + this.state.serverAsia.length + this.state.serverAmerica.length + this.state.serverEurope.length + this.state.serverOceania.length
     const buttonSwitch = !this.props.editbtn ? <button className="form_group__button" onClick={this.onClickHandler}>Create</button> : <button className="form_group__button" onClick={this.onClickHandler}>Save</button>
   const countryModal = !this.state.showModal ? <div className="ad_constructor__form no_p clearfix">
     {title}
@@ -580,6 +638,7 @@ class CampaignConstructor extends Component {
         <div className="form_group">
           <label className="form_group__label">Country</label>
           <button className="country" onClick={this.clickModal}>click to choose</button>
+          <span>{countriesChosen} chosen</span>
           {errors.country_id && <span className="validate_span">{errors.country_id}</span>}
         </div>
         <div className="form_group">
