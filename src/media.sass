@@ -246,6 +246,10 @@
     top: 0
     position: fixed
 
+  .settings_wrapper__form.mess .message_list
+    padding-left: 20px
+    padding-right: 20px
+
   .stats_container__table h2
     padding-left: 0
 
@@ -288,11 +292,21 @@
   .ad_constructor.campaign_constructor .input_fields
     margin-bottom: 150px
 
+  .settings_wrapper__form.mess .message_list__items .block .date::before,
+  .settings_wrapper__form.mess .message_list__items .block .date::after
+    display: none
+
+
+
 
 @media screen and (max-width: 480px)
   .auth_form
     width: 90%
     box-sizing: border-box
+
+  .settings_wrapper__form.mess .message_list__items .input_block input
+    background-image: none
+    padding-right: 0
 
   .ad_constructor.campaign_constructor .checkbox_section .title
     padding-left: 20px
