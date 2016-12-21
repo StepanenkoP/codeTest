@@ -33,19 +33,26 @@ class MessagesPage extends Component {
   }
 
   render() {
+    console.log(this.props);
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
+    const messagesType = this.props.params.id == undefined
+    ?
+    <div className="main_wrapper">
+      {mobileMenu}
+      <FlashList />
+      <Header
+        title="Messages"
+        text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
+        openMenu={this.openMenu}
+        logOut={this.logOut}
+      />
+      <MessagesForm />
+      <Footer />
+    </div>
+    : <div>{this.props.children}</div>
     return (
-      <div className="main_wrapper">
-        {mobileMenu}
-        <FlashList />
-        <Header
-          title="Messages"
-          text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
-          openMenu={this.openMenu}
-          logOut={this.logOut}
-        />
-        <MessagesForm />
-        <Footer />
+      <div>
+        {messagesType}
       </div>
     );
   }

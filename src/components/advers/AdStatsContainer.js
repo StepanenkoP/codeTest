@@ -80,7 +80,9 @@ class AdStatsContainer extends Component {
             disableDays={true}
           />
         </div>
-        <LineChart data={data} width="1170" height="310"/>
+        <div className="stats_wrapper">
+          <LineChart data={data} width="1170" height="310"/>
+        </div>
         <div className="stats_container__table">
           <div className="wrapper">
             <h2 className="stats_container__header">{this.state.start_date && this.state.end_date !== 'Invalid date' ? <span>{`Views from ${this.state.start_date} to ${this.state.end_date}`}</span> : <span>Views last 30 days</span>}</h2>

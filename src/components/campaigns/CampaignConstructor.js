@@ -68,23 +68,43 @@ class CampaignConstructor extends Component {
       const timesArrServer = this.props.timesEdit.map(item=> item.id);
       const websitesArr = this.props.websitesEdit.map(item=> item.title);
       const websitesArrServer = this.props.websitesEdit.map(item=> item.id);
+      const africaArr = this.props.africaEdit.map(item=> item.title)
+      const americaArr = this.props.americaEdit.map(item=> item.title)
+      const asiaArr = this.props.asiaEdit.map(item=> item.title)
+      const europeArr = this.props.europeEdit.map(item=> item.title)
+      const oceaniaArr = this.props.oceaniaEdit.map(item=> item.title)
+      const serverAfricaArr = this.props.africaEdit.map(item=> item.id)
+      const serverAmericaArr = this.props.americaEdit.map(item=> item.id)
+      const serverAsiaArr = this.props.asiaEdit.map(item=> item.id)
+      const serverEuropeArr = this.props.europeEdit.map(item=> item.id)
+      const serverOceaniaArr = this.props.oceaniaEdit.map(item=> item.id)
       this.setState({
         title: this.props.name,
         gender_id: `${this.props.gender_id}`,
-        days: daysArr.length == 7 ? ['All'] : daysArr,
+        days: daysArr.length == 7 ? ['All'].concat(daysArr) : daysArr,
         serverDays: daysArrServer,
         serverAges: agesArrServer,
         serverTimes: timesArrServer,
         serverWebsites: websitesArrServer,
         start_date: this.props.start_date,
         end_date: this.props.end_date,
-        ages: agesArr.length == 6 ? ['All'] : agesArr,
-        times: timesArr.length == 24 ? ['All'] : timesArr,
-        websites: websitesArr.length == 5 ? ['All'] : websitesArr,
+        ages: agesArr.length == 6 ? ['All'].concat(agesArr) : agesArr,
+        times: timesArr.length == 24 ? ['All'].concat(timesArr) : timesArr,
+        websites: websitesArr.length == 5 ? ['All'].concat(websitesArr) : websitesArr,
         limit_per_day: `${this.props.limit_per_day}`,
         limit_per_user: `${this.props.limit_per_user}`,
         country_id: `${this.props.country_id}`,
-        showDatePicker: this.props.showDatePicker ? false : true
+        showDatePicker: this.props.showDatePicker ? false : true,
+        africa: africaArr.length == 58 ? ['All'].concat(africaArr) : africaArr,
+        america: americaArr.length == 55 ? ['All'].concat(americaArr) : americaArr,
+        asia: asiaArr.length == 51 ? ['All'].concat(asiaArr) : asiaArr,
+        europe: europeArr.length == 51 ? ['All'].concat(europeArr) : europeArr,
+        oceania: oceaniaArr.length == 25 ? ['All'].concat(oceaniaArr) : oceaniaArr,
+        serverAfrica: serverAfricaArr,
+        serverAmerica: serverAmericaArr,
+        serverAsia: serverAsiaArr,
+        serverEurope: serverEuropeArr,
+        serverOceania: serverOceaniaArr
       })
     }
   }
@@ -156,7 +176,7 @@ class CampaignConstructor extends Component {
         title: this.state.title,
         start_date: this.state.start_date,
         end_date: this.state.end_date,
-        country_id: this.state.country_id,
+        countries: [].concat(this.state.serverAfrica, this.state.serverAmerica, this.state.serverAsia, this.state.serverEurope, this.state.serverOceania),
         gender_id: this.state.gender_id,
         limit_per_day: this.state.limit_per_day,
         limit_per_user: this.state.limit_per_user,
@@ -560,7 +580,7 @@ class CampaignConstructor extends Component {
 
 
   render() {
-    console.log(this.props);
+    console.log(this.props.days);
     const {errors} = this.state
     const dayInputs = !this.state.showDatePicker ?
     <div>
@@ -589,15 +609,15 @@ class CampaignConstructor extends Component {
     </div> : <DayInputEnd errors={this.state.errors} getDateData={this.getDateData} startState={this.state.start_date}/>
     const title = this.props.title ? <h2>Edit Campaign</h2> : <h2>Create Campaign</h2>
     const allInArr = [{id:0, title: "All"}]
-    const days = this.props.days ? allInArr.concat(this.props.days) : []
+    const days = this.props.days.length ? allInArr.concat(this.props.days) : []
     const countriesAfrica = this.props.countries.Africa ? allInArr.concat(this.props.countries.Africa) : []
     const countriesAmerica = this.props.countries.Americas ? allInArr.concat(this.props.countries.Americas) : []
     const countriesAsia = this.props.countries.Asia ? allInArr.concat(this.props.countries.Asia) : []
     const countriesEurope = this.props.countries.Europe ? allInArr.concat(this.props.countries.Europe) : []
     const countriesOceania = this.props.countries.Oceania ? allInArr.concat(this.props.countries.Oceania) : []
-    const times = this.props.times ? allInArr.concat(this.props.times) : []
-    const ages = this.props.ages ? allInArr.concat(this.props.ages) : []
-    const websites = this.props.websites ? allInArr.concat(this.props.websites) : []
+    const times = this.props.times.length ? allInArr.concat(this.props.times) : []
+    const ages = this.props.ages.length ? allInArr.concat(this.props.ages) : []
+    const websites = this.props.websites.length ? allInArr.concat(this.props.websites) : []
     const dataOnEdit = {
       id: this.props.id,
       formData: {
@@ -635,10 +655,10 @@ class CampaignConstructor extends Component {
         </div>
       </div>
       <div className="block">
-        <div className="form_group">
+        <div className="form_group country">
           <label className="form_group__label">Country</label>
           <button className="country" onClick={this.clickModal}>click to choose</button>
-          <span>{countriesChosen} chosen</span>
+          <span className="chosen">{countriesChosen} chosen</span>
           {errors.country_id && <span className="validate_span">{errors.country_id}</span>}
         </div>
         <div className="form_group">

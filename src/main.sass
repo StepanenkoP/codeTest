@@ -89,6 +89,8 @@ body
   text-align: center
   position: relative
   clear: left
+  &.country
+    text-align: left
   &__label
     display: block
     text-align: left
@@ -101,11 +103,16 @@ body
     background-color: #4272BC
     color: #fff
     border: none
-    display: block
+    display: inline-block
     height: 40px
+    margin-right: 20px
     text-transform: uppercase
     padding: 0 20px
     border-radius: 2px
+    font-weight: 700
+  .chosen
+    display: inline-block
+    line-height: 40px
     font-weight: 700
   .labelFile
     position: absolute
@@ -724,6 +731,7 @@ body
           width: 115px
           vertical-align: top
           margin-bottom: 15px
+          padding-right: 10px
           padding-left: 25px
           position: relative
           .label_text
@@ -902,6 +910,10 @@ body
       right: 0
     .close_picker
       right: 15px
+  .stats_wrapper
+    width: 100%
+    overflow-x: auto
+    margin-top: 150px
   &__table
     border: 1px solid #D7E0F1
     padding: 35px 20px

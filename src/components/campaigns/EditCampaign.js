@@ -96,6 +96,11 @@ class EditCampaign extends Component {
       agesEdit={campaign.ages !== undefined ? campaign.ages : ''}
       timesEdit={campaign.times !== undefined ? campaign.times : ''}
       websitesEdit={campaign.websites !== undefined ? campaign.websites : ''}
+      africaEdit={campaign.countries.Africa !== undefined ? campaign.countries.Africa : []}
+      americaEdit={campaign.countries.America !== undefined ? campaign.countries.America : []}
+      asiaEdit={campaign.countries.Asia !== undefined ? campaign.countries.Asia : []}
+      europeEdit={campaign.countries.Europe !== undefined ? campaign.countries.Europe : []}
+      oceaniaEdit={campaign.countries.Oceania !== undefined ? campaign.countries.Oceania : []}
       limit_per_day={campaign.limit_per_day !== undefined ? campaign.limit_per_day : ''}
       limit_per_user={campaign.limit_per_user !== undefined ? campaign.limit_per_user : ''}
       country_id={campaign.country_id !== undefined ? campaign.country_id : ''}

@@ -12,7 +12,7 @@ class Message extends Component {
   }
 
   componentDidMount= () => {
-    document.title = "asfasf - Micro Advertising Portal";
+    document.title = "Messages - Micro Advertising Portal";
   }
 
   openMenu = () => {

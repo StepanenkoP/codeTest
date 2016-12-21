@@ -4,13 +4,18 @@ import TextFieldGroup from '../signup/TextFieldGroup'
 import update from 'react-addons-update'
 import TextareaField from '../unisex/TextareaField'
 import validateFeedback from '../../functions/validateFeedback'
+import ring from '../../img/main/ring.svg'
+import {postFeedback} from '../../AC/feedbackAC'
+import {addFlashMessage} from '../../AC/flashMessages'
+import {connect} from 'react-redux'
 
 
 class FeedbackForm extends Component {
   state = {
     subject: '',
     description: '',
-    errors: {}
+    errors: {},
+    loader: false
   }
 
   onChangeHandler = (e) => {
@@ -37,15 +42,42 @@ class FeedbackForm extends Component {
 
   clickHandler = () => {
     this.setState({
-      errors : {}
+      errors : {},
     });
     if (this.isValid()) {
-      alert(123);
+      this.setState({
+        loader: true
+      })
+      const data = {
+        subject: this.state.subject,
+        description: this.state.description
+      }
+      this.props.postFeedback(data).then(
+        r => {
+          console.log(r);
+          if (r.data.success) {
+            this.props.addFlashMessage({
+              type: 'success',
+              text: 'Your message has been sent successfully'
+            })
+            this.setState({
+              subject: '',
+              description: '',
+              loader: false
+            })
+          }
+        }
+      )
     }
   }
 
   render () {
     const {errors} = this.state
+    const loader = this.state.loader
+    ?
+    <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
+    :
+    <button className="form_group__button" onClick={this.clickHandler}>Send Message</button>
     return (
       <div className="settings_wrapper">
         <div className="settings_wrapper__form">
@@ -74,7 +106,7 @@ class FeedbackForm extends Component {
                 onChangeHandler={this.onChangeHandler}
               />
               <div className="form_group">
-                <button className="form_group__button" onClick={this.clickHandler}>Send Message</button>
+                {loader}
               </div>
             </div>
           </div>
@@ -84,4 +116,4 @@ class FeedbackForm extends Component {
   }
 }
 
-export default FeedbackForm;
+export default connect(null, {postFeedback, addFlashMessage})(FeedbackForm);

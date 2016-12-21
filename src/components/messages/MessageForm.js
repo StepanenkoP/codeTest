@@ -10,7 +10,7 @@ class MessageForm extends Component {
         <div className="settings_wrapper__form mess">
           <div className="title">
             <div className="img_wrapper"><img src={mail} alt="alt"/></div>
-            Custom Messages
+            Messages
           </div>
         </div>
       </div>
