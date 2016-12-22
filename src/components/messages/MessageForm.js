@@ -4,10 +4,80 @@ import user from '../../img/messages/user.png'
 import button from '../../img/messages/button.png'
 import me from '../../img/messages/me.png'
 import {Link} from 'react-router'
+import {sendMessage} from '../../AC/messagesAC'
+import {addFlashMessage} from '../../AC/flashMessages'
+import validateSendMessage from '../../functions/validateSendMessage'
+import {connect} from 'react-redux'
+import moment from 'moment';
 
 
 class MessageForm extends Component {
+  state = {
+    message_text: '',
+    sended: false,
+    errors: {}
+  }
+
+  inputChange = (e) => {
+    this.setState({
+      sended: false,
+      message_text: e.target.value
+    })
+  }
+
+  isValid() {
+    const {errors, isValid} = validateSendMessage(this.state)
+
+    if (!isValid) {
+      this.setState({
+        errors
+      })
+    }
+    return isValid
+  }
+
+  sendOnClick = () => {
+    this.setState({
+      errors : {}
+    });
+    if (this.isValid()) {
+      const data = {
+        subject_id: this.props.id,
+        message_text: this.state.message_text
+      }
+      const newobj = {
+        id: Date.now(),
+        from: "Pavel Stepanenko",
+        text: this.state.message_text,
+        created_at: moment(new Date()).format("YYYY-MM-DD HH:mm")
+      }
+      this.props.sendMessage(data, newobj)
+      this.setState({
+        message_text: '',
+        sended: true
+      })
+    } else {
+      this.props.addFlashMessage({
+        type: 'error',
+        text: 'You cant send empty message!'
+      })
+    }
+  }
+
   render () {
+    const {messages} = this.props
+    const allMessages = this.props.messages !== undefined ? Object.keys(messages).map(item => <div key={item} className="block">
+      {
+        messages[item].map(date => <div key={date.id} className="message">
+          <div className="name">
+            <img src={user} alt="alt"/>
+            <span className="user_name">{date.from}</span>
+            <div className="time">{date.created_at.split(' ')[1].slice(0,5)}</div>
+          </div>
+          <div className="text">{date.text}</div>
+        </div>)
+      } {item !== Object.keys(messages)[Object.keys(messages).length - 1] && <div className="date">{item}</div>}</div>) : null
+    console.log(allMessages);
     return (
       <div className="settings_wrapper">
         <div className="settings_wrapper__form mess">
@@ -17,50 +87,14 @@ class MessageForm extends Component {
           </div>
           <div className="message_list">
             <div className="message_list__title">
-              <div className="name">Chris Jones</div>
-              <div className="id">ID Advert SC30293045</div>
+              <div className="name">{localStorage.from}</div>
+              <div className="id">{`ID Advert ${localStorage.advert_id}`}</div>
             </div>
             <div className="message_list__items">
-              <div className="block">
-                <div className="message">
-                  <div className="name">
-                    <img src={user} alt="alt"/>
-                    <span className="user_name">Chris Jones</span>
-                    <div className="time">11:45</div>
-                  </div>
-                  <div className="text">Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per. Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per.</div>
-                </div>
-                <div className="message">
-                  <div className="name">
-                    <img src={me} alt="alt"/>
-                    <span className="user_name">Dan King</span>
-                    <div className="time">11:45</div>
-                  </div>
-                  <div className="text">Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per. Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per.</div>
-                </div>
-                <div className="date">Yesterday</div>
-              </div>
-              <div className="block">
-                <div className="message">
-                  <div className="name">
-                    <img src={user} alt="alt"/>
-                    <span className="user_name">Chris Jones</span>
-                    <div className="time">11:45</div>
-                  </div>
-                  <div className="text">Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per. Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per.</div>
-                </div>
-                <div className="message">
-                  <div className="name">
-                    <img src={me} alt="alt"/>
-                    <span className="user_name">Dan King</span>
-                    <div className="time">11:45</div>
-                  </div>
-                  <div className="text">Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per. Lorem ipsum dolor sit amet, ea sit cetero assusamus, a idqran ende salutandi no per. Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per.</div>
-                </div>
-              </div>
+              {allMessages}
               <div className="input_block">
-                <div className="button"><div className="btn"></div></div>
-                <input type="text" name="message" placeholder="Text..."/>
+                <div className="button" onClick={this.sendOnClick}><div className="btn"></div></div>
+                <input type="text" value={this.state.message_text} onChange={this.inputChange} placeholder="Text..."/>
               </div>
             </div>
           </div>
@@ -70,4 +104,6 @@ class MessageForm extends Component {
   }
 }
 
-export default MessageForm;
+
+
+export default connect(null, {addFlashMessage, sendMessage})(MessageForm);

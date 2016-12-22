@@ -4,6 +4,10 @@ import Footer from '../unisex/Footer'
 import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
 import MessageForm from './MessageForm'
+import {connect} from 'react-redux'
+import {loadMessageById} from '../../AC/messagesAC'
+import ring from '../../img/main/ring.svg'
+import isEmpty from 'lodash/isEmpty'
 
 
 class Message extends Component {
@@ -13,6 +17,7 @@ class Message extends Component {
 
   componentDidMount= () => {
     document.title = "Messages - Micro Advertising Portal";
+    this.props.loadMessageById(this.props.params.id)
   }
 
   openMenu = () => {
@@ -33,6 +38,7 @@ class Message extends Component {
   }
 
   render() {
+    console.log(this.props);
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
     return (
       <div className="main_wrapper">
@@ -44,7 +50,7 @@ class Message extends Component {
           openMenu={this.openMenu}
           logOut={this.logOut}
         />
-        <MessageForm />
+        {this.props.messageById !== null && !isEmpty(this.props.messageById) ? <MessageForm id={this.props.params.id} messages={this.props.messageById !== null ? this.props.messageById : []}/> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px', paddingTop: '50px'}}/></div>}
         <Footer />
       </div>
     );
@@ -55,4 +61,10 @@ Message.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default Message;
+function mapStateToProps({accountData}) {
+  return {
+    messageById: accountData.messageById
+  }
+}
+
+export default connect(mapStateToProps, {loadMessageById})(Message);

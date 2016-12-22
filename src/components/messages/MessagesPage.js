@@ -6,6 +6,7 @@ import Header from '../unisex/Header'
 import MessagesForm from './MessagesForm'
 
 
+
 class MessagesPage extends Component {
   state = {
     isOpen: false
@@ -61,5 +62,6 @@ class MessagesPage extends Component {
 MessagesPage.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
+
 
 export default MessagesPage;
