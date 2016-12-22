@@ -51,7 +51,8 @@ class MessageForm extends Component {
         text: this.state.message_text,
         created_at: moment(new Date()).format("YYYY-MM-DD HH:mm")
       }
-      this.props.sendMessage(data, newobj)
+      const currentDate = Object.keys(this.props.messages)[Object.keys(this.props.messages).length - 1]
+      this.props.sendMessage(data, newobj, currentDate)
       this.setState({
         message_text: '',
         sended: true

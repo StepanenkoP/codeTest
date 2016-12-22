@@ -37,7 +37,7 @@ export function loadMessageById(id) {
   }
 }
 
-export function sendMessage(data, newobj) {
+export function sendMessage(data, newobj, currentDate) {
   return dispatch => {
     return axios({
       method: "post",
@@ -50,7 +50,8 @@ export function sendMessage(data, newobj) {
     }).then(
       r => dispatch({
         type: SEND_MESSAGE,
-        payload: newobj
+        payload: newobj,
+        currentDate
       })
     )
   }

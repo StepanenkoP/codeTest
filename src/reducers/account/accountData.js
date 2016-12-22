@@ -25,9 +25,10 @@ export default (state = initialState, action) => {
           messageById: action.payload
       }
     case SEND_MESSAGE:
+      console.log(action.currentDate);
       return {
         ...state,
-          messageById: {...state.messageById, '2016-12-22': [...state.messageById['2016-12-22'], action.payload]}
+          messageById: {...state.messageById, [action.currentDate]: [...state.messageById[action.currentDate], action.payload]}
       }
     default:
     return state
