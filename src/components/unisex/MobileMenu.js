@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import {Link} from 'react-router';
 import hamclose from '../../img/main/hamclose.png'
 import image from '../../img/main/image.png'
+import {connect} from 'react-redux'
+import {getUserInfo} from '../../AC/accountAC'
+import ring from '../../img/main/ring.svg'
 
 class MobileMenu extends Component {
+  componentDidMount() {
+    this.props.getUserInfo()
+  }
 
   logOut = () => {
     localStorage.removeItem('token');
@@ -11,17 +17,19 @@ class MobileMenu extends Component {
   }
 
   render() {
+    console.log(this.props);
+    const user = this.props.userInfo !== null ? <div className="user">
+      <div className="user_img">
+        <img src={image} alt="alt"/>
+      </div>
+      <h3 className="user_name">{`${this.props.userInfo !== null ? this.props.userInfo.first_name : ''} ${this.props.userInfo !== null ? this.props.userInfo.last_name : ''}`}</h3>
+      <div className="user_mnu"><span className="logout" onClick={this.logOut}>Logout</span><span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span></div>
+    </div> : <div style={{textAlign: 'center', float: 'right', paddingTop: '20px'}}><img src={ring} alt="alt" /></div>
     return (
       <div className="mobile_mnu">
         <div className="mobile_head">
           <div className="ham" onClick={this.props.closeMenu}><img src={hamclose} alt="alt"/></div>
-          <div className="user">
-            <div className="user_img">
-              <img src={image} alt="alt"/>
-            </div>
-            <h3 className="user_name">Chris jones</h3>
-            <div className="user_mnu"><span className="logout" onClick={this.logOut}>Logout</span><span className="balance">$0.00</span></div>
-          </div>
+          {user}
         </div>
         <ul className="mobile_ul">
           <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/">Account summary</Link></li>
@@ -40,4 +48,10 @@ MobileMenu.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default MobileMenu;
+function mapStateToProps({accountData}) {
+  return {
+    userInfo: accountData.userInfo
+  }
+}
+
+export default connect(mapStateToProps, {getUserInfo})(MobileMenu);
