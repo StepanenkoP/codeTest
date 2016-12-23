@@ -16,6 +16,9 @@ import EditCampaign from './components/campaigns/EditCampaign'
 import NoPage from './components/404/NoPage'
 import FeedbackPage from './components/feedback/FeedbackPage'
 import MessagesPage from './components/messages/MessagesPage'
+import PaymentPage from './components/payment/PaymentPage'
+import SendPaymentPage from './components/payment/SendPaymentPage'
+import SendCardPage from './components/payment/SendCardPage'
 import Message from './components/messages/Message'
 import App from './components/App'
 import {store} from './index'
@@ -81,6 +84,10 @@ export default (
     </Route>
     <Route path='create_ad' component={CreateAd} onEnter={needLogin}/>
     <Route path='feedback' component={FeedbackPage} onEnter={needLogin}/>
+    <Route path='payments' component={PaymentPage} onEnter={needLogin}>
+      <Route path='send' component={SendPaymentPage}/>
+      <Route path='card' component={SendCardPage} />
+    </Route>
     <Route path='messages' component={MessagesPage} onEnter={needLogin}>
       <Route path=':id' component={Message} />
     </Route>

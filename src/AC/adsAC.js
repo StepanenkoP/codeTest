@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {CREATE_AD, LOAD_ADS, LOAD_AD, DELETE_AD, GET_AD_STATS} from '../types'
+import { LOAD_ADS, LOAD_AD, DELETE_AD, GET_AD_STATS} from '../types'
 
 export function createAD(data) {
   return dispatch => {

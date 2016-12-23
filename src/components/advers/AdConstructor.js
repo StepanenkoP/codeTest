@@ -167,9 +167,9 @@ class AdConstructor extends Component {
 
     const imageEdit = this.state.image && !this.state.image_base64
     ?
-    this.state.image.indexOf(";") == -1 ? <img src={`/api/public/upload/images/${this.state.image}`} alt="alt"/> : null
+    this.state.image.indexOf(";") === -1 ? <img src={`/api/public/upload/images/${this.state.image}`} alt="alt"/> : null
     :
-    this.props.id ? this.state.image.indexOf(";") == -1 ? <img src={ring} alt="alt"/> : null : null
+    this.props.id ? this.state.image.indexOf(";") === -1 ? <img src={ring} alt="alt"/> : null : null
 
     const pending = !this.state.loader
     ?

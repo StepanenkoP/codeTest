@@ -35,7 +35,7 @@ class AdversPage extends Component {
 
   render() {
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
-    const content = this.props.params.id == undefined ? <div className="main_wrapper">
+    const content = this.props.params.id === undefined ? <div className="main_wrapper">
       {mobileMenu}
       <FlashList />
       <Header

@@ -139,6 +139,9 @@
   .main_wrapper .main_header__line .main_mnu
     display: none
 
+  .settings_wrapper__form .stripe_form .block
+    width: 300px
+
   .stats_container__date .DayPicker
     right: 0
 
@@ -246,6 +249,26 @@
     top: 0
     position: fixed
 
+  .settings_wrapper__form .stripe_form .block
+    width: 100%
+
+  .settings_wrapper__form .stripe_form .block .exp,
+  .settings_wrapper__form .stripe_form .block .cvc
+    width: 100%
+
+  .settings_wrapper__form .stripe_form .block .exp select
+    width: 40%
+    float: left
+
+  .settings_wrapper__form .stripe_form .block .exp select.year
+    margin-left: 0
+    float: right
+
+  .settings_wrapper__form .title .payment_btn
+    float: none
+    display: block
+    margin-top: 20px
+
   .settings_wrapper__form.mess .message_list
     padding-left: 20px
     padding-right: 20px
@@ -303,6 +326,17 @@
   .auth_form
     width: 90%
     box-sizing: border-box
+
+  .settings_wrapper__form .stripe_form
+    padding-left: 20px
+    padding-right: 20px
+
+  .settings_wrapper__form .title
+    font-size: 20px
+
+  .settings_wrapper__form .title .payment_btn
+    margin: auto
+    margin-top: 20px
 
   .settings_wrapper__form.mess .message_list__items .input_block input
     background-image: none

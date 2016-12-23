@@ -534,6 +534,32 @@ body
       width: 1168px
       .message_link
         color: #000
+      .payment_row
+        padding-left: 65px
+        font-weight: 700
+        font-size: 16px
+        margin-bottom: 25px
+        &.passive
+          font-size: 13px
+          padding-top: 15px
+          padding-bottom: 15px
+          margin-bottom: 0
+          font-weight: 400
+        div
+          float: left
+          word-break: break-all
+          padding-right: 10px
+          &.payment_date
+            width: 160px
+          &.payment_time
+            width: 160px
+          &.payment_method
+            width: 215px
+          &.payment_id
+            width: 180px
+            padding-right: 30px
+          &.payment_amount
+            width: 260px
       &_row
         padding-left: 65px
         font-weight: 700
@@ -568,6 +594,73 @@ body
             width: 250px
           &.date
             width: 200px
+    .stripe_form
+      padding: 55px
+      .btn_stripe
+        display: block
+        margin: auto
+        clear: both
+      .block
+        width: 310px
+        .cvc
+          float: right
+          width: 95px
+          margin-bottom: 30px
+        .exp
+          width: 185px
+          float: left
+          text-align: left
+          select
+            display: inline-block
+            width: 85px
+            &.year
+              margin-left: 15px
+    .payment_types
+      text-align: center
+      padding-top: 40px
+      padding-bottom: 50px
+      .type
+        width: 155px
+        height: 50px
+        background-color: #fff
+        box-shadow: 0 0 10px rgba(0,0,0,.2)
+        display: inline-block
+        position: relative
+        cursor: pointer
+        transition: box-shadow .3s ease
+        &:hover
+          box-shadow: 0 0 10px rgba(0,0,0,.4)
+        &.card
+          margin-right: 35px
+          &::before
+            content: ''
+            position: absolute
+            background-image: url(./img/payments/visa.png)
+            width: 54px
+            height: 17px
+            left: 10px
+            top: 50%
+            margin-top: -9px
+          &::after
+            content: ''
+            position: absolute
+            background-image: url(./img/payments/mc.png)
+            width: 59px
+            height: 35px
+            right: 10px
+            top: 50%
+            margin-top: -18px
+        &.paypal
+          &::after
+            content: ''
+            position: absolute
+            background-image: url(./img/payments/paypal.png)
+            width: 72px
+            height: 19px
+            right: 50%
+            margin-right: -36px
+            top: 50%
+            margin-top: -9px
     .title
       padding-left: 15px
       text-transform: uppercase
@@ -577,9 +670,13 @@ body
       border-bottom: 1px dotted #DBE0E6
       margin-left: 30px
       margin-right: 30px
+      .payment_btn
+        float: right
+        margin-top: 0
       .img_wrapper
         margin-right: 25px
         display: inline-block
+        vertical-align: top
         position: relative
         top: -1px
     .delete_acc

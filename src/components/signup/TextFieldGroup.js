@@ -15,6 +15,7 @@ class TextFieldGroup extends Component {
           name={field}
           placeholder={placeholder}
           className={className}
+          maxLength={this.props.maxlength}
         />
         {error && <span className="validate_span">{error}</span>}
         {limits}

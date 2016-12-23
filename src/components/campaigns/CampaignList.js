@@ -3,7 +3,6 @@ import CampaignListItem from './CampaignListItem'
 import {connect} from 'react-redux'
 import {getCampaignList} from '../../AC/campaignGet'
 import ring from '../../img/main/ring.svg'
-import EditCampaign from './EditCampaign'
 
 class CampaignList extends Component {
   componentWillMount() {

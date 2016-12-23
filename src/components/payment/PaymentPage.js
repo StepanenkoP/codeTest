@@ -3,17 +3,17 @@ import FlashList from '../flash/FlashList'
 import Footer from '../unisex/Footer'
 import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
-import MessagesForm from './MessagesForm'
+import PaymentForm from './PaymentForm'
 
 
 
-class MessagesPage extends Component {
+class PaymentPage extends Component {
   state = {
     isOpen: false
   }
 
   componentDidMount= () => {
-    document.title = "Messages - Micro Advertising Portal";
+    document.title = "Payment - Micro Advertising Portal";
   }
 
   openMenu = () => {
@@ -36,8 +36,8 @@ class MessagesPage extends Component {
   render() {
     console.log(this.props);
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
-    const messagesType = this.props.params.id === undefined
-    ?
+    const paymentType = this.props.location.pathname !== "/payments/send"
+    ? this.props.location.pathname !== "/payments/card" ?
     <div className="main_wrapper">
       {mobileMenu}
       <FlashList />
@@ -47,21 +47,21 @@ class MessagesPage extends Component {
         openMenu={this.openMenu}
         logOut={this.logOut}
       />
-      <MessagesForm />
+      <PaymentForm />
       <Footer />
-    </div>
+    </div> : <div>{this.props.children}</div>
     : <div>{this.props.children}</div>
     return (
       <div>
-        {messagesType}
+        {paymentType}
       </div>
     );
   }
 }
 
-MessagesPage.contextTypes = {
+PaymentPage.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
 
-export default MessagesPage;
+export default PaymentPage;

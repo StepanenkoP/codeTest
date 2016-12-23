@@ -115,7 +115,7 @@ App.contextTypes = {
 
 function mapStateToProps({accountData}) {
   return {
-    accountStats: accountData.accountStats
+    accountStats: accountData.accountStats,
   }
 }
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {LOAD_CAMPAIGNS, LOAD_CAMPAIGN, EDIT_CAMPAIGN , DELETE_CAMPAIGN} from '../types'
+import {LOAD_CAMPAIGNS, LOAD_CAMPAIGN, DELETE_CAMPAIGN} from '../types'
 
 export function getCampaignList() {
   return dispatch => {

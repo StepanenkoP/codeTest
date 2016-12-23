@@ -1,39 +1,34 @@
 import axios from 'axios'
+import {LOAD_ALL_PAYMENTS} from '../types'
 
-import {LOAD_ALLSTATS, GET_USER_INFO} from '../types'
-
-export function loadAllStats() {
+export function loadAllPayments() {
   return dispatch => {
     return axios({
       method: "get",
-      url: `/api/account/summary`,
+      url: `/api/payments`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
       }
     }).then(
       r => dispatch({
-        type: LOAD_ALLSTATS,
+        type: LOAD_ALL_PAYMENTS,
         payload: r.data
       })
     )
   }
 }
 
-export function getUserInfo() {
+export function sendPayment(data) {
   return dispatch => {
     return axios({
-      method: "get",
-      url: `/api/getUserInfo`,
+      method: "post",
+      url: `/api/stripePayment`,
+      data: data,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
       }
-    }).then(
-      r => dispatch({
-        type: GET_USER_INFO,
-        payload: r.data
-      })
-    )
+    })
   }
 }

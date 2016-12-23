@@ -29,7 +29,7 @@ class MessagesForm extends Component {
         <div className="time">{item.last_message_at.split(' ')[1].slice(0, 5)}</div>
       </div>
     </Link></div>) : null
-    const messages = this.props.allMessages !== null && this.props.allMessages.length ? <div className="messages_wrapper">
+    const messages = this.props.allMessages !== null ? <div className="messages_wrapper">
       <div className="messages">
         <div className="messages_row clearfix">
           <div className="from">From</div>
