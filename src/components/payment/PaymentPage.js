@@ -32,12 +32,12 @@ class PaymentPage extends Component {
     localStorage.removeItem('token');
     this.context.router.push('/login');
   }
-
+ || this.props.location.pathname !== "/payments/paypal"
   render() {
     console.log(this.props);
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
     const paymentType = this.props.location.pathname !== "/payments/send"
-    ? this.props.location.pathname !== "/payments/card" ?
+    ? this.props.location.pathname !== "/payments/card" ? this.props.location.pathname !== "/payments/paypal" ?
     <div className="main_wrapper">
       {mobileMenu}
       <FlashList />
@@ -50,6 +50,7 @@ class PaymentPage extends Component {
       <PaymentForm />
       <Footer />
     </div> : <div>{this.props.children}</div>
+    : <div>{this.props.children}</div>
     : <div>{this.props.children}</div>
     return (
       <div>

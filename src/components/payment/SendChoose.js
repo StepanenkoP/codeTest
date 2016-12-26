@@ -14,7 +14,7 @@ class SendChoose extends Component {
           </div>
           <div className="payment_types">
             <Link to="/payments/card"><div className="type card" onClick={this.cardClick}></div></Link>
-            <div className="type paypal"></div>
+            <Link to="/payments/paypal"><div className="type paypal"></div></Link>
           </div>
         </div>
       </div>

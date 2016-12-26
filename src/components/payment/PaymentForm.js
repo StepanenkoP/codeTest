@@ -13,7 +13,7 @@ class PaymentForm extends Component {
 
   render () {
     console.log(this.props);
-    const items = this.props.allPayments !== null && this.props.allPayments.payments.length ? this.props.allPayments.payments.map(item => <div key={item.id}>
+    const items = this.props.allPayments !== null ? this.props.allPayments.payments.map(item => <div key={item.id}>
       <div className="payment_row passive clearfix">
         <div className="payment_date">{item.created_at.split(' ')[0]}</div>
         <div className="payment_time">{item.created_at.split(' ')[1].slice(0,5)}</div>

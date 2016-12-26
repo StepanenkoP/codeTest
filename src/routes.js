@@ -19,6 +19,7 @@ import MessagesPage from './components/messages/MessagesPage'
 import PaymentPage from './components/payment/PaymentPage'
 import SendPaymentPage from './components/payment/SendPaymentPage'
 import SendCardPage from './components/payment/SendCardPage'
+import SendPaypalPage from './components/payment/SendPaypalPage'
 import Message from './components/messages/Message'
 import App from './components/App'
 import {store} from './index'
@@ -61,7 +62,7 @@ const needLogout = () => {
     axios({
       method: "post",
       url: "/api/account_recovery",
-      data: {activation_token: token},
+      data: {recovery_token: token},
       headers: {
           'Content-Type': 'application/json'
       }
@@ -103,6 +104,7 @@ export default (
     <Route path='payments' component={PaymentPage} onEnter={needLogin}>
       <Route path='send' component={SendPaymentPage}/>
       <Route path='card' component={SendCardPage} />
+      <Route path='paypal' component={SendPaypalPage} />
     </Route>
     <Route path='messages' component={MessagesPage} onEnter={needLogin}>
       <Route path=':id' component={Message} />
