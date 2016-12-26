@@ -6,11 +6,14 @@ import update from 'react-addons-update'
 import {connect} from 'react-redux'
 import {userLoginRequest, userActivateRequest} from '../../AC/signupActions'
 import {addFlashMessage} from '../../AC/flashMessages'
+import {reactivationRequest} from '../../AC/accountAC'
+import back from '../../img/signup/back.png'
 
 class LoginForm extends Component {
   state = {
     login: '',
     password: '',
+    reactivation: false,
     errors: {}
   }
   onChangeHandler = (e) => {
@@ -55,6 +58,11 @@ class LoginForm extends Component {
               text: response.data.error
             })
           }
+          if (response.data.error === 'account was deleted') {
+            this.setState({
+              reactivation: true
+            })
+          }
           if (response.data.token) {
             this.props.addFlashMessage({
               type: 'success',
@@ -74,42 +82,85 @@ class LoginForm extends Component {
       })
     }
   }
+
+  backClick = () => {
+    this.setState({
+      reactivation: false
+    })
+  }
+
+  activateOnClick = (e) => {
+    e.preventDefault()
+    const data = {
+      email: this.state.login
+    }
+    this.props.reactivationRequest(data).then(
+      r=> {
+        console.log(r);
+        if (r.data.success) {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: "Check your email!"
+          })
+        }
+      }
+    )
+  }
+
   render() {
     const {errors} = this.state
+    const formSwitch = this.state.reactivation ? <form className="auth_form">
+      <div className="back" onClick={this.backClick}><img src={back} alt="alt"/> Back</div>
+      <h2>Account Activation</h2>
+      <TextFieldGroup
+        value={this.state.login}
+        label="Login"
+        placeholder="Login"
+        type="email"
+        field="login"
+        readOnly={true}
+        onChangeHandler={this.onChangeHandler}
+        error={errors.login}
+        className="form_group__input"
+      />
+      <div className="form_group">
+        <button className="form_group__button" onClick={this.activateOnClick}>Send</button>
+      </div>
+    </form> : <form className="auth_form">
+      <h2>Log In</h2>
+      <TextFieldGroup
+        value={this.state.login}
+        label="Login"
+        placeholder="Login"
+        type="email"
+        field="login"
+        onChangeHandler={this.onChangeHandler}
+        error={errors.login}
+        className="form_group__input"
+      />
+      <TextFieldGroup
+        value={this.state.password}
+        label="Password"
+        placeholder="******"
+        type="password"
+        field="password"
+        onChangeHandler={this.onChangeHandler}
+        error={errors.password}
+        className="form_group__input"
+      />
+
+      <div className="links">
+        <Link to="/forgot" className="redirect">Forgot your password?</Link>
+
+        <Link to="/signup" className="redirect">Signup page</Link>
+      </div>
+
+      <div className="form_group">
+        <button className="form_group__button" onClick={this.onClickHandler}>Enter</button>
+      </div>
+    </form>
     return(
-      <form className="auth_form">
-        <h2>Log In</h2>
-        <TextFieldGroup
-          value={this.state.login}
-          label="Login"
-          placeholder="Login"
-          type="email"
-          field="login"
-          onChangeHandler={this.onChangeHandler}
-          error={errors.login}
-          className="form_group__input"
-        />
-        <TextFieldGroup
-          value={this.state.password}
-          label="Password"
-          placeholder="******"
-          type="password"
-          field="password"
-          onChangeHandler={this.onChangeHandler}
-          error={errors.password}
-          className="form_group__input"
-        />
-
-        <div className="links">
-          <Link to="/forgot" className="redirect">Forgot your password?</Link>
-
-          <Link to="/signup" className="redirect">Signup page</Link>
-        </div>
-
-        <div className="form_group">
-          <button className="form_group__button" onClick={this.onClickHandler}>Enter</button>
-        </div>
-      </form>
+      <div>{formSwitch}</div>
     )
   }
 }
@@ -118,4 +169,4 @@ LoginForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default connect(null, {userLoginRequest, userActivateRequest, addFlashMessage})(LoginForm)
+export default connect(null, {userLoginRequest, userActivateRequest, addFlashMessage, reactivationRequest})(LoginForm)

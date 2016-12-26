@@ -39,12 +39,28 @@ const needLogout = () => {
     })
     browserHistory.push('/');
   }
-  if (window.location.href.indexOf("=") !== -1) {
+  if (window.location.href.indexOf("?token") !== -1) {
     let obj = window.location.href.split("=");
     let token = obj[obj.length - 1];
     axios({
       method: "post",
       url: "/api/activation",
+      data: {activation_token: token},
+      headers: {
+          'Content-Type': 'application/json'
+      }
+    }).then((r)=> {
+      if (r.data.success === true) {
+        browserHistory.push('/success');
+      }
+    })
+  }
+  if (window.location.href.indexOf("recovery_token") !== -1) {
+    let obj = window.location.href.split("=");
+    let token = obj[obj.length - 1];
+    axios({
+      method: "post",
+      url: "/api/account_recovery",
       data: {activation_token: token},
       headers: {
           'Content-Type': 'application/json'

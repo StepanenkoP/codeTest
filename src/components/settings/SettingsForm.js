@@ -9,6 +9,7 @@ import validateChangepass from '../../functions/validateChangepass'
 import {connect} from 'react-redux'
 import {addFlashMessage} from '../../AC/flashMessages'
 import {userChangePassword} from '../../AC/changePassword'
+import {deleteUser} from '../../AC/accountAC'
 
 class SettingsForm extends Component {
   state = {
@@ -95,6 +96,15 @@ class SettingsForm extends Component {
     }
   }
 
+  deleteAcc = () => {
+    if (confirm("Are you sure?")) {
+      this.props.deleteUser()
+      localStorage.removeItem('token');
+      this.context.router.push('/login');
+    }
+  }
+
+
   render() {
     const {errors} = this.state
     return (
@@ -141,26 +151,11 @@ class SettingsForm extends Component {
                 error={errors.confirm_password}
               />
             </div>
-            <div className="form_block">
-              <div className="form_group">
-                <label className="checkbox_label">
-                  <Checkbox
-                    disabled={this.state.disabled}
-                  /><span className="label_text">Get important notifications</span>
-                </label>
-                <label className="checkbox_label">
-                  <Checkbox
-                    defaultChecked
-                    disabled={this.state.disabled}
-                  /><span className="label_text">Get news from the system</span>
-                </label>
-              </div>
-            </div>
           </div>
           <div className="form_group">
             <button className="form_group__button" onClick={this.clickHandler}>Save</button>
           </div>
-          <div className="delete_acc">
+          <div className="delete_acc" onClick={this.deleteAcc}>
             <div className="img_wrapper"><img src={trash} alt="alt"/></div>
             Delete account
           </div>
@@ -170,4 +165,8 @@ class SettingsForm extends Component {
   }
 }
 
-export default connect(null, {userChangePassword, addFlashMessage})(SettingsForm);
+SettingsForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+export default connect(null, {userChangePassword, addFlashMessage, deleteUser})(SettingsForm);

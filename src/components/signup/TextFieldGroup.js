@@ -13,6 +13,7 @@ class TextFieldGroup extends Component {
           type={type}
           onBlur={onBlurHandler}
           name={field}
+          readOnly={this.props.readOnly}
           placeholder={placeholder}
           className={className}
           maxLength={this.props.maxlength}

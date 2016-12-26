@@ -37,3 +37,30 @@ export function getUserInfo() {
     )
   }
 }
+
+export function deleteUser() {
+  return dispatch => {
+    return axios({
+      method: "delete",
+      url: `/api/user`,
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.token
+      }
+    })
+  }
+}
+
+export function reactivationRequest(data) {
+  return dispatch => {
+    return axios({
+      method: "post",
+      url: `/api/account_recovery_request`,
+      data: data,
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.token
+      }
+    })
+  }
+}
