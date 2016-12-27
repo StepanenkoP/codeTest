@@ -20,6 +20,7 @@ import PaymentPage from './components/payment/PaymentPage'
 import SendPaymentPage from './components/payment/SendPaymentPage'
 import SendCardPage from './components/payment/SendCardPage'
 import SendPaypalPage from './components/payment/SendPaypalPage'
+import UsersPage from './components/users/UsersPage'
 import Message from './components/messages/Message'
 import App from './components/App'
 import {store} from './index'
@@ -27,9 +28,7 @@ import axios from 'axios'
 import {ADD_FLASH_MESSAGE} from './types'
 
 const needLogout = () => {
-  localStorage.removeItem('address');
-  localStorage.removeItem('business_type_id');
-  localStorage.removeItem('contact_number');
+  localStorage.clear()
   if (localStorage.token) {
     store.dispatch({
       type: ADD_FLASH_MESSAGE,
@@ -78,6 +77,13 @@ const needLogin = () => {
   if (!localStorage.token) {
     browserHistory.push('/login');
   }
+  console.log(browserHistory.getCurrentLocation().pathname === '/');
+  if (browserHistory.getCurrentLocation().pathname === '/' && localStorage.userType === 'admin') {
+    browserHistory.push('/users');
+  }
+  if (browserHistory.getCurrentLocation().pathname === '/users' && localStorage.userType !== 'admin') {
+    browserHistory.push('/');
+  }
 }
 
 
@@ -110,6 +116,7 @@ export default (
       <Route path=':id' component={Message} />
     </Route>
     <Route path='create_campaign' component={CreateCampaign} onEnter={needLogin}/>
+    <Route path='users' component={UsersPage} onEnter={needLogin}/>
     <Route path='*' component={NoPage}/>
   </Route>
 )

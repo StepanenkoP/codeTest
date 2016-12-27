@@ -20,6 +20,21 @@ class Header extends Component {
       <h3 className="user_name">{`${this.props.userInfo !== null ? this.props.userInfo.first_name : ''} ${this.props.userInfo !== null ? this.props.userInfo.last_name : ''}`}</h3>
       <div className="user_mnu"><span className="logout" onClick={this.props.logOut}>Logout</span><span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span></div>
     </div> : <div style={{textAlign: 'center', float: 'right', paddingTop: '20px'}}><img src={ring} alt="alt" /></div>
+
+  const menu = this.props.userInfo !== null && this.props.userInfo.user_type !== 'admin' ?
+  <ul className="main_mnu">
+    <li><Link className="main_mnu__link" to="/">Account summary</Link></li>
+    <li><Link className="main_mnu__link" to="/advers_list">List of Adverts</Link></li>
+    <li><Link className="main_mnu__link" to="/campaign_list">List of Compaign</Link></li>
+    <li><Link className="main_mnu__link" to="/messages">Messages</Link></li>
+    <li><Link className="main_mnu__link" to="/payments">Payments</Link></li>
+    <li><Link className="main_mnu__link" to="/settings">Settings</Link></li>
+  </ul> :
+  <ul className="main_mnu">
+    <li><Link className="main_mnu__link" to="/messages">Messages</Link></li>
+    <li><Link className="main_mnu__link" to="/settings">Settings</Link></li>
+  </ul>
+
     return (
       <header className="main_header">
         <div className="main_header__line clearfix">
@@ -28,14 +43,7 @@ class Header extends Component {
           {user}
           <h1>{this.props.title}</h1>
           <p className="text">{this.props.text}</p>
-          <ul className="main_mnu">
-            <li><Link className="main_mnu__link" to="/">Account summary</Link></li>
-            <li><Link className="main_mnu__link" to="/advers_list">List of Adverts</Link></li>
-            <li><Link className="main_mnu__link" to="/campaign_list">List of Compaign</Link></li>
-            <li><Link className="main_mnu__link" to="/messages">Messages</Link></li>
-            <li><Link className="main_mnu__link" to="/payments">Payments</Link></li>
-            <li><Link className="main_mnu__link" to="/settings">Settings</Link></li>
-          </ul>
+          {menu}
         </div>
       </header>
     )
