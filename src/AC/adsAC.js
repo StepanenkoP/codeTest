@@ -20,7 +20,7 @@ export function loadAds(data) {
   return dispatch => {
     return axios({
       method: "get",
-      url: "/api/advertisement",
+      url: `/api/advertisement?page=${data}`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token

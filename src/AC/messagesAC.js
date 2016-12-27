@@ -1,11 +1,11 @@
 import axios from 'axios'
 import {LOAD_ALL_MESSAGES, LOAD_MESSAGE, SEND_MESSAGE} from '../types'
 
-export function loadAllMessages() {
+export function loadAllMessages(data) {
   return dispatch => {
     return axios({
       method: "get",
-      url: `/api/messages`,
+      url: `/api/messages?page=${data}`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token

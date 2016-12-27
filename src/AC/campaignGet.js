@@ -1,11 +1,11 @@
 import axios from 'axios'
 import {LOAD_CAMPAIGNS, LOAD_CAMPAIGN, DELETE_CAMPAIGN} from '../types'
 
-export function getCampaignList() {
+export function getCampaignList(data) {
   return dispatch => {
     return axios({
       method: "get",
-      url: "/api/campaign",
+      url: `/api/campaign?page=${data}`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token

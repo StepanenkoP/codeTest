@@ -73,13 +73,14 @@ class MessageForm extends Component {
   render () {
     console.log(this.props);
     const {messages} = this.props
+    const color = this.props.userInfo !== null ? this.props.userInfo.color : ''
     const allMessages = this.props.messages !== undefined ? Object.keys(messages).map(item => <div key={item} className="block">
       {
         messages[item].map(date => {
           const localTime = moment(moment.utc(date.created_at).local().format("YYYY-MM-DD HH:mm"))
             return <div key={date.id} className="message">
               <div className="name">
-                <img src={user} alt="alt"/>
+                <span className="img" style={{backgroundColor: color}}>P</span>
                 <span className="user_name">{date.from}</span>
                 <div className="time">{localTime._i.split(' ')[1].slice(0,5)}</div>
               </div>

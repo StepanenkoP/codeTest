@@ -5,11 +5,19 @@ import {connect} from 'react-redux'
 import {loadAllMessages} from '../../AC/messagesAC'
 import ring from '../../img/main/ring.svg'
 import moment from 'moment'
+import Pagination from '../unisex/Pagination'
+import $ from 'jquery'
 
 
 class MessagesForm extends Component {
+
+  state = {
+    activePage: 1,
+    preloader: false
+  }
+
   componentDidMount() {
-    this.props.loadAllMessages()
+    this.props.loadAllMessages(this.state.activePage)
   }
 
   linkClick = (from,id) => {
@@ -17,13 +25,35 @@ class MessagesForm extends Component {
     localStorage.setItem('advert_id', id)
   }
 
+  handlePageChange = (pageNumber) => {
+    this.setState({activePage: pageNumber});
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (this.state.activePage !== nextState.activePage) {
+      this.setState({
+        preloader: true
+      })
+      this.props.loadAllMessages(nextState.activePage)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.activePage !== prevState.activePage) {
+      setTimeout(() => {
+        this.setState({
+          preloader: false
+        })
+      }, 500)
+    }
+  }
 
 
   render () {
-    console.log(this.props);
-    const items = this.props.allMessages !== null ? this.props.allMessages.map(item => {
+    // console.log(this.props);
+    const items = this.props.allMessages !== null ? this.props.allMessages.data.map(item => {
       const localTime = moment(moment.utc(item.last_message_at).local().format("YYYY-MM-DD HH:mm"))
-      return <div key={item.id} onClick={this.linkClick(item.from, item.advertisement_slug)}><Link className='message_link' to={`/messages/${item.id}`}>
+      return <div key={item.id} onClick={() => this.linkClick(item.from, item.advertisement_slug)}><Link className='message_link' to={`/messages/${item.id}`}>
         <div className={`messages_row ${item.has_new ? 'passive' : 'active'} clearfix`}>
           <div className="from">{item.from}</div>
           <div className="subject">{item.title}</div>
@@ -33,7 +63,8 @@ class MessagesForm extends Component {
         </div>
       </Link></div>
     }) : null
-    const messages = this.props.allMessages !== null ? <div className="messages_wrapper">
+
+    const messages = this.props.allMessages !== null && !this.state.preloader ? <div className="messages_wrapper">
       <div className="messages">
         <div className="messages_row clearfix">
           <div className="from">From</div>
@@ -45,6 +76,26 @@ class MessagesForm extends Component {
         {items}
       </div>
     </div> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px', paddingTop: '50px'}}/></div>
+
+    const pagination = this.props.allMessages !== null && this.props.allMessages.data.length === 10 ? <div style={{textAlign: 'center'}}>
+      <Pagination
+        activePage={this.state.activePage}
+        itemsCountPerPage={10}
+        totalItemsCount={this.props.allMessages.total}
+        pageRangeDisplayed={5}
+        onChange={this.handlePageChange}
+      />
+    </div> : this.props.allMessages !== null && this.props.allMessages.current_page === this.props.allMessages.last_page ?
+    <div style={{textAlign: 'center'}}>
+      <Pagination
+        activePage={this.state.activePage}
+        itemsCountPerPage={10}
+        totalItemsCount={this.props.allMessages.total}
+        pageRangeDisplayed={5}
+        onChange={this.handlePageChange}
+      />
+    </div> : null
+
     return (
       <div className="settings_wrapper">
         <div className="settings_wrapper__form mess">
@@ -53,7 +104,8 @@ class MessagesForm extends Component {
             Custom Messages
           </div>
           {messages}
-          {this.props.allMessages !== null && !this.props.allMessages.length && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
+          {this.props.allMessages !== null && !this.props.allMessages.data.length && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
+          {!this.state.preloader ? pagination : null}
         </div>
       </div>
     )

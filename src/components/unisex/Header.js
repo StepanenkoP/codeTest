@@ -14,8 +14,8 @@ class Header extends Component {
   render() {
     console.log(this.props);
     const user = this.props.userInfo !== null ? <div className="user">
-      <div className="user_img">
-        <img src={image} alt="alt"/>
+      <div className="user_img" style={{backgroundColor: this.props.userInfo.color}}>
+        {this.props.userInfo.first_name.slice(0, 1)}
       </div>
       <h3 className="user_name">{`${this.props.userInfo !== null ? this.props.userInfo.first_name : ''} ${this.props.userInfo !== null ? this.props.userInfo.last_name : ''}`}</h3>
       <div className="user_mnu"><span className="logout" onClick={this.props.logOut}>Logout</span><span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span></div>

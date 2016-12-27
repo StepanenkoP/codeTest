@@ -45,7 +45,7 @@ class EditAd extends Component {
   render() {
     console.log(this.props);
     const {title, short_description, description, image, campaign_id, url_link} = this.props.ad
-    const campaignList = this.props.campaignList.campaign_array.map(item => <option key={item.id} value={item.id}>{item.title}</option>)
+    const campaignList = this.props.campaignList.campaign_count !== null ? this.props.campaignList.campaign_array.data.map(item => <option key={item.id} value={item.id}>{item.title}</option>) : null
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
     const loader =
     !this.props.ad.error && title ?

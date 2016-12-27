@@ -20,6 +20,11 @@ body
 :-ms-input-placeholder
 	color: #AFAFAF
 
+*
+  &:focus,
+  &:active,
+    outline: none
+
 
 
 .auth_wrapper
@@ -273,6 +278,11 @@ body
       &_img
         position: absolute
         left: -60px
+        width: 43px
+        height: 43px
+        border-radius: 50%
+        line-height: 43px
+        text-align: center
       &_name
         text-transform: uppercase
         font-size: 16px
@@ -313,6 +323,13 @@ body
         &_img
           position: absolute
           left: -60px
+          width: 43px
+          height: 43px
+          border-radius: 50%
+          line-height: 43px
+          text-align: center
+          font-weight: 700
+          font-size: 18px
         &_name
           text-transform: uppercase
           font-size: 16px
@@ -474,9 +491,6 @@ body
               background-color: #fff
               z-index: 1
             input
-              background-image: url(./img/messages/userinput.png)
-              background-repeat: no-repeat
-              background-position: 100% 0
               border: none
               width: 100%
               padding-left: 70px
@@ -516,6 +530,16 @@ body
               margin-bottom: 40px
               .name
                 margin-bottom: 20px
+                .img
+                  width: 50px
+                  height: 50px
+                  display: inline-block
+                  color: #fff
+                  font-weight: 700
+                  font-size: 18px
+                  line-height: 50px
+                  text-align: center
+                  border-radius: 50%
                 .user_name
                   font-size: 14px
                   text-transform: uppercase
@@ -1159,3 +1183,11 @@ body
         width: 170px
       .clicks
         width: 145px
+
+.pagination
+  li
+    a
+      width: 42px
+      text-align: center
+      padding-left: 0
+      padding-right: 0
