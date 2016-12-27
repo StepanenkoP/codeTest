@@ -5,6 +5,7 @@ import button from '../../img/messages/button.png'
 import me from '../../img/messages/me.png'
 import {Link} from 'react-router'
 import {sendMessage} from '../../AC/messagesAC'
+import {getUserInfo} from '../../AC/accountAC'
 import {addFlashMessage} from '../../AC/flashMessages'
 import validateSendMessage from '../../functions/validateSendMessage'
 import {connect} from 'react-redux'
@@ -16,6 +17,10 @@ class MessageForm extends Component {
     message_text: '',
     sended: false,
     errors: {}
+  }
+
+  componentDidMount() {
+    this.props.getUserInfo()
   }
 
   inputChange = (e) => {
@@ -47,7 +52,7 @@ class MessageForm extends Component {
       }
       const newobj = {
         id: Date.now(),
-        from: "Pavel Stepanenko",
+        from: `${this.props.userInfo.first_name} ${this.props.userInfo.last_name}`,
         text: this.state.message_text,
         created_at: moment.utc(new Date()).format("YYYY-MM-DD HH:mm")
       }
@@ -66,6 +71,7 @@ class MessageForm extends Component {
   }
 
   render () {
+    console.log(this.props);
     const {messages} = this.props
     const allMessages = this.props.messages !== undefined ? Object.keys(messages).map(item => <div key={item} className="block">
       {
@@ -108,6 +114,10 @@ class MessageForm extends Component {
   }
 }
 
+function mapStateToProps({accountData}) {
+  return {
+    userInfo: accountData.userInfo,
+  }
+}
 
-
-export default connect(null, {addFlashMessage, sendMessage})(MessageForm);
+export default connect(mapStateToProps, {addFlashMessage, sendMessage, getUserInfo})(MessageForm);

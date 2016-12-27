@@ -62,7 +62,7 @@ class MessagesForm extends Component {
 
 function mapStateToProps({accountData}) {
   return {
-    allMessages: accountData.allMessages
+    allMessages: accountData.allMessages,
   }
 }
 
