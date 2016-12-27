@@ -49,7 +49,7 @@ class MessageForm extends Component {
         id: Date.now(),
         from: "Pavel Stepanenko",
         text: this.state.message_text,
-        created_at: moment(new Date()).format("YYYY-MM-DD HH:mm")
+        created_at: moment.utc(new Date()).format("YYYY-MM-DD HH:mm")
       }
       const currentDate = Object.keys(this.props.messages)[Object.keys(this.props.messages).length - 1]
       this.props.sendMessage(data, newobj, currentDate)
@@ -69,14 +69,17 @@ class MessageForm extends Component {
     const {messages} = this.props
     const allMessages = this.props.messages !== undefined ? Object.keys(messages).map(item => <div key={item} className="block">
       {
-        messages[item].map(date => <div key={date.id} className="message">
-          <div className="name">
-            <img src={user} alt="alt"/>
-            <span className="user_name">{date.from}</span>
-            <div className="time">{date.created_at.split(' ')[1].slice(0,5)}</div>
-          </div>
-          <div className="text">{date.text}</div>
-        </div>)
+        messages[item].map(date => {
+          const localTime = moment(moment.utc(date.created_at).local().format("YYYY-MM-DD HH:mm"))
+            return <div key={date.id} className="message">
+              <div className="name">
+                <img src={user} alt="alt"/>
+                <span className="user_name">{date.from}</span>
+                <div className="time">{localTime._i.split(' ')[1].slice(0,5)}</div>
+              </div>
+              <div className="text">{date.text}</div>
+            </div>
+        })
       } {item !== Object.keys(messages)[Object.keys(messages).length - 1] && <div className="date">{item}</div>}</div>) : null
     console.log(allMessages);
     return (

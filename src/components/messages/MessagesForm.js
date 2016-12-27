@@ -4,6 +4,7 @@ import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {loadAllMessages} from '../../AC/messagesAC'
 import ring from '../../img/main/ring.svg'
+import moment from 'moment'
 
 
 class MessagesForm extends Component {
@@ -20,15 +21,18 @@ class MessagesForm extends Component {
 
   render () {
     console.log(this.props);
-    const items = this.props.allMessages !== null ? this.props.allMessages.map(item => <div key={item.id} onClick={this.linkClick(item.from, item.advertisement_slug)}><Link className='message_link' to={`/messages/${item.id}`}>
-      <div className={`messages_row ${item.has_new ? 'passive' : 'active'} clearfix`}>
-        <div className="from">{item.from}</div>
-        <div className="subject">{item.title}</div>
-        <div className="id">{item.advertisement_slug}</div>
-        <div className="date">{item.last_message_at.split(' ')[0]}</div>
-        <div className="time">{item.last_message_at.split(' ')[1].slice(0, 5)}</div>
-      </div>
-    </Link></div>) : null
+    const items = this.props.allMessages !== null ? this.props.allMessages.map(item => {
+      const localTime = moment(moment.utc(item.last_message_at).local().format("YYYY-MM-DD HH:mm"))
+      return <div key={item.id} onClick={this.linkClick(item.from, item.advertisement_slug)}><Link className='message_link' to={`/messages/${item.id}`}>
+        <div className={`messages_row ${item.has_new ? 'passive' : 'active'} clearfix`}>
+          <div className="from">{item.from}</div>
+          <div className="subject">{item.title}</div>
+          <div className="id">{item.advertisement_slug == null ? 'n/a' : item.advertisement_slug}</div>
+          <div className="date">{localTime._i.split(' ')[0]}</div>
+          <div className="time">{localTime._i.split(' ')[1].slice(0, 5)}</div>
+        </div>
+      </Link></div>
+    }) : null
     const messages = this.props.allMessages !== null ? <div className="messages_wrapper">
       <div className="messages">
         <div className="messages_row clearfix">
