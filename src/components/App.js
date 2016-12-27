@@ -57,6 +57,9 @@ class App extends Component {
             pointColor: "#fff"
         }]
     }
+    const chart = total_views ? <div className="data_chart">
+      <LineChart data={data} width="1170" height="310"/>
+    </div> : <div className="no_data" style={{textAlign: 'center'}}>No data</div>
     const totalStats = !isEmpty(this.props.accountStats) ?
     <div className="data">
       <ul className="data_ul">
@@ -86,9 +89,7 @@ class App extends Component {
         </li>
       </ul>
       <h2>Total views</h2>
-      <div className="data_chart">
-        <LineChart data={data} width="1170" height="310"/>
-      </div>
+      {chart}
     </div> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '150px', paddingTop: '150px'}}/></div>
 
 
