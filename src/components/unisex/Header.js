@@ -31,6 +31,8 @@ class Header extends Component {
     <li><Link className="main_mnu__link" to="/settings">Settings</Link></li>
   </ul> :
   <ul className="main_mnu">
+    <li><Link className="main_mnu__link" to="/users">Users</Link></li>
+    <li><Link className="main_mnu__link" to="/adverts">Adverts</Link></li>
     <li><Link className="main_mnu__link" to="/messages">Messages</Link></li>
     <li><Link className="main_mnu__link" to="/settings">Settings</Link></li>
   </ul>

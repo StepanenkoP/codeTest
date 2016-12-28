@@ -25,20 +25,30 @@ class MobileMenu extends Component {
       <h3 className="user_name">{`${this.props.userInfo !== null ? this.props.userInfo.first_name : ''} ${this.props.userInfo !== null ? this.props.userInfo.last_name : ''}`}</h3>
       <div className="user_mnu"><span className="logout" onClick={this.logOut}>Logout</span><span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span></div>
     </div> : <div style={{textAlign: 'center', float: 'right', paddingTop: '20px'}}><img src={ring} alt="alt" /></div>
+
+    const menu = this.props.userInfo !== null && this.props.userInfo.user_type !== 'admin' ?
+    <ul className="mobile_ul">
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/">Account summary</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/advers_list">List of Adverts</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/campaign_list">List of Compaign</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/messages">Messages</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/payments">Payments</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/settings">Settings</Link></li>
+    </ul> :
+    <ul className="mobile_ul">
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/users">Users</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/adverts">Adverts</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/messages">Messages</Link></li>
+      <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/settings">Settings</Link></li>
+    </ul>
+
     return (
       <div className="mobile_mnu">
         <div className="mobile_head">
           <div className="ham" onClick={this.props.closeMenu}><img src={hamclose} alt="alt"/></div>
           {user}
         </div>
-        <ul className="mobile_ul">
-          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/">Account summary</Link></li>
-          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/advers_list">List of Adverts</Link></li>
-          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/campaign_list">List of Compaign</Link></li>
-          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/messages">Messages</Link></li>
-          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/payments">Payments</Link></li>
-          <li><Link className="mobile_ul__link" onClick={this.props.closeMenu} to="/settings">Settings</Link></li>
-        </ul>
+        {menu}
       </div>
     )
   }

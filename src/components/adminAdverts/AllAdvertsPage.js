@@ -3,17 +3,16 @@ import FlashList from '../flash/FlashList'
 import Footer from '../unisex/Footer'
 import MobileMenu from '../unisex/MobileMenu'
 import Header from '../unisex/Header'
-import UsersForm from './UsersForm'
+import AllAdvertsForm from './AllAdvertsForm'
 
 
-
-class UsersPage extends Component {
+class AllAdvertsPage extends Component {
   state = {
     isOpen: false
   }
 
   componentDidMount= () => {
-    document.title = "Users - Micro Advertising Portal";
+    document.title = "All Adverts - Micro Advertising Portal";
   }
 
   openMenu = () => {
@@ -47,7 +46,7 @@ class UsersPage extends Component {
         openMenu={this.openMenu}
         logOut={this.logOut}
       />
-      <UsersForm />
+      <AllAdvertsForm />
       <Footer />
     </div>
     : <div>{this.props.children}</div>
@@ -59,9 +58,9 @@ class UsersPage extends Component {
   }
 }
 
-UsersPage.contextTypes = {
+AllAdvertsPage.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
 
-export default UsersPage;
+export default AllAdvertsPage;

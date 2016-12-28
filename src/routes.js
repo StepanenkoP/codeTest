@@ -22,6 +22,7 @@ import SendCardPage from './components/payment/SendCardPage'
 import SendPaypalPage from './components/payment/SendPaypalPage'
 import UsersPage from './components/users/UsersPage'
 import Message from './components/messages/Message'
+import AllAdvertsPage from './components/adminAdverts/AllAdvertsPage'
 import App from './components/App'
 import {store} from './index'
 import axios from 'axios'
@@ -117,6 +118,7 @@ export default (
     </Route>
     <Route path='create_campaign' component={CreateCampaign} onEnter={needLogin}/>
     <Route path='users' component={UsersPage} onEnter={needLogin}/>
+    <Route path='adverts' component={AllAdvertsPage} onEnter={needLogin}/>
     <Route path='*' component={NoPage}/>
   </Route>
 )

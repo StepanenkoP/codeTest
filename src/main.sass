@@ -558,6 +558,88 @@ body
     .messages
       padding-top: 30px
       width: 1168px
+      .adverts_row
+        &.pending
+          background-color: #F6F4F6
+          font-weight: 400
+          font-size: 13px
+          padding-top: 15px
+          padding-bottom: 15px
+          margin-bottom: 0
+        &.approved,
+        &.rejected
+          font-weight: 400
+          font-size: 13px
+          padding-top: 15px
+          padding-bottom: 15px
+          margin-bottom: 0
+        position: relative
+        cursor: default
+        .advert_title
+          width: 215px
+        .advert_id
+          width: 180px
+        .advert_date
+          width: 210px
+        .advert_name
+          width: 170px
+        .advert_surname
+          width: 155px
+        .advert_status
+          span
+            cursor: pointer
+            font-weight: 700
+            &.active
+              color: #4272BC
+      .users_row
+        position: relative
+        cursor: default
+        &.blocked
+          background-color: #F6F4F6
+          color: #B2B2B2
+          font-weight: 400
+          padding-top: 15px
+          padding-bottom: 15px
+          margin-bottom: 0
+          .block
+            background-image: url(./img/users/blocked.png)
+            background-repeat: no-repeat
+            background-position: 50% 50%
+        &.unblocked
+          font-weight: 400
+          margin-bottom: 0
+          padding-top: 15px
+          padding-bottom: 15px
+          .block
+            background-image: url(./img/users/unblocked.png)
+            background-repeat: no-repeat
+            background-position: 50% 50%
+        .block
+          position: absolute
+          cursor: pointer
+          top: 50%
+          width: 30px
+          height: 30px
+          margin-top: -15px
+          background-color: transparent
+          border: 1px solid #DBDBDB
+          border-radius: 2px
+        .user_id
+          width: 70px
+        .user_name
+          width: 140px
+        .user_surname
+          width: 130px
+        .user_date
+          width: 145px
+        .user_campaigns
+          width: 150px
+        .user_ads
+          width: 120px
+        .user_spent
+          width: 110px
+        .user_balance
+          width: 145px
       .message_link
         color: #000
       .payment_row
@@ -696,6 +778,20 @@ body
       border-bottom: 1px dotted #DBE0E6
       margin-left: 30px
       margin-right: 30px
+      .filter
+        float: right
+        font-size: 17px
+        text-transform: none
+        span
+          cursor: pointer
+        .bold
+          font-weight: 700
+          margin-left: 20px
+          margin-right: 20px
+          font-size: 20px
+          cursor: default
+        .active
+          color: #4272BC
       .payment_btn
         float: right
         margin-top: 0
