@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import profile from '../../img/users/Profile.png'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
-import {loadAllMessages} from '../../AC/messagesAC'
+import {getAllAdverts, setApprove, setReject, getFilteredAdverts} from '../../AC/accountAC'
 import ring from '../../img/main/ring.svg'
 import moment from 'moment'
 import Pagination from '../unisex/Pagination'
@@ -17,7 +17,7 @@ class AllAdvertsForm extends Component {
   }
 
   componentDidMount() {
-    this.props.loadAllMessages(this.state.activePage)
+    this.props.getAllAdverts(this.state.activePage)
   }
 
   linkClick = (from,id) => {
@@ -34,37 +34,58 @@ class AllAdvertsForm extends Component {
       this.setState({
         preloader: true
       })
-      this.props.loadAllMessages(nextState.activePage)
+      this.props.getAllAdverts(nextState.activePage).then(
+        r => {
+          if (r.payload) {
+            this.setState({
+              preloader: false
+            })
+          }
+        }
+      )
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.activePage !== prevState.activePage) {
-      setTimeout(() => {
-        this.setState({
-          preloader: false
-        })
-      }, 500)
+  setApprove = (id) => {
+    this.props.setApprove(id)
+  }
+
+  setReject = (id) => {
+    this.props.setReject(id)
+  }
+
+  filterOnClick = (data) => {
+    console.log(data);
+    if (data == 'all') {
+      this.props.getAllAdverts(this.state.activePage)
+    } else {
+      let status = {
+        filter_by: data
+      }
+      this.props.getFilteredAdverts(this.state.activePage, status).then(
+        r => console.log(r)
+      )
     }
   }
+
 
 
   render () {
-    // console.log(this.props);
-    const items = this.props.allMessages !== null ? this.props.allMessages.data.map(item => {
-      const localTime = moment(moment.utc(item.last_message_at).local().format("YYYY-MM-DD HH:mm"))
-      return <div key={item.id} onClick={() => this.linkClick(item.from, item.advertisement_slug)}><Link className='message_link' to={`/messages/${item.id}`}>
-        <div className={`messages_row ${item.has_new ? 'passive' : 'active'} clearfix`}>
-          <div className="from">{item.from}</div>
-          <div className="subject">{item.title}</div>
-          <div className="id">{item.advertisement_slug == null ? 'n/a' : item.advertisement_slug}</div>
-          <div className="date">{localTime._i.split(' ')[0]}</div>
-          <div className="time">{localTime._i.split(' ')[1].slice(0, 5)}</div>
-        </div>
-      </Link></div>
+    console.log(this.props);
+    const items = this.props.allAdverts !== null ? this.props.allAdverts.data.map(item => {
+      return <div key={item.id}>
+        <div className={`messages_row adverts_row ${item.status == 'pending' ? 'pending' : 'approved'} clearfix`}>
+          <div className="advert_title">Lego for kids</div>
+          <div className="advert_id">SC30293045</div>
+          <div className="advert_date">11/01/2016</div>
+          <div className="advert_name">Chris</div>
+          <div className="advert_surname">Jones</div>
+          <div className="advert_status"><span onClick={() => this.setApprove(item.id)} className={`${item.status == 'approved' ? 'active' : ''}`}>Approve</span> / <span onClick={() => this.setReject(item.id)} className={`${item.status == 'rejected' ? 'active' : ''}`}>Reject</span></div>
+          </div>
+          </div>
     }) : null
 
-    const messages = this.props.allMessages !== null && !this.state.preloader ? <div className="messages_wrapper">
+    const messages = this.props.allAdverts !== null && !this.state.preloader ? <div className="messages_wrapper">
       <div className="messages">
         <div className="messages_row adverts_row clearfix">
           <div className="advert_title">Title</div>
@@ -74,48 +95,24 @@ class AllAdvertsForm extends Component {
           <div className="advert_surname">Last name</div>
           <div className="advert_status">Status</div>
         </div>
-        <div className="messages_row adverts_row pending clearfix">
-          <div className="advert_title">Lego for kids</div>
-          <div className="advert_id">SC30293045</div>
-          <div className="advert_date">11/01/2016</div>
-          <div className="advert_name">Chris</div>
-          <div className="advert_surname">Jones</div>
-          <div className="advert_status"><span>Approve</span> / <span>Reject</span></div>
-        </div>
-        <div className="messages_row adverts_row approved clearfix">
-          <div className="advert_title">Lego for kids</div>
-          <div className="advert_id">SC30293045</div>
-          <div className="advert_date">11/01/2016</div>
-          <div className="advert_name">Chris</div>
-          <div className="advert_surname">Jones</div>
-          <div className="advert_status"><span className="active">Approve</span> / <span>Reject</span></div>
-        </div>
-        <div className="messages_row adverts_row rejected clearfix">
-          <div className="advert_title">Lego for kids</div>
-          <div className="advert_id">SC30293045</div>
-          <div className="advert_date">11/01/2016</div>
-          <div className="advert_name">Chris</div>
-          <div className="advert_surname">Jones</div>
-          <div className="advert_status"><span>Approve</span> / <span className="active">Reject</span></div>
-        </div>
         {items}
       </div>
     </div> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px', paddingTop: '50px'}}/></div>
 
-    const pagination = this.props.allMessages !== null && this.props.allMessages.data.length === 10 ? <div style={{textAlign: 'center'}}>
-      <Pagination
-        activePage={this.state.activePage}
-        itemsCountPerPage={10}
-        totalItemsCount={this.props.allMessages.total}
-        pageRangeDisplayed={5}
+  const pagination = this.props.allAdverts !== null && this.props.allAdverts.data.length === 20 ? <div style={{textAlign: 'center'}}>
+    <Pagination
+      activePage={this.state.activePage}
+      itemsCountPerPage={20}
+      totalItemsCount={this.props.allAdverts.total}
+      pageRangeDisplayed={5}
         onChange={this.handlePageChange}
       />
-    </div> : this.props.allMessages !== null && this.props.allMessages.current_page === this.props.allMessages.last_page ?
+    </div> : this.props.allAdverts !== null && this.props.allAdverts.current_page === this.props.allAdverts.last_page ?
     <div style={{textAlign: 'center'}}>
       <Pagination
         activePage={this.state.activePage}
-        itemsCountPerPage={10}
-        totalItemsCount={this.props.allMessages.total}
+        itemsCountPerPage={20}
+        totalItemsCount={this.props.allAdverts.total}
         pageRangeDisplayed={5}
         onChange={this.handlePageChange}
       />
@@ -126,19 +123,19 @@ class AllAdvertsForm extends Component {
         <div className="settings_wrapper__form mess">
           <div className="title">
             <div className="img_wrapper"><img src={profile} alt="alt"/></div>
-            List of Users
+            List of Adverts
             <div className="filter adverts">
-              <span className="active">All</span>
+              <span className="active" onClick={() => this.filterOnClick('all')}>All</span>
               <span className="bold">|</span>
-              <span>Approved</span>
+              <span onClick={() => this.filterOnClick('approved')}>Approved</span>
               <span className="bold">|</span>
-              <span>Rejected</span>
+              <span onClick={() => this.filterOnClick('rejected')}>Rejected</span>
               <span className="bold">|</span>
-              <span>Pending</span>
+              <span onClick={() => this.filterOnClick('pending')}>Pending</span>
             </div>
           </div>
           {messages}
-          {this.props.allMessages !== null && !this.props.allMessages.data.length && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
+          {this.props.allAdverts !== null && !this.props.allAdverts.data.length && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
           {!this.state.preloader ? pagination : null}
         </div>
       </div>
@@ -146,10 +143,10 @@ class AllAdvertsForm extends Component {
   }
 }
 
-function mapStateToProps({accountData}) {
+function mapStateToProps({adminInfo}) {
   return {
-    allMessages: accountData.allMessages,
+    allAdverts: adminInfo.allAdverts,
   }
 }
 
-export default connect (mapStateToProps, {loadAllMessages})(AllAdvertsForm);
+export default connect (mapStateToProps, {getAllAdverts, setApprove, setReject, getFilteredAdverts})(AllAdvertsForm);

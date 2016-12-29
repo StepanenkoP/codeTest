@@ -34,19 +34,18 @@ class MessagesForm extends Component {
       this.setState({
         preloader: true
       })
-      this.props.loadAllMessages(nextState.activePage)
+      this.props.loadAllMessages(nextState.activePage).then(
+        r => {
+          if (r.payload) {
+            this.setState({
+              preloader: false
+            })
+          }
+        }
+      )
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.activePage !== prevState.activePage) {
-      setTimeout(() => {
-        this.setState({
-          preloader: false
-        })
-      }, 500)
-    }
-  }
 
 
   render () {
