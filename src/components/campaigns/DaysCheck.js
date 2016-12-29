@@ -6,7 +6,6 @@ class DaysCheck extends Component {
 
   render() {
     const {error} = this.props
-    console.log(this.props);
     const allItems = this.props.items.length ? this.props.items.map(item =>
       <label key={item.id} className="checkbox_label">
         <Checkbox value={item.title}/>

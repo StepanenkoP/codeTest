@@ -84,7 +84,7 @@ class App extends Component {
           <p>Total spend</p>
         </li>
         <li>
-          <span className="data_ul__number">{balance}</span>
+          <span className="data_ul__number">&#163;{balance}</span>
           <p>You balance</p>
         </li>
       </ul>

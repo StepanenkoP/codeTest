@@ -40,7 +40,7 @@ class CreateAd extends Component {
 
   render() {
     console.log(this.props);
-    const campaignList = this.props.campaignList.campaign_array.map(item => <option key={item.id} value={item.id}>{item.title}</option>)
+    const campaignList = this.props.campaignList.campaign_count !== null ? this.props.campaignList.campaign_array.data.map(item => <option key={item.id} value={item.id}>{item.title}</option>) : null
     const mobileMenu = this.state.isOpen ? <MobileMenu closeMenu={this.closeMenu}/> : null
     return (
       <div className="main_wrapper">

@@ -67,7 +67,7 @@ class MessagesForm extends Component {
     const messages = this.props.allMessages !== null && !this.state.preloader ? <div className="messages_wrapper">
       <div className="messages">
         <div className="messages_row clearfix">
-          <div className="from">From</div>
+          <div className="from">With</div>
           <div className="subject">Subject</div>
           <div className="id">ID Advert</div>
           <div className="date">Date</div>

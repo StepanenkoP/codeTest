@@ -69,6 +69,7 @@ class SendCardForm extends Component {
               cvc: '',
               errors: {}
             })
+            this.context.router.push('/payments')
           } else {
             this.props.addFlashMessage({
               type: 'error',
@@ -170,6 +171,10 @@ class SendCardForm extends Component {
       </div>
     )
   }
+}
+
+SendCardForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }
 
 export default connect(null, {sendPayment,addFlashMessage})(SendCardForm);

@@ -16,6 +16,7 @@ import validateCampaignForm from '../../functions/validateCampaignForm'
 import update from 'react-addons-update'
 import {addFlashMessage} from '../../AC/flashMessages'
 import back from '../../img/signup/back.png'
+import ring from '../../img/main/ring.svg'
 
 class CampaignConstructor extends Component {
   state = {
@@ -47,7 +48,9 @@ class CampaignConstructor extends Component {
     asia: [],
     europe: [],
     oceania: [],
-    errors: {}
+    errors: {},
+    canEdit: false,
+    loader: false
   }
 
   componentDidMount() {
@@ -58,53 +61,53 @@ class CampaignConstructor extends Component {
     this.props.getWebsites();
   }
 
-  componentWillReceiveProps() {
-    if (this.props.name) {
-      const daysArr = this.props.daysEdit.map(item=> item.title);
-      const daysArrServer = this.props.daysEdit.map(item=> item.id);
-      const agesArr = this.props.agesEdit.map(item=> item.title);
-      const agesArrServer = this.props.agesEdit.map(item=> item.id);
-      const timesArr = this.props.timesEdit.map(item=> item.title);
-      const timesArrServer = this.props.timesEdit.map(item=> item.id);
-      const websitesArr = this.props.websitesEdit.map(item=> item.title);
-      const websitesArrServer = this.props.websitesEdit.map(item=> item.id);
-      const africaArr = this.props.africaEdit.map(item=> item.title)
-      const americaArr = this.props.americaEdit.map(item=> item.title)
-      const asiaArr = this.props.asiaEdit.map(item=> item.title)
-      const europeArr = this.props.europeEdit.map(item=> item.title)
-      const oceaniaArr = this.props.oceaniaEdit.map(item=> item.title)
-      const serverAfricaArr = this.props.africaEdit.map(item=> item.id)
-      const serverAmericaArr = this.props.americaEdit.map(item=> item.id)
-      const serverAsiaArr = this.props.asiaEdit.map(item=> item.id)
-      const serverEuropeArr = this.props.europeEdit.map(item=> item.id)
-      const serverOceaniaArr = this.props.oceaniaEdit.map(item=> item.id)
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.name) {
+      const daysArr = nextProps.daysEdit.map(item=> item.title);
+      const daysArrServer = nextProps.daysEdit.map(item=> item.id);
+      const agesArr = nextProps.agesEdit.map(item=> item.title);
+      const agesArrServer = nextProps.agesEdit.map(item=> item.id);
+      const timesArr = nextProps.timesEdit.map(item=> item.title);
+      const timesArrServer = nextProps.timesEdit.map(item=> item.id);
+      const websitesArr = nextProps.websitesEdit.map(item=> item.title);
+      const websitesArrServer = nextProps.websitesEdit.map(item=> item.id);
+      const africaArr = nextProps.africaEdit.map(item=> item.title)
+      const americaArr = nextProps.americaEdit.map(item=> item.title)
+      const asiaArr = nextProps.asiaEdit.map(item=> item.title)
+      const europeArr = nextProps.europeEdit.map(item=> item.title)
+      const oceaniaArr = nextProps.oceaniaEdit.map(item=> item.title)
+      const serverAfricaArr = nextProps.africaEdit.map(item=> item.id)
+      const serverAmericaArr = nextProps.americaEdit.map(item=> item.id)
+      const serverAsiaArr = nextProps.asiaEdit.map(item=> item.id)
+      const serverEuropeArr = nextProps.europeEdit.map(item=> item.id)
+      const serverOceaniaArr = nextProps.oceaniaEdit.map(item=> item.id)
       this.setState({
-        title: this.props.name,
-        gender_id: `${this.props.gender_id}`,
-        days: daysArr.length === 7 ? ['All'].concat(daysArr) : daysArr,
+        title: this.state.canEdit ? this.state.title : nextProps.name,
+        gender_id: this.state.canEdit ? this.state.gender_id : `${nextProps.gender_id}`,
+        days: daysArr.length === 7 ? this.state.canEdit ? this.state.days : ['All'].concat(daysArr) : this.state.canEdit ? this.state.days : daysArr,
         serverDays: daysArrServer,
         serverAges: agesArrServer,
         serverTimes: timesArrServer,
         serverWebsites: websitesArrServer,
-        start_date: this.props.start_date,
-        end_date: this.props.end_date,
-        ages: agesArr.length === 6 ? ['All'].concat(agesArr) : agesArr,
-        times: timesArr.length === 24 ? ['All'].concat(timesArr) : timesArr,
-        websites: websitesArr.length === 5 ? ['All'].concat(websitesArr) : websitesArr,
-        limit_per_day: `${this.props.limit_per_day}`,
-        limit_per_user: `${this.props.limit_per_user}`,
-        country_id: `${this.props.country_id}`,
+        start_date: this.state.canEdit ? this.state.start_date : nextProps.start_date,
+        end_date: this.state.canEdit ? this.state.end_date : nextProps.end_date,
+        ages: agesArr.length === 6 ? this.state.canEdit ? this.state.ages : ['All'].concat(agesArr) : this.state.canEdit ? this.state.ages : agesArr,
+        times: timesArr.length === 24 ? this.state.canEdit ? this.state.times : ['All'].concat(timesArr) : this.state.canEdit ? this.state.times : timesArr,
+        websites: websitesArr.length === 5 ? this.state.canEdit ? this.state.websites : ['All'].concat(websitesArr) : this.state.canEdit ? this.state.websites : websitesArr,
+        limit_per_day: this.state.canEdit ? this.state.limit_per_day : `${nextProps.limit_per_day}`,
+        limit_per_user: this.state.canEdit ? this.state.limit_per_user : `${nextProps.limit_per_user}`,
         showDatePicker: this.props.showDatePicker ? false : true,
-        africa: africaArr.length === 58 ? ['All'].concat(africaArr) : africaArr,
-        america: americaArr.length === 55 ? ['All'].concat(americaArr) : americaArr,
-        asia: asiaArr.length === 51 ? ['All'].concat(asiaArr) : asiaArr,
-        europe: europeArr.length === 51 ? ['All'].concat(europeArr) : europeArr,
-        oceania: oceaniaArr.length === 25 ? ['All'].concat(oceaniaArr) : oceaniaArr,
-        serverAfrica: serverAfricaArr,
-        serverAmerica: serverAmericaArr,
-        serverAsia: serverAsiaArr,
-        serverEurope: serverEuropeArr,
-        serverOceania: serverOceaniaArr
+        africa: africaArr.length === 58 ? this.state.canEdit ? this.state.africa : ['All'].concat(africaArr) : this.state.canEdit ? this.state.africa : africaArr,
+        america: americaArr.length === 55 ? this.state.canEdit ? this.state.america : ['All'].concat(americaArr) : this.state.canEdit ? this.state.america : americaArr,
+        asia: asiaArr.length === 51 ? this.state.canEdit ? this.state.asia : ['All'].concat(asiaArr) : this.state.canEdit ? this.state.asia : asiaArr,
+        europe: europeArr.length === 51 ? this.state.canEdit ? this.state.europe : ['All'].concat(europeArr) : this.state.canEdit ? this.state.europe : europeArr,
+        oceania: oceaniaArr.length === 25 ? this.state.canEdit ? this.state.oceania : ['All'].concat(oceaniaArr) : this.state.canEdit ? this.state.oceania : oceaniaArr,
+        serverAfrica: this.state.canEdit ? this.state.serverAfrica : serverAfricaArr,
+        serverAmerica: this.state.canEdit ? this.state.serverAmerica : serverAmericaArr,
+        serverAsia: this.state.canEdit ? this.state.serverAsia : serverAsiaArr,
+        serverEurope: this.state.canEdit ? this.state.serverEurope : serverEuropeArr,
+        serverOceania: this.state.canEdit ? this.state.serverOceania : serverOceaniaArr,
+        canEdit: true
       })
     }
   }
@@ -169,7 +172,8 @@ class CampaignConstructor extends Component {
 
   onClickHandler = () => {
     this.setState({
-      errors : {}
+      errors : {},
+      loader: true
     });
     if (this.isValid()) {
       const data = {
@@ -188,11 +192,13 @@ class CampaignConstructor extends Component {
       if (!this.props.start_date) {
         this.props.createCampaign(data).then(
           r => {
-            console.log(r);
             if (r.data.success) {
               this.props.addFlashMessage({
                 type: 'success',
                 text: "Campaign has been created successfully!"
+              })
+              this.setState({
+                loader: false
               })
               this.context.router.push('/campaign_list');
             }
@@ -205,6 +211,10 @@ class CampaignConstructor extends Component {
         }
         this.props.onClickEdit(obj)
       }
+    } else {
+      this.setState({
+        loader: false
+      })
     }
   }
 
@@ -348,56 +358,80 @@ class CampaignConstructor extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.serverAfrica !== this.state.serverAfrica) {
+    const serverLengthThis = this.state.serverAfrica.length +
+    this.state.serverAsia.length +
+    this.state.serverAmerica.length +
+    this.state.serverEurope.length +
+    this.state.serverOceania.length
+
+    const serverLengthPrev = prevState.serverAfrica.length +
+    prevState.serverAsia.length +
+    prevState.serverAmerica.length +
+    prevState.serverEurope.length +
+    prevState.serverOceania.length
+
+    if (serverLengthPrev !== serverLengthThis && serverLengthThis !== 0) {
       this.setState({
-        country_id: 'checked'
-      })
+         country_id: 'checked'
+       })
     }
-    if (prevState.serverAmerica !== this.state.serverAmerica) {
+    if (serverLengthPrev !== serverLengthThis && serverLengthThis == 0) {
       this.setState({
-        country_id: 'checked'
-      })
+         country_id: ''
+       })
     }
-    if (prevState.serverAsia !== this.state.serverAsia) {
-      this.setState({
-        country_id: 'checked'
-      })
-    }
-    if (prevState.serverEurope !== this.state.serverEurope) {
-      this.setState({
-        country_id: 'checked'
-      })
-    }
-    if (prevState.serverOceania !== this.state.serverOceania) {
-      this.setState({
-        country_id: 'checked'
-      })
-    }
-    if (prevState.serverAfrica.length > this.state.serverAfrica) {
-      this.setState({
-        country_id: ''
-      })
-    }
-    if (prevState.serverAmerica.length > this.state.serverAmerica) {
-      this.setState({
-        country_id: ''
-      })
-    }
-    if (prevState.serverAsia.length > this.state.serverAsia) {
-      this.setState({
-        country_id: ''
-      })
-    }
-    if (prevState.serverEurope.length > this.state.serverEurope) {
-      this.setState({
-        country_id: ''
-      })
-    }
-    if (prevState.serverOceania.length > this.state.serverOceania) {
-      this.setState({
-        country_id: ''
-      })
-    }
+    // if (prevState.africa.length +
+    //     prevState.serverA.length +
+    //   !== this.state.serverAfrica) {
+    //   this.setState({
+    //     country_id: 'checked'
+    //   })
+    // }
+    // if (prevState.serverAmerica !== this.state.serverAmerica) {
+    //   this.setState({
+    //     country_id: 'checked'
+    //   })
+    // }
+    // if (prevState.serverAsia !== this.state.serverAsia) {
+    //   this.setState({
+    //     country_id: 'checked'
+    //   })
+    // }
+    // if (prevState.serverEurope !== this.state.serverEurope) {
+    //   this.setState({
+    //     country_id: 'checked'
+    //   })
+    // }
+    // if (prevState.serverOceania !== this.state.serverOceania) {
+    //   this.setState({
+    //     country_id: 'checked'
+    //   })
+    // }
+    // if (prevState.serverAfrica.length > this.state.serverAfrica) {
+    //   this.setState({
+    //     country_id: ''
+    //   })
+    // }
+    // if (prevState.serverAmerica.length > this.state.serverAmerica) {
+    //   this.setState({
+    //     country_id: ''
+    //   })
+    // }
+    // if (prevState.serverAsia.length > this.state.serverAsia) {
+    //   this.setState({
+    //     country_id: ''
+    //   })
+    // }
+    // if (prevState.serverEurope.length > this.state.serverEurope) {
+    //   this.setState({
+    //     country_id: ''
+    //   })
+    // }
+    // if (prevState.serverOceania.length > this.state.serverOceania) {
+    //   this.setState({
+    //     country_id: ''
+    //   })
+    // }
   }
 
   africaChanged= (africa) => {
@@ -580,7 +614,6 @@ class CampaignConstructor extends Component {
 
 
   render() {
-    console.log(this.props.days);
     const {errors} = this.state
     const dayInputs = !this.state.showDatePicker ?
     <div>
@@ -588,7 +621,7 @@ class CampaignConstructor extends Component {
         <label className="form_group__label">Start Date</label>
         <input
           type="text"
-          value={this.props.start_date}
+          value={this.state.canEdit ? this.state.start_date : this.props.start_date}
           placeholder="YYYY-MM-DD"
           onFocus={ this.openDaypicker }
           className="form_group__input"
@@ -599,7 +632,7 @@ class CampaignConstructor extends Component {
         <label className="form_group__label">End Date</label>
         <input
           type="text"
-          value={this.props.end_date}
+          value={this.state.canEdit ? this.state.end_date : this.props.end_date}
           placeholder="YYYY-MM-DD"
           onChange={() => {}}
           className="form_group__input"
@@ -635,7 +668,11 @@ class CampaignConstructor extends Component {
       }
     }
     const countriesChosen = this.state.serverAfrica.length + this.state.serverAsia.length + this.state.serverAmerica.length + this.state.serverEurope.length + this.state.serverOceania.length
-    const buttonSwitch = !this.props.editbtn ? <button className="form_group__button" onClick={this.onClickHandler}>Create</button> : <button className="form_group__button" onClick={this.onClickHandler}>Save</button>
+    const buttonSwitch = !this.props.editbtn
+    ?
+    !this.state.loader ? <button className="form_group__button" onClick={this.onClickHandler}>Create</button> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" /></div>
+    :
+    !this.state.loader ? <button className="form_group__button" onClick={this.onClickHandler}>Save</button> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" /></div>
   const countryModal = !this.state.showModal ? <div className="ad_constructor__form no_p clearfix">
     {title}
     <div className="input_fields">
