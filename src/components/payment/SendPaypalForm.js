@@ -48,6 +48,9 @@ class SendPaypalForm extends Component {
 
   render () {
     const {errors} = this.state
+    console.log(this.props);
+    const userId = this.props.userInfo !== null ? {userId: this.props.userInfo.id} : ''
+    console.log(JSON.stringify(userId));
     return (
       <div className="settings_wrapper">
         <div className="settings_wrapper__form">
@@ -57,6 +60,7 @@ class SendPaypalForm extends Component {
           </div>
           <form className="stripe_form" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" onSubmit={this.onSubmitHandler}>
             <input type="hidden" name="cmd" value="_xclick"/>
+            <input type="hidden" name="custom" value={JSON.stringify(userId)}/>
             <input type="hidden" name="business" value="foxpay-facilitator@midwinter-map.com"/>
             <input type="hidden" name="item_name" value="Payment"/>
             <input type="hidden" name="currency_code" value="GBP"/>
@@ -78,4 +82,10 @@ class SendPaypalForm extends Component {
   }
 }
 
-export default connect(null, {sendPayment,addFlashMessage})(SendPaypalForm);
+function mapStateToProps({accountData}) {
+  return {
+    userInfo: accountData.userInfo
+  }
+}
+
+export default connect(mapStateToProps, {sendPayment,addFlashMessage})(SendPaypalForm);

@@ -9,6 +9,7 @@ import {userSignupRequest} from '../../AC/signupActions'
 import {addFlashMessage} from '../../AC/flashMessages'
 
 class SignupForm extends Component {
+
   state = {
     firstname: '',
     lastname: '',
@@ -17,6 +18,7 @@ class SignupForm extends Component {
     errors: {},
     show: false
   }
+
   onChangeHandler = (e) => {
     console.log(e);
     this.setState({
@@ -30,6 +32,7 @@ class SignupForm extends Component {
       })
     }
   }
+
   isValid() {
     const {errors, isValid} = validateInput(this.state)
 

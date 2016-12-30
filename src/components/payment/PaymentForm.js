@@ -4,6 +4,7 @@ import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {loadAllPayments} from '../../AC/paymentAC'
 import ring from '../../img/main/ring.svg'
+import moment from 'moment'
 
 
 class PaymentForm extends Component {
@@ -13,16 +14,19 @@ class PaymentForm extends Component {
 
   render () {
     console.log(this.props);
-    const items = this.props.allPayments !== null ? this.props.allPayments.payments.map(item => <div key={item.id}>
-      <div className="payment_row passive clearfix">
-        <div className="payment_date">{item.created_at.split(' ')[0]}</div>
-        <div className="payment_time">{item.created_at.split(' ')[1].slice(0,5)}</div>
-        <div className="payment_method">{item.payment_method}</div>
-        <div className="payment_id">{item.payment_id}</div>
-        <div className="payment_amount">{item.amount}</div>
-        <div className="payment_balance">{item.balance_after_transaction}</div>
+    const items = this.props.allPayments !== null ? this.props.allPayments.payments.map(item => {
+      const localTime = moment(moment.utc(item.last_message_at).local().format("YYYY-MM-DD HH:mm"))
+      return <div key={item.id}>
+        <div className="payment_row passive clearfix">
+          <div className="payment_date">{localTime._i.split(' ')[0]}</div>
+          <div className="payment_time">{localTime._i.split(' ')[1].slice(0,5)}</div>
+          <div className="payment_method">{item.payment_method}</div>
+          <div className="payment_id">{item.payment_id}</div>
+          <div className="payment_amount">{item.amount}</div>
+          <div className="payment_balance">{item.balance_after_transaction}</div>
+        </div>
       </div>
-    </div>) : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
+    }) : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
     const messages = <div className="messages_wrapper">
       <div className="messages">
         <div className="payment_row clearfix">

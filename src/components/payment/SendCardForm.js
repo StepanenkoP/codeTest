@@ -6,6 +6,7 @@ import validateStripeForm from '../../functions/validateStripeForm'
 import {sendPayment} from '../../AC/paymentAC'
 import {addFlashMessage} from '../../AC/flashMessages'
 import {connect} from 'react-redux'
+import ring from '../../img/main/ring.svg'
 
 class SendCardForm extends Component {
   state = {
@@ -14,6 +15,7 @@ class SendCardForm extends Component {
     exp_month: '',
     exp_year: '',
     cvc: '',
+    loader: false,
     errors: {}
   }
 
@@ -47,6 +49,9 @@ class SendCardForm extends Component {
       errors : {}
     });
     if (this.isValid()) {
+      this.setState({
+        loader: true
+      })
       const data = {
         amount: this.state.amount,
         card_number: this.state.card_number,
@@ -67,13 +72,17 @@ class SendCardForm extends Component {
               exp_month: '',
               exp_year: '',
               cvc: '',
+              loader: false,
               errors: {}
             })
-            this.context.router.push('/payments')
+            // this.context.router.push('/payments')
           } else {
             this.props.addFlashMessage({
               type: 'error',
               text: "Could not find payment information"
+            })
+            this.setState({
+              loader: false
             })
           }
         }
@@ -83,6 +92,9 @@ class SendCardForm extends Component {
 
   render () {
     const {errors} = this.state
+    const buttonLoader = !this.state.loader ?
+    <button className="form_group__button btn_stripe" onClick={this.onClickHandler}>Send Payment</button> : <div style={{textAlign: 'center', clear: 'both'}}><img src={ring} alt="alt" /></div>
+
     return (
       <div className="settings_wrapper">
         <div className="settings_wrapper__form">
@@ -165,7 +177,7 @@ class SendCardForm extends Component {
                 />
               </div>
             </div>
-            <button className="form_group__button btn_stripe" onClick={this.onClickHandler}>Send Payment</button>
+            {buttonLoader}
           </div>
         </div>
       </div>
