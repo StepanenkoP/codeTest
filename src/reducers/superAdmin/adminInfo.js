@@ -1,4 +1,4 @@
-import {GET_ALL_USERS, BLOCK_USER, GET_ALL_ADVERTS, APPROVE_AD, REJECT_AD, GET_FILTERED_ADVERTS} from '../../types'
+import {GET_ALL_USERS, BLOCK_USER, GET_ALL_ADVERTS, APPROVE_AD, REJECT_AD, GET_FILTERED_ADVERTS, GET_FILTERED_USERS} from '../../types'
 import update from 'react-addons-update'
 
 const initialState = {
@@ -9,6 +9,11 @@ const initialState = {
 export default (state = initialState, action) => {
   switch(action.type) {
     case GET_ALL_USERS:
+      return {
+        ...state,
+        allUsers: action.payload
+      }
+    case GET_FILTERED_USERS:
       return {
         ...state,
         allUsers: action.payload

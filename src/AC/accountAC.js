@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {LOAD_ALLSTATS, GET_USER_INFO, GET_ALL_USERS, BLOCK_USER, GET_ALL_ADVERTS, APPROVE_AD, REJECT_AD, GET_FILTERED_ADVERTS} from '../types'
+import {LOAD_ALLSTATS, GET_USER_INFO, GET_ALL_USERS, BLOCK_USER, GET_ALL_ADVERTS, APPROVE_AD, REJECT_AD, GET_FILTERED_ADVERTS, GET_FILTERED_USERS} from '../types'
 
 export function loadAllStats() {
   return dispatch => {
@@ -65,11 +65,11 @@ export function reactivationRequest(data) {
   }
 }
 
-export function getAllUsers(data) {
+export function getAllUsers(data,filter_by) {
   return dispatch => {
     return axios({
       method: "get",
-      url: `/api/users?page=${data}`,
+      url: `/api/users${filter_by == undefined ? '?' : `/${filter_by}?`}page=${data}`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
@@ -102,11 +102,11 @@ export function blockUser(data) {
   }
 }
 
-export function getAllAdverts(data) {
+export function getAllAdverts(data, filter_by) {
   return dispatch => {
     return axios({
       method: "get",
-      url: `/api/advertisements?page=${data}`,
+      url: `/api/advertisements${filter_by == undefined ? '?' : `/${filter_by}?`}page=${data}`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
@@ -120,12 +120,11 @@ export function getAllAdverts(data) {
   }
 }
 
-export function getFilteredAdverts(id, data) {
+export function getFilteredAdverts(data) {
   return dispatch => {
     return axios({
       method: "get",
-      url: `/api/advertisements?page=${id}`,
-      data: data,
+      url: `/api/advertisements/${data}`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ' + localStorage.token
@@ -133,6 +132,24 @@ export function getFilteredAdverts(id, data) {
     }).then(
       r => dispatch({
         type: GET_FILTERED_ADVERTS,
+        payload: r.data
+      })
+    )
+  }
+}
+
+export function getFilteredUsers(data) {
+  return dispatch => {
+    return axios({
+      method: "get",
+      url: `/api/users/${data}`,
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + localStorage.token
+      }
+    }).then(
+      r => dispatch({
+        type: GET_FILTERED_USERS,
         payload: r.data
       })
     )

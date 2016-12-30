@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import profile from '../../img/users/Profile.png'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
-import {getAllUsers, blockUser} from '../../AC/accountAC'
+import {getAllUsers, blockUser, getFilteredUsers} from '../../AC/accountAC'
 import ring from '../../img/main/ring.svg'
 import moment from 'moment'
 import Pagination from '../unisex/Pagination'
@@ -13,7 +13,8 @@ class UsersForm extends Component {
 
   state = {
     activePage: 1,
-    preloader: false
+    preloader: false,
+    activeOn: 'all'
   }
 
   componentDidMount() {
@@ -30,11 +31,25 @@ class UsersForm extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (this.state.activePage !== nextState.activePage) {
+    if (this.state.activePage !== nextState.activePage && this.state.activeOn == nextState.activeOn && this.state.activeOn == 'all') {
       this.setState({
         preloader: true
       })
       this.props.getAllUsers(nextState.activePage).then(
+        r => {
+          if (r.payload) {
+            this.setState({
+              preloader: false
+            })
+          }
+        }
+      )
+    }
+    if (this.state.activePage !== nextState.activePage && this.state.activeOn == nextState.activeOn && this.state.activeOn !== 'all') {
+      this.setState({
+        preloader: true
+      })
+      this.props.getAllUsers(nextState.activePage, nextState.activeOn).then(
         r => {
           if (r.payload) {
             this.setState({
@@ -51,21 +66,50 @@ class UsersForm extends Component {
     this.props.blockUser(id)
   }
 
+  filterOnClick = (data) => {
+    if (data == 'all' && data !== this.state.activeOn) {
+      this.setState({
+        activePage: 1,
+        preloader: true,
+        activeOn: 'all'
+      })
+      this.props.getAllUsers(this.state.activePage).then(r => {
+        if (r.type) {
+          this.setState({
+            preloader: false
+          })
+        }
+      })
+    } else if (data == 'blocked' && data !== this.state.activeOn){
+      this.setState({
+        activePage: 1,
+        activeOn: 'blocked',
+        preloader: true,
+      })
+      this.props.getFilteredUsers(data).then(r => {
+        if (r.type) {
+          this.setState({
+            preloader: false
+          })
+        }
+      })
+    }
+  }
+
 
   render () {
     console.log(this.props);
     const items = this.props.allUsers !== null ? this.props.allUsers.data.map(item => {
-      const localTime = moment(moment.utc(item.last_message_at).local().format("YYYY-MM-DD HH:mm"))
-      return <div key={item.id} onClick={() => this.linkClick(item.from, item.advertisement_slug)}>
+      return <div key={item.id}>
         <div className={`messages_row users_row ${item.blocked ? 'blocked' : 'unblocked'} clearfix`}>
-          <div className="user_id">C01</div>
-          <div className="user_name">Chris</div>
-          <div className="user_surname">Jones</div>
-          <div className="user_date">11/01/2016</div>
-          <div className="user_campaigns">15</div>
-          <div className="user_ads">15</div>
-          <div className="user_spent">£84.95</div>
-          <div className="user_balance">£84.95</div>
+          <div className="user_id">{item.id}</div>
+          <div className="user_name">{item.first_name}</div>
+          <div className="user_surname">{item.last_name}</div>
+          <div className="user_date">{item.created_at.split(' ')[0]}</div>
+          <div className="user_campaigns">{item.campaigns_count}</div>
+          <div className="user_ads">{item.advertisements_count}</div>
+          <div className="user_spent">£{item.balance_spent}</div>
+          <div className="user_balance">£{item.balance}</div>
           <div className="user_block"><div className="block" onClick={() => this.blockToggle(item.id)}></div></div>
         </div>
       </div>
@@ -86,7 +130,7 @@ class UsersForm extends Component {
         </div>
         {items}
       </div>
-    </div> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px', paddingTop: '50px'}}/></div>
+    </div> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '150px', paddingTop: '150px'}}/></div>
 
   const pagination = this.props.allUsers !== null && this.props.allUsers.data.length === 20 ? <div style={{textAlign: 'center'}}>
     <Pagination
@@ -113,7 +157,11 @@ class UsersForm extends Component {
           <div className="title">
             <div className="img_wrapper"><img src={profile} alt="alt"/></div>
             List of Users
-            <div className="filter"><span className="active">All</span><span className="bold">|</span><span>Blocked</span></div>
+            <div className="filter">
+              <span onClick={() => this.filterOnClick('all')} className={ this.state.activeOn == 'all' ? 'active' : ''}>All</span>
+              <span className="bold">|</span>
+              <span onClick={() => this.filterOnClick('blocked')} className={ this.state.activeOn == 'blocked' ? 'active' : ''}>Blocked</span>
+            </div>
           </div>
           {users}
           {this.props.allUsers !== null && !this.props.allUsers.data.length && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
@@ -130,4 +178,4 @@ function mapStateToProps({adminInfo}) {
   }
 }
 
-export default connect (mapStateToProps, {getAllUsers, blockUser})(UsersForm);
+export default connect (mapStateToProps, {getAllUsers, blockUser, getFilteredUsers})(UsersForm);
