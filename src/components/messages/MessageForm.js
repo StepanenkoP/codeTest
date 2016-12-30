@@ -53,6 +53,7 @@ class MessageForm extends Component {
       const newobj = {
         id: Date.now(),
         from: `${this.props.userInfo.first_name} ${this.props.userInfo.last_name}`,
+        color: this.props.userInfo.color,
         text: this.state.message_text,
         created_at: moment.utc(new Date()).format("YYYY-MM-DD HH:mm")
       }
@@ -73,14 +74,13 @@ class MessageForm extends Component {
   render () {
     console.log(this.props);
     const {messages} = this.props
-    const color = this.props.userInfo !== null ? this.props.userInfo.color : ''
     const allMessages = this.props.messages !== undefined ? Object.keys(messages).map(item => <div key={item} className="block">
       {
         messages[item].map(date => {
           const localTime = moment(moment.utc(date.created_at).local().format("YYYY-MM-DD HH:mm"))
             return <div key={date.id} className="message">
               <div className="name">
-                <span className="img" style={{backgroundColor: color}}>P</span>
+                <span className="img" style={{backgroundColor: date.color}}>{date.from.slice(0,1)}</span>
                 <span className="user_name">{date.from}</span>
                 <div className="time">{localTime._i.split(' ')[1].slice(0,5)}</div>
               </div>
@@ -99,7 +99,7 @@ class MessageForm extends Component {
           <div className="message_list">
             <div className="message_list__title">
               <div className="name">{localStorage.from}</div>
-              <div className="id">{`ID Advert ${localStorage.advert_id}`}</div>
+              <div className="id">{localStorage.advert_id !== "null" ? `ID Advert ${localStorage.advert_id}` : ''}</div>
             </div>
             <div className="message_list__items">
               {allMessages}
