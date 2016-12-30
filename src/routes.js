@@ -78,11 +78,22 @@ const needLogin = () => {
   if (!localStorage.token) {
     browserHistory.push('/login');
   }
-  console.log(browserHistory.getCurrentLocation().pathname === '/');
   if (browserHistory.getCurrentLocation().pathname === '/' && localStorage.userType === 'admin') {
     browserHistory.push('/users');
   }
+  if (browserHistory.getCurrentLocation().pathname === '/advers_list' && localStorage.userType === 'admin') {
+    browserHistory.push('/users');
+  }
+  if (browserHistory.getCurrentLocation().pathname === '/campaign_list' && localStorage.userType === 'admin') {
+    browserHistory.push('/users');
+  }
+  if (browserHistory.getCurrentLocation().pathname === '/payments' && localStorage.userType === 'admin') {
+    browserHistory.push('/users');
+  }
   if (browserHistory.getCurrentLocation().pathname === '/users' && localStorage.userType !== 'admin') {
+    browserHistory.push('/');
+  }
+  if (browserHistory.getCurrentLocation().pathname === '/adverts' && localStorage.userType !== 'admin') {
     browserHistory.push('/');
   }
 }
