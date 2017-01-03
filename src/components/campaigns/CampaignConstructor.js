@@ -621,7 +621,7 @@ class CampaignConstructor extends Component {
         <label className="form_group__label">Start Date</label>
         <input
           type="text"
-          value={this.state.canEdit ? this.state.start_date : this.props.start_date}
+          value={this.state.canEdit ? this.state.start_date : this.props.start_date !== undefined ? this.props.start_date : this.state.start_date}
           placeholder="YYYY-MM-DD"
           onFocus={ this.openDaypicker }
           className="form_group__input"
@@ -632,14 +632,14 @@ class CampaignConstructor extends Component {
         <label className="form_group__label">End Date</label>
         <input
           type="text"
-          value={this.state.canEdit ? this.state.end_date : this.props.end_date}
+          value={this.state.canEdit ? this.state.end_date : this.props.end_date !== undefined ? this.props.end_date : this.state.end_date}
           placeholder="YYYY-MM-DD"
           onChange={() => {}}
           className="form_group__input"
         />
       </div>
       <div className="reset" onClick={this.showDatePicker}>Reset</div>
-    </div> : <DayInputEnd errors={this.state.errors} getDateData={this.getDateData} startState={this.state.start_date}/>
+    </div> : <DayInputEnd errors={this.state.errors} getDateData={this.getDateData} startState={this.state.start_date} endState={this.state.end_date}/>
     const title = this.props.title ? <h2>Edit Campaign</h2> : <h2>Create Campaign</h2>
     const allInArr = [{id:0, title: "All"}]
     const days = this.props.days.length ? allInArr.concat(this.props.days) : []

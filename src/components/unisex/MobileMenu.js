@@ -23,7 +23,7 @@ class MobileMenu extends Component {
         {this.props.userInfo.first_name.slice(0, 1)}
       </div>
       <h3 className="user_name">{`${this.props.userInfo !== null ? this.props.userInfo.first_name : ''} ${this.props.userInfo !== null ? this.props.userInfo.last_name : ''}`}</h3>
-      <div className="user_mnu"><span className="logout" onClick={this.logOut}>Logout</span><span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span></div>
+      <div className="user_mnu"><span className="logout" onClick={this.logOut}>Logout</span>{this.props.userInfo.user_type !== 'admin' ? <span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span> : null}</div>
     </div> : <div style={{textAlign: 'center', float: 'right', paddingTop: '20px'}}><img src={ring} alt="alt" /></div>
 
     const menu = this.props.userInfo !== null && this.props.userInfo.user_type !== 'admin' ?

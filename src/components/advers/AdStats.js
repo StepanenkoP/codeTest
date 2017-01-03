@@ -47,7 +47,7 @@ class CreateAd extends Component {
         <FlashList />
         <Header
           title="Statistics"
-          text={`"${!isEmpty(this.props.adStats) ? this.props.adStats.adv_title : ''}" ${!isEmpty(this.props.adStats) ? this.props.adStats.adv_id : ''}`}
+          text={`${!isEmpty(this.props.adStats) ? this.props.adStats.adv_title : ""} ${!isEmpty(this.props.adStats) ? this.props.adStats.adv_id : ''}`}
           openMenu={this.openMenu}
           logOut={this.logOut}
         />

@@ -103,11 +103,10 @@ class UsersForm extends Component {
       return <div key={item.id}>
         <div className={`messages_row users_row ${item.blocked ? 'blocked' : 'unblocked'} clearfix`}>
           <div className="user_id">{item.id}</div>
-          <div className="user_name">{item.first_name}</div>
-          <div className="user_surname">{item.last_name}</div>
+          <div className="user_name">{item.first_name} {item.last_name}</div>
+          <div className="user_surname">{item.email}</div>
           <div className="user_date">{item.created_at.split(' ')[0]}</div>
-          <div className="user_campaigns">{item.campaigns_count}</div>
-          <div className="user_ads">{item.advertisements_count}</div>
+          <div className="user_campaigns">{item.campaigns_count}/{item.advertisements_count}</div>
           <div className="user_spent">£{item.balance_spent}</div>
           <div className="user_balance">£{item.balance}</div>
           <div className="user_block"><div className="block" onClick={() => this.blockToggle(item.id)}></div></div>
@@ -119,11 +118,10 @@ class UsersForm extends Component {
       <div className="messages">
         <div className="messages_row users_row clearfix">
           <div className="user_id">ID</div>
-          <div className="user_name">First name</div>
-          <div className="user_surname">Last name</div>
-          <div className="user_date">Date of <br/>registration</div>
-          <div className="user_campaigns">Number of campaigns</div>
-          <div className="user_ads">Number of <br/>ads</div>
+          <div className="user_name">Full name</div>
+          <div className="user_surname">Email</div>
+          <div className="user_date">Registration</div>
+          <div className="user_campaigns">Campaigns / Ads</div>
           <div className="user_spent">Spent</div>
           <div className="user_balance">Balance</div>
           <div className="user_block">Block</div>

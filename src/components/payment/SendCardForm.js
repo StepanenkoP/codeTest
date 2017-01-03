@@ -75,7 +75,7 @@ class SendCardForm extends Component {
               loader: false,
               errors: {}
             })
-            // this.context.router.push('/payments')
+            this.context.router.push('/payments')
           } else {
             this.props.addFlashMessage({
               type: 'error',

@@ -41,7 +41,7 @@ class AllAdvertsPage extends Component {
       {mobileMenu}
       <FlashList />
       <Header
-        title="Users"
+        title="Adverts"
         text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
         openMenu={this.openMenu}
         logOut={this.logOut}

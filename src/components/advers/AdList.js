@@ -10,7 +10,8 @@ import $ from 'jquery'
 
 class AdList extends Component {
   state = {
-    activePage: 1
+    activePage: 1,
+    loader: false
   }
 
   componentWillMount() {
@@ -18,12 +19,21 @@ class AdList extends Component {
   }
 
   handlePageChange = (pageNumber) => {
-    this.setState({activePage: pageNumber});
+    this.setState({
+      activePage: pageNumber,
+      loader: true
+    });
   }
 
   componentWillUpdate(nextProps, nextState) {
     if (this.state.activePage !== nextState.activePage) {
-      this.props.loadAds(nextState.activePage)
+      this.props.loadAds(nextState.activePage).then(r => {
+        if (r.type == 'LOAD_ADS') {
+          this.setState({
+            loader: false
+          })
+        }
+      })
       $(document).scrollTop(0)
     }
   }
@@ -31,7 +41,7 @@ class AdList extends Component {
 
   render() {
     console.log(this.props);
-    const list = this.props.adsList.advertisement_count !== null ? this.props.adsList.advertisement_array.data.map(item =>
+    const listPending = this.props.adsList.advertisement_count !== null ? this.props.adsList.advertisement_array.data.filter(item => item.status == 'pending').map(item =>
       <div key={item.id}>
         <Awaiting
           title={item.title}
@@ -40,7 +50,27 @@ class AdList extends Component {
           image={item.image}
           id={item.id}
         />
-      </div>) : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>
+      </div>) : null
+    const listApproved = this.props.adsList.advertisement_count !== null ? this.props.adsList.advertisement_array.data.filter(item => item.status == 'approved').map(item =>
+        <div key={item.id}>
+          <Active
+            title={item.title}
+            created_at={item.created_at.split(' ')[0]}
+            short_description={item.short_description}
+            image={item.image}
+            id={item.id}
+          />
+        </div>) : null
+      const listRejected = this.props.adsList.advertisement_count !== null ? this.props.adsList.advertisement_array.data.filter(item => item.status == 'rejected').map(item =>
+        <div key={item.id}>
+          <NotActive
+            title={item.title}
+            created_at={item.created_at.split(' ')[0]}
+            short_description={item.short_description}
+            image={item.image}
+            id={item.id}
+          />
+        </div>) : null
     const pagination = this.props.adsList.advertisement_count !== null && this.props.adsList.advertisement_array.data.length === 10 ? <div style={{textAlign: 'center'}}>
       <Pagination
         activePage={this.state.activePage}
@@ -62,7 +92,11 @@ class AdList extends Component {
 
     return (
       <div className="ads_wrapper">
-        {list}
+        {this.props.adsList.advertisement_count !== null && !this.state.loader ? <div>
+          {listPending}
+          {listApproved}
+          {listRejected}
+        </div> : <div style={{textAlign: 'center'}}><img src={ring} alt="alt" style={{paddingBottom: '50px'}}/></div>}
         {!this.props.adsList.advertisement_count && this.props.adsList.advertisement_count !== null && <div className="no_data" style={{textAlign: 'center'}}>No data</div>}
         {pagination}
       </div>

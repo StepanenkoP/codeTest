@@ -13,12 +13,13 @@ class Header extends Component {
   }
   render() {
     console.log(this.props);
+    const floatAdmin = this.props.userInfo !== null && this.props.userInfo.user_type !== 'admin' ? {float: 'left'} : {float: 'right'}
     const user = this.props.userInfo !== null ? <div className="user">
       <div className="user_img" style={{backgroundColor: this.props.userInfo.color}}>
         {this.props.userInfo.first_name.slice(0, 1)}
       </div>
       <h3 className="user_name">{`${this.props.userInfo !== null ? this.props.userInfo.first_name : ''} ${this.props.userInfo !== null ? this.props.userInfo.last_name : ''}`}</h3>
-      <div className="user_mnu"><span className="logout" onClick={this.props.logOut}>Logout</span><span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span></div>
+      <div className="user_mnu"><span className="logout" onClick={this.props.logOut} style={floatAdmin}>Logout</span>{this.props.userInfo.user_type !== 'admin' ? <span className="balance">&#163;{this.props.userInfo !== null ? this.props.userInfo.balance: ''}</span> : null}</div>
     </div> : <div style={{textAlign: 'center', float: 'right', paddingTop: '20px'}}><img src={ring} alt="alt" /></div>
 
   const menu = this.props.userInfo !== null && this.props.userInfo.user_type !== 'admin' ?

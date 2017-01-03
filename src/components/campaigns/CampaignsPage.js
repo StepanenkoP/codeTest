@@ -48,7 +48,7 @@ class CampaignsPage extends Component {
       <FlashList />
       <Header
         title="List of campaigns"
-        text="Est eu pertinaciaen delacrue instructiol vel eu natum vedi idqran ende salutandi no per."
+        text="Service which allows you to create advertisements. You can easily manage the process and to increase their sales."
         openMenu={this.openMenu}
         logOut={this.logOut}
       />

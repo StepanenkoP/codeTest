@@ -75,6 +75,8 @@ export default class Range extends React.Component {
     })
   }
   render() {
+    console.log('state', this.state);
+    console.log('props', this.props);
     const { from, to } = this.state;
     const startTitle = this.props.startTitle ? <label className="form_group__label">{this.props.startTitle}</label> : <label className="form_group__label">Start Date</label>
   const endTitle = this.props.endTitle ? <label className="form_group__label">{this.props.endTitle}</label> : <label className="form_group__label">End Date</label>
@@ -84,9 +86,10 @@ export default class Range extends React.Component {
             {startTitle}
             <input
               type="text"
-              value={this.state.from !== null ? moment(from).format("YYYY-MM-DD") : '' }
+              value={this.state.from !== null ? moment(from).format("YYYY-MM-DD") : this.props.startState }
               placeholder="YYYY-MM-DD"
               onFocus={ this.openDaypicker }
+              onChange={() => {}}
               className="form_group__input"
             />
             {this.props.errors.start_date && <span className="validate_span">{this.props.errors.start_date}</span>}
@@ -95,10 +98,11 @@ export default class Range extends React.Component {
             {endTitle}
             <input
               type="text"
-              value={this.state.to !== null ? moment(to).format("YYYY-MM-DD") : '' }
+              value={this.state.to !== null ? moment(to).format("YYYY-MM-DD") : this.props.endState !== 'Invalid date' ? this.props.endState : ''}
               placeholder="YYYY-MM-DD"
               onChange={ this.handleInputChange }
               onFocus={ this.openDaypicker }
+              onChange={() => {}}
               className="form_group__input"
             />
             {this.props.errors.end_date && <span className="validate_span">{this.props.errors.end_date}</span>}
