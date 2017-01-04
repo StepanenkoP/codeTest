@@ -69,7 +69,7 @@ class LoginForm extends Component {
               text: "Success! Welcome to Micro Advertising Portal"
             })
             localStorage.setItem('token', response.data.token)
-            if (loginObj.email === 'alex.jumperman@gmail.com') {
+            if (loginObj.email === 'admin@midwinter-map.com') {
               localStorage.setItem('userType', 'admin')
             }
             this.context.router.push('/')
