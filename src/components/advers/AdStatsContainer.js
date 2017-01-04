@@ -41,7 +41,6 @@ class AdStatsContainer extends Component {
   }
 
   render () {
-    console.log(this.props);
     const statsRow = this.props.stats && this.props.id && this.props.title
     ?
     this.props.stats.map(item => <div key={item.date} className="table_row">
@@ -57,6 +56,7 @@ class AdStatsContainer extends Component {
     const data = {
         labels: dates,
         datasets: [{
+            label: "My First dataset",
             data: views,
             fillColor: "rgba(151,187,205,0.2)",
             pointColor: "rgba(151,187,205,1)",
@@ -81,7 +81,7 @@ class AdStatsContainer extends Component {
           />
         </div>
         <div className="stats_wrapper">
-          <LineChart data={data} width="1170" height="310"/>
+          <LineChart data={data} width="1170" height="310" redraw />
         </div>
         <div className="stats_container__table">
           <div className="wrapper">
