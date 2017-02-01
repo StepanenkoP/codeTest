@@ -67,6 +67,7 @@ class AdStatsContainer extends Component {
             pointColor: "#fff"
         }]
     }
+    console.log(this.props.stats);
     return(
       <div className="stats_container">
         <h2 className="stats_container__header">{this.state.start_date && this.state.end_date !== 'Invalid date' ? <span>{`Views from ${this.state.start_date} to ${this.state.end_date}`}</span> : <span>Views last 30 days</span>}</h2>
@@ -81,7 +82,8 @@ class AdStatsContainer extends Component {
           />
         </div>
         <div className="stats_wrapper">
-          <LineChart data={data} width="1170" height="310" redraw />
+          {this.props.stats !== null ? this.props.stats.length > 0 ? <LineChart data={data} width="1170" height="310" /> : <div className="no_data" style={{textAlign: 'center'}}>No data</div>
+            : <img src={ring} alt="alt" style={{paddingBottom: '50px', display: 'block', margin: 'auto'}}/>}
         </div>
         <div className="stats_container__table">
           <div className="wrapper">
@@ -95,10 +97,11 @@ class AdStatsContainer extends Component {
               <div className="ctr">CTR(%)</div>
             </div>
             <div className="table_data">
-              {statsRow}
+              {this.props.stats !== null ? this.props.stats.length > 0 ? statsRow : <div className="no_data" style={{textAlign: 'center'}}>No data</div>
+                : <img src={ring} alt="alt" style={{paddingBottom: '50px', display: 'block', margin: 'auto'}}/>}
             </div>
-          </div>
-        </div>
+              </div>
+            </div>
       </div>
     )
   }

@@ -54,7 +54,7 @@ class CreateAd extends Component {
         <AdStatsContainer
           idWithData={this.props.params.id}
           id={!isEmpty(this.props.adStats) ? this.props.adStats.adv_id : ''}
-          stats={!isEmpty(this.props.adStats) ? this.props.adStats.adv_stats : []}
+          stats={!isEmpty(this.props.adStats) ? this.props.adStats.adv_stats : null}
           title={!isEmpty(this.props.adStats) ? this.props.adStats.adv_title : ''}
         />
         <Footer />
